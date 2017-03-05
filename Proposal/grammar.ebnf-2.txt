@@ -1,0 +1,35 @@
+Main ::= ( 'main' Block)
+
+Type ::= ( "int" | "float" | "char" | "bool" | "string")
+
+Array ::= ( id '[' Exp ']' )
+
+Constant ::= ( 'id' | Array | 'true' | 'false' )
+
+Vars ::=  ( Type (       (id '=' ('+' | '-')? Constant )  (',' id '=' ('+' | '-')? Constant)* ) ';')
+
+Assignment ::= ( (id | Array) '=' Expresion ';')
+
+Block ::= ('{' (Statute)? '}')
+
+Condition ::= ( 'if' ( ('(' Expression ')' Block) ('else if' '(' Expression ')' Block)* ) ('else' Block)? )
+
+Loop ::= ( 'while' '(' Expression ')' Block )
+
+Exp ::= ( Term (('+' | '-') Exp )* )
+
+Expression ::= ( Exp (('<=' | '>=' | '<' | '>' |  '==' | '!=' | '||' | '&&') Exp )?  )
+
+Factor ::= ( (('+'  | '-')? Constant) | ( '(' Expression ')' )  )
+
+Function ::= ( ('void' | Type) id ('null' | Parameter) Block_Return )
+
+Block_Return ::= ( '{' (Statue)?  ( 'return' Exp ';')?    '}' )
+
+Parameter ::= ( (Type id) (',' Type id)* )
+
+Statute ::= ( Assignment | Condition | Vars | Loop | Write)
+
+Write ::= ( 'print' '(' Exp ')' ';')
+
+Term ::= ( Factor (('*' | '/') Term )*)

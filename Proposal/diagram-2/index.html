@@ -1,0 +1,571 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html class="gr__bottlecaps_de">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="generator" content="Railroad Diagram Generator 1.45.1338"><style type="text/css" xml:space="preserve">
+    ::-moz-selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }
+    ::selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }      
+    .ebnf a
+    {
+      text-decoration: none;
+    }
+    .ebnf a:hover
+    {
+      color: #050400;
+      text-decoration: underline;
+    }    
+    .signature
+    {
+      color: #806600;
+      font-size: 11px;
+      text-align: right;
+    }
+    body
+    {
+      font: normal 12px Verdana, sans-serif;
+      color: #0F0C00;
+      background: #FFFCF0;
+    }
+    a:link, a:visited
+    {
+      color: #0F0C00;
+    }
+    a:link.signature, a:visited.signature
+    {
+      color: #806600;
+    }
+    a.button, #tabs li a
+    {
+      padding: 0.25em 0.5em;
+      border: 1px solid #806600;
+      background: #F1E8C6;
+      color: #806600;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.button:hover, #tabs li a:hover
+    {
+      color: #050400;
+      background: #FFF6D1;
+      border-color: #050400;       
+    }     
+    #tabs
+    {
+      padding: 3px 10px;
+      margin-left: 0;
+      margin-top: 58px;
+      border-bottom: 1px solid #0F0C00;
+    }  
+    #tabs li
+    {
+      list-style: none;
+      margin-left: 5px;
+      display: inline;
+    }
+    #tabs li a
+    {     
+      border-bottom: 1px solid #0F0C00;
+    }
+    #tabs li a.active
+    {
+      color: #0F0C00;
+      background: #FFFCF0;
+      border-color: #0F0C00;
+      border-bottom: 1px solid #FFFCF0;
+      outline: none;
+    }
+    #divs div
+    {
+      display: none;
+      overflow:auto;
+    }
+    #divs div.active
+    {
+      display: block;
+    }
+    #text
+    {
+      border-color: #806600;
+      background: #FFFEFA;
+      color: #050400;
+    }
+    .small
+    {
+      vertical-align: top;
+      text-align: right;
+      font-size: 9px;
+      font-weight: normal;
+      line-height: 120%;
+    }
+    td.small
+    {
+      padding-top: 0px;
+    }
+    .hidden
+    {
+      visibility: hidden;
+    }
+    td:hover .hidden 
+    {
+      visibility: visible;
+    }
+    div.download
+    {
+      display: none;
+      background: #FFFCF0;
+      position: absolute;
+      right: 34px;
+      top: 94px;
+      padding: 10px;
+      border: 1px dotted #0F0C00;
+    }
+    #divs div.ebnf, div.ebnf
+    {
+      display: block;
+      padding-left: 16px;
+      padding-top: 2px; 
+      padding-bottom: 2px; 
+      background: #FFF6D1;
+    }
+    tr.option-line td:first-child
+    {
+      text-align: right
+    }
+    tr.option-text td
+    {
+      padding-bottom: 10px
+    }
+    table.palette
+    {
+      border-top: 1px solid #050400;
+      border-right: 1px solid #050400;
+      margin-bottom: 4px
+    }
+    td.palette
+    {
+      border-bottom: 1px solid #050400;
+      border-left: 1px solid #050400;
+    }
+    a.palette
+    {
+      padding: 2px 3px 2px 10px;
+      text-decoration: none;
+    }
+    .palette
+    {
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      -ms-user-select: none;
+    }
+  </style></head>
+   <body>
+      
+      <p style="font-size: 14px; font-weight:bold"><a name="Main">Main:</a></p>
+      <img border="0" src="diagram/Main.png" height="36" width="182" usemap="#Main.map"><map name="Main.map">
+         <area shape="rect" coords="101,1,153,33" href="#Block" title="Block"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Main" title="Main" shape="rect">Main</a>     ::= 'main' <a href="#Block" title="Block" shape="rect">Block</a></pre></div>
+         
+      </p>
+      
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Type">Type:</a></p>
+      <img border="0" src="diagram/Type.png" height="212" width="156">
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Type" title="Type" shape="rect">Type</a>     ::= 'int'
+           | 'float'
+           | 'char'
+           | 'bool'
+           | 'string'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Function" title="Function">Function</a></li>
+            
+            <li><a href="#Parameter" title="Parameter">Parameter</a></li>
+            
+            <li><a href="#Vars" title="Vars">Vars</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Array">Array:</a></p>
+      <img border="0" src="diagram/Array.png" height="36" width="242" usemap="#Array.map"><map name="Array.map">
+         <area shape="rect" coords="29,1,59,33" href="#id" title="id">
+         <area shape="rect" coords="125,1,167,33" href="#Exp" title="Exp"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Array" title="Array" shape="rect">Array</a>    ::= <a href="#id" title="id" shape="rect">id</a> '[' <a href="#Exp" title="Exp" shape="rect">Exp</a> ']'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Assignment" title="Assignment">Assignment</a></li>
+            
+            <li><a href="#Constant" title="Constant">Constant</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Constant">Constant:</a></p>
+      <img border="0" src="diagram/Constant.png" height="168" width="150" usemap="#Constant.map"><map name="Constant.map">
+         <area shape="rect" coords="49,45,101,77" href="#Array" title="Array"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Constant" title="Constant" shape="rect">Constant</a> ::= 'id'
+           | <a href="#Array" title="Array" shape="rect">Array</a>
+           | 'true'
+           | 'false'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Factor" title="Factor">Factor</a></li>
+            
+            <li><a href="#Vars" title="Vars">Vars</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Vars">Vars:</a></p>
+      <img border="0" src="diagram/Vars.png" height="156" width="480" usemap="#Vars.map"><map name="Vars.map">
+         <area shape="rect" coords="29,45,79,77" href="#Type" title="Type">
+         <area shape="rect" coords="119,45,149,77" href="#id" title="id">
+         <area shape="rect" coords="309,45,387,77" href="#Constant" title="Constant"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Vars" title="Vars" shape="rect">Vars</a>     ::= <a href="#Type" title="Type" shape="rect">Type</a> <a href="#id" title="id" shape="rect">id</a> '=' ( '+' | '-' )? <a href="#Constant" title="Constant" shape="rect">Constant</a> ( ',' <a href="#id" title="id" shape="rect">id</a> '=' ( '+' | '-' )? <a href="#Constant" title="Constant" shape="rect">Constant</a> )* ';'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Statute" title="Statute">Statute</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Assignment">Assignment:</a></p>
+      <img border="0" src="diagram/Assignment.png" height="80" width="346" usemap="#Assignment.map"><map name="Assignment.map">
+         <area shape="rect" coords="49,1,79,33" href="#id" title="id">
+         <area shape="rect" coords="49,45,101,77" href="#Array" title="Array">
+         <area shape="rect" coords="191,1,273,33" href="#Expresion" title="Expresion"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Assignment" title="Assignment" shape="rect">Assignment</a>
+         ::= ( <a href="#id" title="id" shape="rect">id</a> | <a href="#Array" title="Array" shape="rect">Array</a> ) '=' <a href="#Expresion" title="Expresion" shape="rect">Expresion</a> ';'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Statute" title="Statute">Statute</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Block">Block:</a></p>
+      <img border="0" src="diagram/Block.png" height="68" width="260" usemap="#Block.map"><map name="Block.map">
+         <area shape="rect" coords="97,33,163,65" href="#Statute" title="Statute"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Block" title="Block" shape="rect">Block</a>    ::= '{' <a href="#Statute" title="Statute" shape="rect">Statute</a>? '}'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Condition" title="Condition">Condition</a></li>
+            
+            <li><a href="#Loop" title="Loop">Loop</a></li>
+            
+            <li><a href="#Main" title="Main">Main</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Condition">Condition:</a></p>
+      <img border="0" src="diagram/Condition.png" height="112" width="576" usemap="#Condition.map"><map name="Condition.map">
+         <area shape="rect" coords="143,45,231,77" href="#Expression" title="Expression">
+         <area shape="rect" coords="297,45,349,77" href="#Block" title="Block">
+         <area shape="rect" coords="475,77,527,109" href="#Block" title="Block"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Condition" title="Condition" shape="rect">Condition</a>
+         ::= 'if' '(' <a href="#Expression" title="Expression" shape="rect">Expression</a> ')' <a href="#Block" title="Block" shape="rect">Block</a> ( 'else if' '(' <a href="#Expression" title="Expression" shape="rect">Expression</a> ')' <a href="#Block" title="Block" shape="rect">Block</a> )* ( 'else' <a href="#Block" title="Block" shape="rect">Block</a> )?</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Statute" title="Statute">Statute</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Loop">Loop:</a></p>
+      <img border="0" src="diagram/Loop.png" height="36" width="386" usemap="#Loop.map"><map name="Loop.map">
+         <area shape="rect" coords="151,1,239,33" href="#Expression" title="Expression">
+         <area shape="rect" coords="305,1,357,33" href="#Block" title="Block"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Loop" title="Loop" shape="rect">Loop</a>     ::= 'while' '(' <a href="#Expression" title="Expression" shape="rect">Expression</a> ')' <a href="#Block" title="Block" shape="rect">Block</a></pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Statute" title="Statute">Statute</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Exp">Exp:</a></p>
+      <img border="0" src="diagram/Exp.png" height="112" width="340" usemap="#Exp.map"><map name="Exp.map">
+         <area shape="rect" coords="29,17,79,49" href="#Term" title="Term">
+         <area shape="rect" coords="229,17,271,49" href="#Exp" title="Exp"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Exp" title="Exp" shape="rect">Exp</a>      ::= <a href="#Term" title="Term" shape="rect">Term</a> ( ( '+' | '-' ) <a href="#Exp" title="Exp" shape="rect">Exp</a> )*</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Array" title="Array">Array</a></li>
+            
+            <li><a href="#Block_Return" title="Block_Return">Block_Return</a></li>
+            
+            <li><a href="#Exp" title="Exp">Exp</a></li>
+            
+            <li><a href="#Expression" title="Expression">Expression</a></li>
+            
+            <li><a href="#Write" title="Write">Write</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Expression">Expression:</a></p>
+      <img border="0" src="diagram/Expression.png" height="376" width="302" usemap="#Expression.map"><map name="Expression.map">
+         <area shape="rect" coords="29,1,71,33" href="#Exp" title="Exp">
+         <area shape="rect" coords="211,33,253,65" href="#Exp" title="Exp"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Expression" title="Expression" shape="rect">Expression</a>
+         ::= <a href="#Exp" title="Exp" shape="rect">Exp</a> ( ( '&lt;=' | '&gt;=' | '&lt;' | '&gt;' | '==' | '!=' | '||' | '&amp;&amp;' ) <a href="#Exp" title="Exp" shape="rect">Exp</a> )?</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Condition" title="Condition">Condition</a></li>
+            
+            <li><a href="#Factor" title="Factor">Factor</a></li>
+            
+            <li><a href="#Loop" title="Loop">Loop</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Factor">Factor:</a></p>
+      <img border="0" src="diagram/Factor.png" height="156" width="278" usemap="#Factor.map"><map name="Factor.map">
+         <area shape="rect" coords="139,1,217,33" href="#Constant" title="Constant">
+         <area shape="rect" coords="95,121,183,153" href="#Expression" title="Expression"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Factor" title="Factor" shape="rect">Factor</a>   ::= ( '+' | '-' )? <a href="#Constant" title="Constant" shape="rect">Constant</a>
+           | '(' <a href="#Expression" title="Expression" shape="rect">Expression</a> ')'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Term" title="Term">Term</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Function">Function:</a></p>
+      <img border="0" src="diagram/Function.png" height="80" width="466" usemap="#Function.map"><map name="Function.map">
+         <area shape="rect" coords="49,45,99,77" href="#Type" title="Type">
+         <area shape="rect" coords="139,1,169,33" href="#id" title="id">
+         <area shape="rect" coords="209,45,295,77" href="#Parameter" title="Parameter">
+         <area shape="rect" coords="335,1,437,33" href="#Block_Return" title="Block_Return"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Function" title="Function" shape="rect">Function</a> ::= ( 'void' | <a href="#Type" title="Type" shape="rect">Type</a> ) <a href="#id" title="id" shape="rect">id</a> ( 'null' | <a href="#Parameter" title="Parameter" shape="rect">Parameter</a> ) <a href="#Block_Return" title="Block_Return" shape="rect">Block_Return</a></pre></div>
+         
+      </p>
+      
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Block_Return">Block_Return:</a></p>
+      <img border="0" src="diagram/Block_Return.png" height="68" width="482" usemap="#Block_Return.map"><map name="Block_Return.map">
+         <area shape="rect" coords="97,33,159,65" href="#Statue" title="Statue">
+         <area shape="rect" coords="299,33,341,65" href="#Exp" title="Exp"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Block_Return" title="Block_Return" shape="rect">Block_Return</a>
+         ::= '{' <a href="#Statue" title="Statue" shape="rect">Statue</a>? ( 'return' <a href="#Exp" title="Exp" shape="rect">Exp</a> ';' )? '}'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Function" title="Function">Function</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Parameter">Parameter:</a></p>
+      <img border="0" src="diagram/Parameter.png" height="80" width="198" usemap="#Parameter.map"><map name="Parameter.map">
+         <area shape="rect" coords="49,45,99,77" href="#Type" title="Type">
+         <area shape="rect" coords="119,45,149,77" href="#id" title="id"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Parameter" title="Parameter" shape="rect">Parameter</a>
+         ::= <a href="#Type" title="Type" shape="rect">Type</a> <a href="#id" title="id" shape="rect">id</a> ( ',' <a href="#Type" title="Type" shape="rect">Type</a> <a href="#id" title="id" shape="rect">id</a> )*</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Function" title="Function">Function</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Statute">Statute:</a></p>
+      <img border="0" src="diagram/Statute.png" height="212" width="190" usemap="#Statute.map"><map name="Statute.map">
+         <area shape="rect" coords="49,1,141,33" href="#Assignment" title="Assignment">
+         <area shape="rect" coords="49,45,129,77" href="#Condition" title="Condition">
+         <area shape="rect" coords="49,89,97,121" href="#Vars" title="Vars">
+         <area shape="rect" coords="49,133,99,165" href="#Loop" title="Loop">
+         <area shape="rect" coords="49,177,103,209" href="#Write" title="Write"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Statute" title="Statute" shape="rect">Statute</a>  ::= <a href="#Assignment" title="Assignment" shape="rect">Assignment</a>
+           | <a href="#Condition" title="Condition" shape="rect">Condition</a>
+           | <a href="#Vars" title="Vars" shape="rect">Vars</a>
+           | <a href="#Loop" title="Loop" shape="rect">Loop</a>
+           | <a href="#Write" title="Write" shape="rect">Write</a></pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Block" title="Block">Block</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Write">Write:</a></p>
+      <img border="0" src="diagram/Write.png" height="36" width="306" usemap="#Write.map"><map name="Write.map">
+         <area shape="rect" coords="145,1,187,33" href="#Exp" title="Exp"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Write" title="Write" shape="rect">Write</a>    ::= 'print' '(' <a href="#Exp" title="Exp" shape="rect">Exp</a> ')' ';'</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Statute" title="Statute">Statute</a></li>
+            
+         </ul>
+         
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="Term">Term:</a></p>
+      <img border="0" src="diagram/Term.png" height="112" width="354" usemap="#Term.map"><map name="Term.map">
+         <area shape="rect" coords="29,17,87,49" href="#Factor" title="Factor">
+         <area shape="rect" coords="235,17,285,49" href="#Term" title="Term"></map>
+      
+      <p>
+         
+         <div class="ebnf"><pre><a href="#Term" title="Term" shape="rect">Term</a>     ::= <a href="#Factor" title="Factor" shape="rect">Factor</a> ( ( '*' | '/' ) <a href="#Term" title="Term" shape="rect">Term</a> )*</pre></div>
+         
+      </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Exp" title="Exp">Exp</a></li>
+            
+            <li><a href="#Term" title="Term">Term</a></li>
+            
+         </ul>
+         
+      </p><br><hr>
+      
+      <p>
+         
+         <table border="0" class="signature">
+            
+            <tr>
+               
+               <td style="width: 100%">&nbsp;</td>
+               
+               <td valign="top">
+                  
+                  <nobr class="signature">... generated by <a name="Railroad-Diagram-Generator" class="signature" title="http://www.bottlecaps.de/rr/ui" href="http://www.bottlecaps.de/rr/ui" target="_blank">Railroad Diagram Generator</a></nobr>
+                  
+               </td>
+               
+               <td><a name="Railroad-Diagram-Generator" title="http://www.bottlecaps.de/rr/ui" href="http://www.bottlecaps.de/rr/ui" target="_blank">
+                     <img border="0" src="diagram/rr-1.45.1338.png" height="16" width="16"></a></td>
+               
+            </tr>
+            
+         </table>
+         
+      </p>
+      
+      <div class="grammarly-disable-indicator"></div>
+   </body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
