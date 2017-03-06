@@ -31,7 +31,7 @@ reserved = {
 
 tokens = ['LFTBRAC', 'RGTBRAC', 'LFTPAREN','RGTPAREN', 'LFTBRACSQR', 'RGTBRACSQR', 'AND', 'DOUBEQUAL',
           'NOT','OR','SEMICOLON', 'EQUAL', 'LESSTHANEQUAL', 'GREATTHANEQUAL', 'GREATTHAN', 'LESSTHAN',  
-          'PLUS', 'MINUS', 'MULTIPLICATION', 'DIVISION', 'INT', 'FLOAT', 'STRING', 'ID', 'COMMA' ] + list(reserved.values())
+          'PLUS', 'MINUS', 'MULTIPLICATION', 'DIVISION', 'ID', 'COMMA' ] + list(reserved.values())
 
 t_LFTBRAC = r'\{'
 t_RGTBRAC = r'\}'
@@ -94,6 +94,15 @@ def p_auxprogram(p):
 def p_array(p):
     '''array : ID LFTBRACSQR exp RGTBRACSQR'''
 
+def p_arrayvalues(p):
+    '''arrayvalues : LFTBRACSQR arrayvaluesaux RGTBRACSQR '''
+def p_arrayvaluesaux(p):
+    '''arrayvaluesaux : cteN arrayvaluesaux2
+    | cteS arrayvaluesaux2 ''' 
+def p_arrayvaluesaux2(p):
+    '''arrayvaluesaux2 : COMMA arrayvaluesaux
+    | empty'''         
+
 def p_assignment(p):
     '''assignment : assignmentaux EQUAL expression SEMICOLON 
     | assignmentaux EQUAL call SEMICOLON'''    
@@ -149,7 +158,8 @@ def p_factor(p):
     | LFTPAREN expression RGTPAREN ''' 
 def p_factoraux(p):
     '''factoraux : PLUS 
-    | MINUS ''' 
+    | MINUS 
+    | empty''' 
 
 def p_expression(p):
     '''expression : exp 
@@ -218,7 +228,9 @@ def p_varsaux(p):
     | empty   '''   
 def p_varsaux2(p):
     '''varsaux2 : ID EQUAL varsaux constant 
-    | ID EQUAL varsaux constant COMMA varsaux2  '''
+    | ID EQUAL varsaux constant COMMA varsaux2
+    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues
+    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux2 '''
 
 def p_call(p):
     '''call : ID LFTPAREN exp RGTPAREN SEMICOLON 
@@ -243,31 +255,17 @@ yacc.yacc()
 
 
 
-# Main
+
 if __name__ == '__main__':
-    # Check for file
     if (len(sys.argv) > 1):
         file = sys.argv[1]
-        # Open file
         try:
             f = open(file, 'r')
             data = f.read()
-            f.close()
-            # Parse the data
-            if (yacc.parse(data, tracking = True) == 'OK'):
-                print(dirProc);
+            yacc.parse(data, tracking = True)
         except EOFError:
             print(EOFError)
-    else:
-        print('File missing')
-        while 1:
-            try:
-                s = raw_input('')
-            except EOFError:
-                break
-            if not s:
-                continue
-            yacc.parse(s)
+   
 
 
 
