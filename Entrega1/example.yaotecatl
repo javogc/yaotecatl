@@ -16,7 +16,7 @@ program nomPrograma {
 
 
 	priomh {
-		 idVar = var;
+		 int a = varA;
 
 		int x = 5;
 		x = 12;

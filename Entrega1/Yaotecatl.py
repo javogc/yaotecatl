@@ -152,11 +152,11 @@ def p_expaux(p):
 
 def p_factor(p):
     '''factor : LFTPAREN expression RGTPAREN
-    | factoraux constant ''' 
+    | factoraux  ''' 
 def p_factoraux(p):
-    '''factoraux : empty  
-    | MINUS 
-    | PLUS ''' 
+    '''factoraux : constant  
+    | MINUS constant
+    | PLUS constant''' 
 
 def p_expression(p):
     '''expression : exp 
