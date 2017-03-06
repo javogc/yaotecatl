@@ -105,7 +105,7 @@ def p_arrayvaluesaux2(p):
 
 def p_assignment(p):
     '''assignment : assignmentaux EQUAL expression SEMICOLON 
-    | assignmentaux EQUAL call SEMICOLON'''    
+    | assignmentaux EQUAL call '''    
 def p_assignmentaux(p):
     '''assignmentaux : ID 
     | array'''  
@@ -221,20 +221,24 @@ def p_functionaux2(p):
     | empty  ''' 
 
 def p_vars(p):
-    '''vars : type varsaux2 SEMICOLON    ''' 
+    '''vars : type varsaux     ''' 
 def p_varsaux(p):
-    '''varsaux : PLUS 
-    | MINUS 
-    | empty   '''   
-def p_varsaux2(p):
-    '''varsaux2 : ID EQUAL varsaux constant 
-    | ID EQUAL varsaux constant COMMA varsaux2
-    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues
-    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux2 '''
+    '''varsaux : ID EQUAL expression SEMICOLON
+    | ID EQUAL call 
+    | ID EQUAL expression COMMA varsaux 
+    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux '''
+
+
+
 
 def p_call(p):
     '''call : ID LFTPAREN exp RGTPAREN SEMICOLON 
-    | ID LFTPAREN exp COMMA call RGTPAREN SEMICOLON  ''' 
+    | ID LFTPAREN exp callaux RGTPAREN SEMICOLON  ''' 
+def p_callaux(p):
+    '''callaux : COMMA exp callaux
+    | empty ''' 
+
 
 def p_read(p):
     '''read : READ LFTPAREN ID RGTPAREN SEMICOLON '''                              

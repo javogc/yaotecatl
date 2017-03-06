@@ -1,6 +1,6 @@
 program id {
 	
-	function int test(int a){
+	function int b(int a){
 		return 2;
 	}
 

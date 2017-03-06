@@ -1,18 +1,26 @@
 
-program nombrePrograma {
+program nomPrograma {
 	
-	int hola = 5;
+	int varGlobal = 3;
 
-	function float nombreFunct(int varX ,float varY) {
+	function void voidFunct(float varX ) {
 		int i = 0, z = 3;
-		return 2;
 	}
+
+
+	function int intFunct(int varY, bool bVar) {
+	    int  a = (varY / 2);
+
+		return a;
+	}
+
 
 	priomh {
 		
 		int x = 5;
 		x = 12;
-		bool bval = true;
+		bool bval = true, varVerdadera = true, varFalsa = false;
+
 
 		string sval = "variable";
 
@@ -21,6 +29,8 @@ program nombrePrograma {
 		
 		int arrDos[3] = [1,2,3];
 		arrDos[0] = 200;
+		arrDos[1] = intFunct(2, false);
+
 		
 		while(1 <= x){
 			
@@ -28,8 +38,13 @@ program nombrePrograma {
 				read(x);
 			}
 
-			elseif(x < 14){
+			elseif(x != 14){
 				x = (x - 1);
+			}
+
+			elseif( (bval && varVerdadera) || varFalsa ){
+				int valor = intFunct(10, true);
+				valor = intFunct (20, false);
 			}
 
 			else{
@@ -38,6 +53,11 @@ program nombrePrograma {
 
 		}
 
+		voidFunct(3.90);
+
+		
+
 	}
 
 }
+
