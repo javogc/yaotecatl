@@ -16,7 +16,8 @@ program nomPrograma {
 
 
 	priomh {
-		
+		 idVar = var;
+
 		int x = 5;
 		x = 12;
 		bool bval = true, varVerdadera = true, varFalsa = false;

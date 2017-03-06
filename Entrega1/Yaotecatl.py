@@ -19,9 +19,7 @@ reserved = {
     'bool' : 'BOOL',
     'print' : 'PRINT',
     'read' : 'READ',
-    'write' : 'WRITE',
     'return' : 'RETURN',
-    'array' : 'ARRAY',
     'char' : 'CHAR',
     'string' : 'STRING',
     'float' : 'FLOAT',
@@ -146,20 +144,19 @@ def p_cteS(p):
     '''cteS : STRING'''
 
 def p_exp(p):
-    '''exp : term 
-    | term expaux  '''   
+    '''exp : term expaux  '''   
 def p_expaux(p):
     '''expaux : PLUS exp expaux 
     | MINUS exp expaux 
     | empty '''    
 
 def p_factor(p):
-    '''factor : factoraux constant 
-    | LFTPAREN expression RGTPAREN ''' 
+    '''factor : LFTPAREN expression RGTPAREN
+    | factoraux constant ''' 
 def p_factoraux(p):
-    '''factoraux : PLUS 
+    '''factoraux : empty  
     | MINUS 
-    | empty''' 
+    | PLUS ''' 
 
 def p_expression(p):
     '''expression : exp 
@@ -212,13 +209,11 @@ def p_main(p):
     '''main : PRIOMH block  ''' 
 
 def p_function(p):
-    '''function : FUNCTION functionaux ID LFTPAREN functionaux2 RGTPAREN blockreturn  '''
+    '''function : FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn  '''
 def p_functionaux(p):
     '''functionaux : VOID 
     | type  '''  
-def p_functionaux2(p):
-    '''functionaux2 : parameter 
-    | empty  ''' 
+
 
 def p_vars(p):
     '''vars : type varsaux     ''' 
@@ -244,7 +239,7 @@ def p_read(p):
     '''read : READ LFTPAREN ID RGTPAREN SEMICOLON '''                              
 
 def p_empty(p):
-    '''empty :'''
+    '''empty : '''
     pass
 
 def p_error(p):
