@@ -1,8 +1,18 @@
 program id {
 	
+	int hola = 5;
+
+		function float fn(bool l) {
+		int i = 0;
+	
+	}
+
 	priomh {
 		
 		print("print while int module");
+
+		float boebo = 666.00;
+
 	}
 
 }

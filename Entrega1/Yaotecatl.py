@@ -43,8 +43,8 @@ t_AND = r'&&'
 t_DOUBEQUAL = r'=='
 t_NOT = r'!='
 t_OR = r'\|\|'
-t_SEMICOLON = r'\,'
-t_COMMA = r'\;'
+t_SEMICOLON = r'\;'
+t_COMMA = r'\,'
 t_EQUAL = r'='
 t_LESSTHANEQUAL = r'\<='
 t_GREATTHANEQUAL = r'\>='
@@ -153,7 +153,7 @@ def p_factoraux(p):
 
 def p_expression(p):
     '''expression : exp 
-    | expressionaux exp ''' 
+    | exp expressionaux exp ''' 
 def p_expressionaux(p):
     '''expressionaux : AND 
     | DOUBEQUAL 
@@ -233,7 +233,7 @@ def p_empty(p):
 
 def p_error(p):
     if p:
-        print("Syntax error at '%s'" % p)#p.value)
+        print("Syntax error at '%s'" % p)
     else:
         print("Syntax error at EOF")
 
