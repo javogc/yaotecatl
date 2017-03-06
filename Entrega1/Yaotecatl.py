@@ -124,8 +124,17 @@ def p_conditionaux(p):
 def p_constant(p):
     '''constant : ID 
     | array 
+    | cteN
+    | cteS
     | TRUE 
     | FALSE '''
+
+def p_cteN(p):
+    '''cteN : FLOAT 
+    | INT'''
+
+def p_cteS(p):
+    '''cteS : STRING'''
 
 def p_exp(p):
     '''exp : term 
@@ -159,7 +168,7 @@ def p_loop(p):
     '''loop : WHILE LFTPAREN expression RGTPAREN block ''' 
 
 def p_write(p):
-    '''write : PRINT LFTPAREN exp RGTPAREN SEMICOLON ''' 
+    '''write : PRINT LFTPAREN constant RGTPAREN SEMICOLON ''' 
 
 def p_parameter(p):
     '''parameter : type ID 
