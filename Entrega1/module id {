@@ -1,0 +1,10 @@
+program id {
+	
+	function int test(int a){
+		return 2;
+	}
+
+	priomh {
+		int x = 4;
+	}
+}

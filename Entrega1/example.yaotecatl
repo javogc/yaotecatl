@@ -1,0 +1,8 @@
+program id {
+	
+	priomh {
+		
+		print("print while int module");
+	}
+
+}
