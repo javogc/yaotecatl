@@ -124,8 +124,11 @@ def p_condition(p):
     '''condition : IF conditionaux 
     | IF conditionaux ELSE block ''' 
 def p_conditionaux(p):
-    '''conditionaux : LFTPAREN expression RGTPAREN block ELSEIF conditionaux 
-    | LFTPAREN expression RGTPAREN block '''              
+    '''conditionaux : LFTPAREN expression RGTPAREN block conditionaux2 '''      
+def p_conditionaux2(p):
+    '''conditionaux2 : ELSEIF conditionaux 
+    | empty ''' 
+
 
 def p_constant(p):
     '''constant : ID 
@@ -211,7 +214,6 @@ def p_functionaux(p):
     '''functionaux : VOID 
     | type  '''  
 
-
 def p_vars(p):
     '''vars : type varsaux     ''' 
 def p_varsaux(p):
@@ -220,9 +222,6 @@ def p_varsaux(p):
     | ID EQUAL expression COMMA varsaux 
     | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
     | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux '''
-
-
-
 
 def p_call(p):
     '''call : ID LFTPAREN exp callaux RGTPAREN SEMICOLON  ''' 
