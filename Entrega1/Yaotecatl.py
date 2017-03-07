@@ -95,11 +95,10 @@ def p_array(p):
 def p_arrayvalues(p):
     '''arrayvalues : LFTBRACSQR arrayvaluesaux RGTBRACSQR '''
 def p_arrayvaluesaux(p):
-    '''arrayvaluesaux : cteN arrayvaluesaux2
-    | cteS arrayvaluesaux2 ''' 
-def p_arrayvaluesaux2(p):
-    '''arrayvaluesaux2 : COMMA arrayvaluesaux
-    | empty'''         
+    '''arrayvaluesaux : cteN 
+    | cteS  
+    | cteN COMMA arrayvaluesaux
+    | cteS COMMA arrayvaluesaux '''        
 
 def p_assignment(p):
     '''assignment : assignmentaux EQUAL expression SEMICOLON 
@@ -152,11 +151,9 @@ def p_expaux(p):
 
 def p_factor(p):
     '''factor : LFTPAREN expression RGTPAREN
-    | factoraux  ''' 
-def p_factoraux(p):
-    '''factoraux : constant  
+    | constant
     | MINUS constant
-    | PLUS constant''' 
+    | PLUS constant ''' 
 
 def p_expression(p):
     '''expression : exp 
@@ -228,8 +225,7 @@ def p_varsaux(p):
 
 
 def p_call(p):
-    '''call : ID LFTPAREN exp RGTPAREN SEMICOLON 
-    | ID LFTPAREN exp callaux RGTPAREN SEMICOLON  ''' 
+    '''call : ID LFTPAREN exp callaux RGTPAREN SEMICOLON  ''' 
 def p_callaux(p):
     '''callaux : COMMA exp callaux
     | empty ''' 

@@ -9,10 +9,10 @@ Rule 3     auxprogram -> function auxprogram
 Rule 4     auxprogram -> empty
 Rule 5     array -> ID LFTBRACSQR exp RGTBRACSQR
 Rule 6     arrayvalues -> LFTBRACSQR arrayvaluesaux RGTBRACSQR
-Rule 7     arrayvaluesaux -> cteN arrayvaluesaux2
-Rule 8     arrayvaluesaux -> cteS arrayvaluesaux2
-Rule 9     arrayvaluesaux2 -> COMMA arrayvaluesaux
-Rule 10    arrayvaluesaux2 -> empty
+Rule 7     arrayvaluesaux -> cteN
+Rule 8     arrayvaluesaux -> cteS
+Rule 9     arrayvaluesaux -> cteN COMMA arrayvaluesaux
+Rule 10    arrayvaluesaux -> cteS COMMA arrayvaluesaux
 Rule 11    assignment -> assignmentaux EQUAL expression SEMICOLON
 Rule 12    assignment -> assignmentaux EQUAL call
 Rule 13    assignmentaux -> ID
@@ -42,143 +42,139 @@ Rule 36    expaux -> PLUS exp expaux
 Rule 37    expaux -> MINUS exp expaux
 Rule 38    expaux -> empty
 Rule 39    factor -> LFTPAREN expression RGTPAREN
-Rule 40    factor -> factoraux
-Rule 41    factoraux -> constant
-Rule 42    factoraux -> MINUS constant
-Rule 43    factoraux -> PLUS constant
-Rule 44    expression -> exp
-Rule 45    expression -> exp expressionaux exp
-Rule 46    expressionaux -> AND
-Rule 47    expressionaux -> DOUBEQUAL
-Rule 48    expressionaux -> NOT
-Rule 49    expressionaux -> OR
-Rule 50    expressionaux -> LESSTHANEQUAL
-Rule 51    expressionaux -> GREATTHANEQUAL
-Rule 52    expressionaux -> GREATTHAN
-Rule 53    expressionaux -> LESSTHAN
-Rule 54    loop -> WHILE LFTPAREN expression RGTPAREN block
-Rule 55    write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON
-Rule 56    parameter -> type ID
-Rule 57    parameter -> type ID COMMA parameter
-Rule 58    parameter -> empty
-Rule 59    term -> factor termaux
-Rule 60    termaux -> MULTIPLICATION term termaux
-Rule 61    termaux -> DIVISION term termaux
-Rule 62    termaux -> empty
-Rule 63    statement -> assignment
-Rule 64    statement -> condition
-Rule 65    statement -> vars
-Rule 66    statement -> loop
-Rule 67    statement -> write
-Rule 68    statement -> read
-Rule 69    statement -> call
-Rule 70    type -> INT
-Rule 71    type -> FLOAT
-Rule 72    type -> CHAR
-Rule 73    type -> BOOL
-Rule 74    type -> STRING
-Rule 75    main -> PRIOMH block
-Rule 76    function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
-Rule 77    functionaux -> VOID
-Rule 78    functionaux -> type
-Rule 79    vars -> type varsaux
-Rule 80    varsaux -> ID EQUAL expression SEMICOLON
-Rule 81    varsaux -> ID EQUAL call
-Rule 82    varsaux -> ID EQUAL expression COMMA varsaux
-Rule 83    varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-Rule 84    varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
-Rule 85    call -> ID LFTPAREN exp RGTPAREN SEMICOLON
-Rule 86    call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON
-Rule 87    callaux -> COMMA exp callaux
-Rule 88    callaux -> empty
-Rule 89    read -> READ LFTPAREN ID RGTPAREN SEMICOLON
-Rule 90    empty -> <empty>
+Rule 40    factor -> constant
+Rule 41    factor -> MINUS constant
+Rule 42    factor -> PLUS constant
+Rule 43    expression -> exp
+Rule 44    expression -> exp expressionaux exp
+Rule 45    expressionaux -> AND
+Rule 46    expressionaux -> DOUBEQUAL
+Rule 47    expressionaux -> NOT
+Rule 48    expressionaux -> OR
+Rule 49    expressionaux -> LESSTHANEQUAL
+Rule 50    expressionaux -> GREATTHANEQUAL
+Rule 51    expressionaux -> GREATTHAN
+Rule 52    expressionaux -> LESSTHAN
+Rule 53    loop -> WHILE LFTPAREN expression RGTPAREN block
+Rule 54    write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON
+Rule 55    parameter -> type ID
+Rule 56    parameter -> type ID COMMA parameter
+Rule 57    parameter -> empty
+Rule 58    term -> factor termaux
+Rule 59    termaux -> MULTIPLICATION term termaux
+Rule 60    termaux -> DIVISION term termaux
+Rule 61    termaux -> empty
+Rule 62    statement -> assignment
+Rule 63    statement -> condition
+Rule 64    statement -> vars
+Rule 65    statement -> loop
+Rule 66    statement -> write
+Rule 67    statement -> read
+Rule 68    statement -> call
+Rule 69    type -> INT
+Rule 70    type -> FLOAT
+Rule 71    type -> CHAR
+Rule 72    type -> BOOL
+Rule 73    type -> STRING
+Rule 74    main -> PRIOMH block
+Rule 75    function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
+Rule 76    functionaux -> VOID
+Rule 77    functionaux -> type
+Rule 78    vars -> type varsaux
+Rule 79    varsaux -> ID EQUAL expression SEMICOLON
+Rule 80    varsaux -> ID EQUAL call
+Rule 81    varsaux -> ID EQUAL expression COMMA varsaux
+Rule 82    varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+Rule 83    varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+Rule 84    call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+Rule 85    callaux -> COMMA exp callaux
+Rule 86    callaux -> empty
+Rule 87    read -> READ LFTPAREN ID RGTPAREN SEMICOLON
+Rule 88    empty -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 46
-BOOL                 : 73
-CHAR                 : 72
-COMMA                : 9 57 82 84 87
-DIVISION             : 61
-DOUBEQUAL            : 47
+AND                  : 45
+BOOL                 : 72
+CHAR                 : 71
+COMMA                : 9 10 56 81 83 85
+DIVISION             : 60
+DOUBEQUAL            : 46
 ELSE                 : 23
 ELSEIF               : 24
-EQUAL                : 11 12 80 81 82 83 84
+EQUAL                : 11 12 79 80 81 82 83
 FALSE                : 31
-FLOAT                : 32 71
-FUNCTION             : 76
-GREATTHAN            : 52
-GREATTHANEQUAL       : 51
-ID                   : 1 5 13 26 56 57 76 80 81 82 83 84 85 86 89
+FLOAT                : 32 70
+FUNCTION             : 75
+GREATTHAN            : 51
+GREATTHANEQUAL       : 50
+ID                   : 1 5 13 26 55 56 75 79 80 81 82 83 84 87
 IF                   : 22 23
-INT                  : 33 70 83 84
-LESSTHAN             : 53
-LESSTHANEQUAL        : 50
+INT                  : 33 69 82 83
+LESSTHAN             : 52
+LESSTHANEQUAL        : 49
 LFTBRAC              : 1 15 16 19
-LFTBRACSQR           : 5 6 83 84
-LFTPAREN             : 24 25 39 54 55 76 85 86 89
-MINUS                : 37 42
-MULTIPLICATION       : 60
-NOT                  : 48
-OR                   : 49
-PLUS                 : 36 43
-PRINT                : 55
-PRIOMH               : 75
+LFTBRACSQR           : 5 6 82 83
+LFTPAREN             : 24 25 39 53 54 75 84 87
+MINUS                : 37 41
+MULTIPLICATION       : 59
+NOT                  : 47
+OR                   : 48
+PLUS                 : 36 42
+PRINT                : 54
+PRIOMH               : 74
 PROGRAM              : 1
-READ                 : 89
+READ                 : 87
 RETURN               : 16
 RGTBRAC              : 1 15 16 19
-RGTBRACSQR           : 5 6 83 84
-RGTPAREN             : 24 25 39 54 55 76 85 86 89
-SEMICOLON            : 11 16 55 80 83 85 86 89
-STRING               : 34 74
+RGTBRACSQR           : 5 6 82 83
+RGTPAREN             : 24 25 39 53 54 75 84 87
+SEMICOLON            : 11 16 54 79 82 84 87
+STRING               : 34 73
 TRUE                 : 30
-VOID                 : 77
-WHILE                : 54
+VOID                 : 76
+WHILE                : 53
 error                : 
 
 Nonterminals, with rules where they appear
 
 array                : 14 27
-arrayvalues          : 83 84
-arrayvaluesaux       : 6 9
-arrayvaluesaux2      : 7 8
-assignment           : 63
+arrayvalues          : 82 83
+arrayvaluesaux       : 6 9 10
+assignment           : 62
 assignmentaux        : 11 12
 auxprogram           : 1 2 3
-block                : 23 24 25 54 75
+block                : 23 24 25 53 74
 blockaux             : 19 20
-blockreturn          : 76
+blockreturn          : 75
 blockreturnaux       : 15 16 17
-call                 : 12 69 81
-callaux              : 86 87
-condition            : 64
+call                 : 12 68 80
+callaux              : 84 85
+condition            : 63
 conditionaux         : 22 23 24
-constant             : 41 42 43 55
-cteN                 : 7 28
-cteS                 : 8 29
-empty                : 4 10 18 21 38 58 62 88
-exp                  : 5 16 36 37 44 45 45 85 86 87
+constant             : 40 41 42 54
+cteN                 : 7 9 28
+cteS                 : 8 10 29
+empty                : 4 18 21 38 57 61 86
+exp                  : 5 16 36 37 43 44 44 84 85
 expaux               : 35 36 37
-expression           : 11 24 25 39 54 80 82
-expressionaux        : 45
-factor               : 59
-factoraux            : 40
+expression           : 11 24 25 39 53 79 81
+expressionaux        : 44
+factor               : 58
 function             : 3
-functionaux          : 76
-loop                 : 66
+functionaux          : 75
+loop                 : 65
 main                 : 1
-parameter            : 57 76
+parameter            : 56 75
 program              : 0
-read                 : 68
+read                 : 67
 statement            : 17 20
-term                 : 35 60 61
-termaux              : 59 60 61
-type                 : 56 57 78 79
-vars                 : 2 65
-varsaux              : 79 82 84
-write                : 67
+term                 : 35 59 60
+termaux              : 58 59 60
+type                 : 55 56 77 78
+vars                 : 2 64
+varsaux              : 78 81 83
+write                : 66
 
 Parsing method: LALR
 
@@ -217,17 +213,17 @@ state 4
     (2) auxprogram -> . vars auxprogram
     (3) auxprogram -> . function auxprogram
     (4) auxprogram -> . empty
-    (79) vars -> . type varsaux
-    (76) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
-    (90) empty -> .
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (78) vars -> . type varsaux
+    (75) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
+    (88) empty -> .
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
 
     FUNCTION        shift and go to state 5
-    PRIOMH          reduce using rule 90 (empty -> .)
+    PRIOMH          reduce using rule 88 (empty -> .)
     INT             shift and go to state 12
     FLOAT           shift and go to state 14
     CHAR            shift and go to state 7
@@ -242,14 +238,14 @@ state 4
 
 state 5
 
-    (76) function -> FUNCTION . functionaux ID LFTPAREN parameter RGTPAREN blockreturn
-    (77) functionaux -> . VOID
-    (78) functionaux -> . type
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (75) function -> FUNCTION . functionaux ID LFTPAREN parameter RGTPAREN blockreturn
+    (76) functionaux -> . VOID
+    (77) functionaux -> . type
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
 
     VOID            shift and go to state 18
     INT             shift and go to state 12
@@ -267,17 +263,17 @@ state 6
     (2) auxprogram -> . vars auxprogram
     (3) auxprogram -> . function auxprogram
     (4) auxprogram -> . empty
-    (79) vars -> . type varsaux
-    (76) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
-    (90) empty -> .
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (78) vars -> . type varsaux
+    (75) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
+    (88) empty -> .
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
 
     FUNCTION        shift and go to state 5
-    PRIOMH          reduce using rule 90 (empty -> .)
+    PRIOMH          reduce using rule 88 (empty -> .)
     INT             shift and go to state 12
     FLOAT           shift and go to state 14
     CHAR            shift and go to state 7
@@ -292,15 +288,15 @@ state 6
 
 state 7
 
-    (72) type -> CHAR .
+    (71) type -> CHAR .
 
-    ID              reduce using rule 72 (type -> CHAR .)
+    ID              reduce using rule 71 (type -> CHAR .)
 
 
 state 8
 
     (1) program -> PROGRAM ID LFTBRAC auxprogram . main RGTBRAC
-    (75) main -> . PRIOMH block
+    (74) main -> . PRIOMH block
 
     PRIOMH          shift and go to state 20
 
@@ -319,17 +315,17 @@ state 10
     (2) auxprogram -> . vars auxprogram
     (3) auxprogram -> . function auxprogram
     (4) auxprogram -> . empty
-    (79) vars -> . type varsaux
-    (76) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
-    (90) empty -> .
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (78) vars -> . type varsaux
+    (75) function -> . FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn
+    (88) empty -> .
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
 
     FUNCTION        shift and go to state 5
-    PRIOMH          reduce using rule 90 (empty -> .)
+    PRIOMH          reduce using rule 88 (empty -> .)
     INT             shift and go to state 12
     FLOAT           shift and go to state 14
     CHAR            shift and go to state 7
@@ -344,26 +340,26 @@ state 10
 
 state 11
 
-    (74) type -> STRING .
+    (73) type -> STRING .
 
-    ID              reduce using rule 74 (type -> STRING .)
+    ID              reduce using rule 73 (type -> STRING .)
 
 
 state 12
 
-    (70) type -> INT .
+    (69) type -> INT .
 
-    ID              reduce using rule 70 (type -> INT .)
+    ID              reduce using rule 69 (type -> INT .)
 
 
 state 13
 
-    (79) vars -> type . varsaux
-    (80) varsaux -> . ID EQUAL expression SEMICOLON
-    (81) varsaux -> . ID EQUAL call
-    (82) varsaux -> . ID EQUAL expression COMMA varsaux
-    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (78) vars -> type . varsaux
+    (79) varsaux -> . ID EQUAL expression SEMICOLON
+    (80) varsaux -> . ID EQUAL call
+    (81) varsaux -> . ID EQUAL expression COMMA varsaux
+    (82) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
     ID              shift and go to state 23
 
@@ -371,37 +367,37 @@ state 13
 
 state 14
 
-    (71) type -> FLOAT .
+    (70) type -> FLOAT .
 
-    ID              reduce using rule 71 (type -> FLOAT .)
+    ID              reduce using rule 70 (type -> FLOAT .)
 
 
 state 15
 
-    (73) type -> BOOL .
+    (72) type -> BOOL .
 
-    ID              reduce using rule 73 (type -> BOOL .)
+    ID              reduce using rule 72 (type -> BOOL .)
 
 
 state 16
 
-    (76) function -> FUNCTION functionaux . ID LFTPAREN parameter RGTPAREN blockreturn
+    (75) function -> FUNCTION functionaux . ID LFTPAREN parameter RGTPAREN blockreturn
 
     ID              shift and go to state 25
 
 
 state 17
 
-    (78) functionaux -> type .
+    (77) functionaux -> type .
 
-    ID              reduce using rule 78 (functionaux -> type .)
+    ID              reduce using rule 77 (functionaux -> type .)
 
 
 state 18
 
-    (77) functionaux -> VOID .
+    (76) functionaux -> VOID .
 
-    ID              reduce using rule 77 (functionaux -> VOID .)
+    ID              reduce using rule 76 (functionaux -> VOID .)
 
 
 state 19
@@ -413,7 +409,7 @@ state 19
 
 state 20
 
-    (75) main -> PRIOMH . block
+    (74) main -> PRIOMH . block
     (19) block -> . LFTBRAC blockaux RGTBRAC
 
     LFTBRAC         shift and go to state 26
@@ -436,11 +432,11 @@ state 22
 
 state 23
 
-    (80) varsaux -> ID . EQUAL expression SEMICOLON
-    (81) varsaux -> ID . EQUAL call
-    (82) varsaux -> ID . EQUAL expression COMMA varsaux
-    (83) varsaux -> ID . LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> ID . LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (79) varsaux -> ID . EQUAL expression SEMICOLON
+    (80) varsaux -> ID . EQUAL call
+    (81) varsaux -> ID . EQUAL expression COMMA varsaux
+    (82) varsaux -> ID . LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> ID . LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
     EQUAL           shift and go to state 29
     LFTBRACSQR      shift and go to state 30
@@ -448,27 +444,27 @@ state 23
 
 state 24
 
-    (79) vars -> type varsaux .
+    (78) vars -> type varsaux .
 
-    IF              reduce using rule 79 (vars -> type varsaux .)
-    WHILE           reduce using rule 79 (vars -> type varsaux .)
-    PRINT           reduce using rule 79 (vars -> type varsaux .)
-    READ            reduce using rule 79 (vars -> type varsaux .)
-    ID              reduce using rule 79 (vars -> type varsaux .)
-    INT             reduce using rule 79 (vars -> type varsaux .)
-    FLOAT           reduce using rule 79 (vars -> type varsaux .)
-    CHAR            reduce using rule 79 (vars -> type varsaux .)
-    BOOL            reduce using rule 79 (vars -> type varsaux .)
-    STRING          reduce using rule 79 (vars -> type varsaux .)
-    RGTBRAC         reduce using rule 79 (vars -> type varsaux .)
-    RETURN          reduce using rule 79 (vars -> type varsaux .)
-    FUNCTION        reduce using rule 79 (vars -> type varsaux .)
-    PRIOMH          reduce using rule 79 (vars -> type varsaux .)
+    IF              reduce using rule 78 (vars -> type varsaux .)
+    WHILE           reduce using rule 78 (vars -> type varsaux .)
+    PRINT           reduce using rule 78 (vars -> type varsaux .)
+    READ            reduce using rule 78 (vars -> type varsaux .)
+    ID              reduce using rule 78 (vars -> type varsaux .)
+    INT             reduce using rule 78 (vars -> type varsaux .)
+    FLOAT           reduce using rule 78 (vars -> type varsaux .)
+    CHAR            reduce using rule 78 (vars -> type varsaux .)
+    BOOL            reduce using rule 78 (vars -> type varsaux .)
+    STRING          reduce using rule 78 (vars -> type varsaux .)
+    RGTBRAC         reduce using rule 78 (vars -> type varsaux .)
+    FUNCTION        reduce using rule 78 (vars -> type varsaux .)
+    PRIOMH          reduce using rule 78 (vars -> type varsaux .)
+    RETURN          reduce using rule 78 (vars -> type varsaux .)
 
 
 state 25
 
-    (76) function -> FUNCTION functionaux ID . LFTPAREN parameter RGTPAREN blockreturn
+    (75) function -> FUNCTION functionaux ID . LFTPAREN parameter RGTPAREN blockreturn
 
     LFTPAREN        shift and go to state 31
 
@@ -478,34 +474,33 @@ state 26
     (19) block -> LFTBRAC . blockaux RGTBRAC
     (20) blockaux -> . statement blockaux
     (21) blockaux -> . empty
-    (63) statement -> . assignment
-    (64) statement -> . condition
-    (65) statement -> . vars
-    (66) statement -> . loop
-    (67) statement -> . write
-    (68) statement -> . read
-    (69) statement -> . call
-    (90) empty -> .
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . vars
+    (65) statement -> . loop
+    (66) statement -> . write
+    (67) statement -> . read
+    (68) statement -> . call
+    (88) empty -> .
     (11) assignment -> . assignmentaux EQUAL expression SEMICOLON
     (12) assignment -> . assignmentaux EQUAL call
     (22) condition -> . IF conditionaux
     (23) condition -> . IF conditionaux ELSE block
-    (79) vars -> . type varsaux
-    (54) loop -> . WHILE LFTPAREN expression RGTPAREN block
-    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
-    (89) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (78) vars -> . type varsaux
+    (53) loop -> . WHILE LFTPAREN expression RGTPAREN block
+    (54) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (87) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (13) assignmentaux -> . ID
     (14) assignmentaux -> . array
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
     (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
 
-    RGTBRAC         reduce using rule 90 (empty -> .)
+    RGTBRAC         reduce using rule 88 (empty -> .)
     IF              shift and go to state 47
     WHILE           shift and go to state 34
     PRINT           shift and go to state 35
@@ -533,9 +528,9 @@ state 26
 
 state 27
 
-    (75) main -> PRIOMH block .
+    (74) main -> PRIOMH block .
 
-    RGTBRAC         reduce using rule 75 (main -> PRIOMH block .)
+    RGTBRAC         reduce using rule 74 (main -> PRIOMH block .)
 
 
 state 28
@@ -547,20 +542,18 @@ state 28
 
 state 29
 
-    (80) varsaux -> ID EQUAL . expression SEMICOLON
-    (81) varsaux -> ID EQUAL . call
-    (82) varsaux -> ID EQUAL . expression COMMA varsaux
-    (44) expression -> . exp
-    (45) expression -> . exp expressionaux exp
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (79) varsaux -> ID EQUAL . expression SEMICOLON
+    (80) varsaux -> ID EQUAL . call
+    (81) varsaux -> ID EQUAL . expression COMMA varsaux
+    (43) expression -> . exp
+    (44) expression -> . exp expressionaux exp
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -572,96 +565,95 @@ state 29
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    ID              shift and go to state 61
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    ID              shift and go to state 60
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    call                           shift and go to state 58
-    exp                            shift and go to state 66
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-    expression                     shift and go to state 67
+    cteN                           shift and go to state 52
+    call                           shift and go to state 57
+    exp                            shift and go to state 65
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+    expression                     shift and go to state 66
 
 state 30
 
-    (83) varsaux -> ID LFTBRACSQR . INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> ID LFTBRACSQR . INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (82) varsaux -> ID LFTBRACSQR . INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> ID LFTBRACSQR . INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
-    INT             shift and go to state 68
+    INT             shift and go to state 67
 
 
 state 31
 
-    (76) function -> FUNCTION functionaux ID LFTPAREN . parameter RGTPAREN blockreturn
-    (56) parameter -> . type ID
-    (57) parameter -> . type ID COMMA parameter
-    (58) parameter -> . empty
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
-    (90) empty -> .
+    (75) function -> FUNCTION functionaux ID LFTPAREN . parameter RGTPAREN blockreturn
+    (55) parameter -> . type ID
+    (56) parameter -> . type ID COMMA parameter
+    (57) parameter -> . empty
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
+    (88) empty -> .
 
     INT             shift and go to state 12
     FLOAT           shift and go to state 14
     CHAR            shift and go to state 7
     BOOL            shift and go to state 15
     STRING          shift and go to state 11
-    RGTPAREN        reduce using rule 90 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
 
-    parameter                      shift and go to state 70
-    empty                          shift and go to state 71
-    type                           shift and go to state 69
+    parameter                      shift and go to state 69
+    empty                          shift and go to state 70
+    type                           shift and go to state 68
 
 state 32
 
-    (65) statement -> vars .
+    (64) statement -> vars .
 
-    IF              reduce using rule 65 (statement -> vars .)
-    WHILE           reduce using rule 65 (statement -> vars .)
-    PRINT           reduce using rule 65 (statement -> vars .)
-    READ            reduce using rule 65 (statement -> vars .)
-    ID              reduce using rule 65 (statement -> vars .)
-    INT             reduce using rule 65 (statement -> vars .)
-    FLOAT           reduce using rule 65 (statement -> vars .)
-    CHAR            reduce using rule 65 (statement -> vars .)
-    BOOL            reduce using rule 65 (statement -> vars .)
-    STRING          reduce using rule 65 (statement -> vars .)
-    RGTBRAC         reduce using rule 65 (statement -> vars .)
-    RETURN          reduce using rule 65 (statement -> vars .)
+    IF              reduce using rule 64 (statement -> vars .)
+    WHILE           reduce using rule 64 (statement -> vars .)
+    PRINT           reduce using rule 64 (statement -> vars .)
+    READ            reduce using rule 64 (statement -> vars .)
+    ID              reduce using rule 64 (statement -> vars .)
+    INT             reduce using rule 64 (statement -> vars .)
+    FLOAT           reduce using rule 64 (statement -> vars .)
+    CHAR            reduce using rule 64 (statement -> vars .)
+    BOOL            reduce using rule 64 (statement -> vars .)
+    STRING          reduce using rule 64 (statement -> vars .)
+    RGTBRAC         reduce using rule 64 (statement -> vars .)
+    RETURN          reduce using rule 64 (statement -> vars .)
 
 
 state 33
 
-    (89) read -> READ . LFTPAREN ID RGTPAREN SEMICOLON
+    (87) read -> READ . LFTPAREN ID RGTPAREN SEMICOLON
 
-    LFTPAREN        shift and go to state 72
+    LFTPAREN        shift and go to state 71
 
 
 state 34
 
-    (54) loop -> WHILE . LFTPAREN expression RGTPAREN block
+    (53) loop -> WHILE . LFTPAREN expression RGTPAREN block
 
-    LFTPAREN        shift and go to state 73
+    LFTPAREN        shift and go to state 72
 
 
 state 35
 
-    (55) write -> PRINT . LFTPAREN constant RGTPAREN SEMICOLON
+    (54) write -> PRINT . LFTPAREN constant RGTPAREN SEMICOLON
 
-    LFTPAREN        shift and go to state 74
+    LFTPAREN        shift and go to state 73
 
 
 state 36
@@ -673,56 +665,56 @@ state 36
 
 state 37
 
-    (67) statement -> write .
+    (66) statement -> write .
 
-    IF              reduce using rule 67 (statement -> write .)
-    WHILE           reduce using rule 67 (statement -> write .)
-    PRINT           reduce using rule 67 (statement -> write .)
-    READ            reduce using rule 67 (statement -> write .)
-    ID              reduce using rule 67 (statement -> write .)
-    INT             reduce using rule 67 (statement -> write .)
-    FLOAT           reduce using rule 67 (statement -> write .)
-    CHAR            reduce using rule 67 (statement -> write .)
-    BOOL            reduce using rule 67 (statement -> write .)
-    STRING          reduce using rule 67 (statement -> write .)
-    RGTBRAC         reduce using rule 67 (statement -> write .)
-    RETURN          reduce using rule 67 (statement -> write .)
+    IF              reduce using rule 66 (statement -> write .)
+    WHILE           reduce using rule 66 (statement -> write .)
+    PRINT           reduce using rule 66 (statement -> write .)
+    READ            reduce using rule 66 (statement -> write .)
+    ID              reduce using rule 66 (statement -> write .)
+    INT             reduce using rule 66 (statement -> write .)
+    FLOAT           reduce using rule 66 (statement -> write .)
+    CHAR            reduce using rule 66 (statement -> write .)
+    BOOL            reduce using rule 66 (statement -> write .)
+    STRING          reduce using rule 66 (statement -> write .)
+    RGTBRAC         reduce using rule 66 (statement -> write .)
+    RETURN          reduce using rule 66 (statement -> write .)
 
 
 state 38
 
-    (68) statement -> read .
+    (67) statement -> read .
 
-    IF              reduce using rule 68 (statement -> read .)
-    WHILE           reduce using rule 68 (statement -> read .)
-    PRINT           reduce using rule 68 (statement -> read .)
-    READ            reduce using rule 68 (statement -> read .)
-    ID              reduce using rule 68 (statement -> read .)
-    INT             reduce using rule 68 (statement -> read .)
-    FLOAT           reduce using rule 68 (statement -> read .)
-    CHAR            reduce using rule 68 (statement -> read .)
-    BOOL            reduce using rule 68 (statement -> read .)
-    STRING          reduce using rule 68 (statement -> read .)
-    RGTBRAC         reduce using rule 68 (statement -> read .)
-    RETURN          reduce using rule 68 (statement -> read .)
+    IF              reduce using rule 67 (statement -> read .)
+    WHILE           reduce using rule 67 (statement -> read .)
+    PRINT           reduce using rule 67 (statement -> read .)
+    READ            reduce using rule 67 (statement -> read .)
+    ID              reduce using rule 67 (statement -> read .)
+    INT             reduce using rule 67 (statement -> read .)
+    FLOAT           reduce using rule 67 (statement -> read .)
+    CHAR            reduce using rule 67 (statement -> read .)
+    BOOL            reduce using rule 67 (statement -> read .)
+    STRING          reduce using rule 67 (statement -> read .)
+    RGTBRAC         reduce using rule 67 (statement -> read .)
+    RETURN          reduce using rule 67 (statement -> read .)
 
 
 state 39
 
-    (69) statement -> call .
+    (68) statement -> call .
 
-    IF              reduce using rule 69 (statement -> call .)
-    WHILE           reduce using rule 69 (statement -> call .)
-    PRINT           reduce using rule 69 (statement -> call .)
-    READ            reduce using rule 69 (statement -> call .)
-    ID              reduce using rule 69 (statement -> call .)
-    INT             reduce using rule 69 (statement -> call .)
-    FLOAT           reduce using rule 69 (statement -> call .)
-    CHAR            reduce using rule 69 (statement -> call .)
-    BOOL            reduce using rule 69 (statement -> call .)
-    STRING          reduce using rule 69 (statement -> call .)
-    RGTBRAC         reduce using rule 69 (statement -> call .)
-    RETURN          reduce using rule 69 (statement -> call .)
+    IF              reduce using rule 68 (statement -> call .)
+    WHILE           reduce using rule 68 (statement -> call .)
+    PRINT           reduce using rule 68 (statement -> call .)
+    READ            reduce using rule 68 (statement -> call .)
+    ID              reduce using rule 68 (statement -> call .)
+    INT             reduce using rule 68 (statement -> call .)
+    FLOAT           reduce using rule 68 (statement -> call .)
+    CHAR            reduce using rule 68 (statement -> call .)
+    BOOL            reduce using rule 68 (statement -> call .)
+    STRING          reduce using rule 68 (statement -> call .)
+    RGTBRAC         reduce using rule 68 (statement -> call .)
+    RETURN          reduce using rule 68 (statement -> call .)
 
 
 state 40
@@ -730,34 +722,33 @@ state 40
     (20) blockaux -> statement . blockaux
     (20) blockaux -> . statement blockaux
     (21) blockaux -> . empty
-    (63) statement -> . assignment
-    (64) statement -> . condition
-    (65) statement -> . vars
-    (66) statement -> . loop
-    (67) statement -> . write
-    (68) statement -> . read
-    (69) statement -> . call
-    (90) empty -> .
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . vars
+    (65) statement -> . loop
+    (66) statement -> . write
+    (67) statement -> . read
+    (68) statement -> . call
+    (88) empty -> .
     (11) assignment -> . assignmentaux EQUAL expression SEMICOLON
     (12) assignment -> . assignmentaux EQUAL call
     (22) condition -> . IF conditionaux
     (23) condition -> . IF conditionaux ELSE block
-    (79) vars -> . type varsaux
-    (54) loop -> . WHILE LFTPAREN expression RGTPAREN block
-    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
-    (89) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (78) vars -> . type varsaux
+    (53) loop -> . WHILE LFTPAREN expression RGTPAREN block
+    (54) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (87) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (13) assignmentaux -> . ID
     (14) assignmentaux -> . array
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
     (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
 
-    RGTBRAC         reduce using rule 90 (empty -> .)
+    RGTBRAC         reduce using rule 88 (empty -> .)
     IF              shift and go to state 47
     WHILE           shift and go to state 34
     PRINT           shift and go to state 35
@@ -781,7 +772,7 @@ state 40
     loop                           shift and go to state 48
     array                          shift and go to state 36
     condition                      shift and go to state 46
-    blockaux                       shift and go to state 75
+    blockaux                       shift and go to state 74
 
 state 41
 
@@ -794,25 +785,25 @@ state 42
 
     (19) block -> LFTBRAC blockaux . RGTBRAC
 
-    RGTBRAC         shift and go to state 76
+    RGTBRAC         shift and go to state 75
 
 
 state 43
 
-    (63) statement -> assignment .
+    (62) statement -> assignment .
 
-    IF              reduce using rule 63 (statement -> assignment .)
-    WHILE           reduce using rule 63 (statement -> assignment .)
-    PRINT           reduce using rule 63 (statement -> assignment .)
-    READ            reduce using rule 63 (statement -> assignment .)
-    ID              reduce using rule 63 (statement -> assignment .)
-    INT             reduce using rule 63 (statement -> assignment .)
-    FLOAT           reduce using rule 63 (statement -> assignment .)
-    CHAR            reduce using rule 63 (statement -> assignment .)
-    BOOL            reduce using rule 63 (statement -> assignment .)
-    STRING          reduce using rule 63 (statement -> assignment .)
-    RGTBRAC         reduce using rule 63 (statement -> assignment .)
-    RETURN          reduce using rule 63 (statement -> assignment .)
+    IF              reduce using rule 62 (statement -> assignment .)
+    WHILE           reduce using rule 62 (statement -> assignment .)
+    PRINT           reduce using rule 62 (statement -> assignment .)
+    READ            reduce using rule 62 (statement -> assignment .)
+    ID              reduce using rule 62 (statement -> assignment .)
+    INT             reduce using rule 62 (statement -> assignment .)
+    FLOAT           reduce using rule 62 (statement -> assignment .)
+    CHAR            reduce using rule 62 (statement -> assignment .)
+    BOOL            reduce using rule 62 (statement -> assignment .)
+    STRING          reduce using rule 62 (statement -> assignment .)
+    RGTBRAC         reduce using rule 62 (statement -> assignment .)
+    RETURN          reduce using rule 62 (statement -> assignment .)
 
 
 state 44
@@ -820,37 +811,36 @@ state 44
     (11) assignment -> assignmentaux . EQUAL expression SEMICOLON
     (12) assignment -> assignmentaux . EQUAL call
 
-    EQUAL           shift and go to state 77
+    EQUAL           shift and go to state 76
 
 
 state 45
 
-    (85) call -> ID . LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> ID . LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (84) call -> ID . LFTPAREN exp callaux RGTPAREN SEMICOLON
     (13) assignmentaux -> ID .
     (5) array -> ID . LFTBRACSQR exp RGTBRACSQR
 
-    LFTPAREN        shift and go to state 78
+    LFTPAREN        shift and go to state 77
     EQUAL           reduce using rule 13 (assignmentaux -> ID .)
-    LFTBRACSQR      shift and go to state 79
+    LFTBRACSQR      shift and go to state 78
 
 
 state 46
 
-    (64) statement -> condition .
+    (63) statement -> condition .
 
-    IF              reduce using rule 64 (statement -> condition .)
-    WHILE           reduce using rule 64 (statement -> condition .)
-    PRINT           reduce using rule 64 (statement -> condition .)
-    READ            reduce using rule 64 (statement -> condition .)
-    ID              reduce using rule 64 (statement -> condition .)
-    INT             reduce using rule 64 (statement -> condition .)
-    FLOAT           reduce using rule 64 (statement -> condition .)
-    CHAR            reduce using rule 64 (statement -> condition .)
-    BOOL            reduce using rule 64 (statement -> condition .)
-    STRING          reduce using rule 64 (statement -> condition .)
-    RGTBRAC         reduce using rule 64 (statement -> condition .)
-    RETURN          reduce using rule 64 (statement -> condition .)
+    IF              reduce using rule 63 (statement -> condition .)
+    WHILE           reduce using rule 63 (statement -> condition .)
+    PRINT           reduce using rule 63 (statement -> condition .)
+    READ            reduce using rule 63 (statement -> condition .)
+    ID              reduce using rule 63 (statement -> condition .)
+    INT             reduce using rule 63 (statement -> condition .)
+    FLOAT           reduce using rule 63 (statement -> condition .)
+    CHAR            reduce using rule 63 (statement -> condition .)
+    BOOL            reduce using rule 63 (statement -> condition .)
+    STRING          reduce using rule 63 (statement -> condition .)
+    RGTBRAC         reduce using rule 63 (statement -> condition .)
+    RETURN          reduce using rule 63 (statement -> condition .)
 
 
 state 47
@@ -860,48 +850,48 @@ state 47
     (24) conditionaux -> . LFTPAREN expression RGTPAREN block ELSEIF conditionaux
     (25) conditionaux -> . LFTPAREN expression RGTPAREN block
 
-    LFTPAREN        shift and go to state 80
+    LFTPAREN        shift and go to state 79
 
-    conditionaux                   shift and go to state 81
+    conditionaux                   shift and go to state 80
 
 state 48
 
-    (66) statement -> loop .
+    (65) statement -> loop .
 
-    IF              reduce using rule 66 (statement -> loop .)
-    WHILE           reduce using rule 66 (statement -> loop .)
-    PRINT           reduce using rule 66 (statement -> loop .)
-    READ            reduce using rule 66 (statement -> loop .)
-    ID              reduce using rule 66 (statement -> loop .)
-    INT             reduce using rule 66 (statement -> loop .)
-    FLOAT           reduce using rule 66 (statement -> loop .)
-    CHAR            reduce using rule 66 (statement -> loop .)
-    BOOL            reduce using rule 66 (statement -> loop .)
-    STRING          reduce using rule 66 (statement -> loop .)
-    RGTBRAC         reduce using rule 66 (statement -> loop .)
-    RETURN          reduce using rule 66 (statement -> loop .)
+    IF              reduce using rule 65 (statement -> loop .)
+    WHILE           reduce using rule 65 (statement -> loop .)
+    PRINT           reduce using rule 65 (statement -> loop .)
+    READ            reduce using rule 65 (statement -> loop .)
+    ID              reduce using rule 65 (statement -> loop .)
+    INT             reduce using rule 65 (statement -> loop .)
+    FLOAT           reduce using rule 65 (statement -> loop .)
+    CHAR            reduce using rule 65 (statement -> loop .)
+    BOOL            reduce using rule 65 (statement -> loop .)
+    STRING          reduce using rule 65 (statement -> loop .)
+    RGTBRAC         reduce using rule 65 (statement -> loop .)
+    RETURN          reduce using rule 65 (statement -> loop .)
 
 
 state 49
 
-    (41) factoraux -> constant .
+    (40) factor -> constant .
 
-    MULTIPLICATION  reduce using rule 41 (factoraux -> constant .)
-    DIVISION        reduce using rule 41 (factoraux -> constant .)
-    PLUS            reduce using rule 41 (factoraux -> constant .)
-    MINUS           reduce using rule 41 (factoraux -> constant .)
-    AND             reduce using rule 41 (factoraux -> constant .)
-    DOUBEQUAL       reduce using rule 41 (factoraux -> constant .)
-    NOT             reduce using rule 41 (factoraux -> constant .)
-    OR              reduce using rule 41 (factoraux -> constant .)
-    LESSTHANEQUAL   reduce using rule 41 (factoraux -> constant .)
-    GREATTHANEQUAL  reduce using rule 41 (factoraux -> constant .)
-    GREATTHAN       reduce using rule 41 (factoraux -> constant .)
-    LESSTHAN        reduce using rule 41 (factoraux -> constant .)
-    SEMICOLON       reduce using rule 41 (factoraux -> constant .)
-    COMMA           reduce using rule 41 (factoraux -> constant .)
-    RGTPAREN        reduce using rule 41 (factoraux -> constant .)
-    RGTBRACSQR      reduce using rule 41 (factoraux -> constant .)
+    MULTIPLICATION  reduce using rule 40 (factor -> constant .)
+    DIVISION        reduce using rule 40 (factor -> constant .)
+    PLUS            reduce using rule 40 (factor -> constant .)
+    MINUS           reduce using rule 40 (factor -> constant .)
+    COMMA           reduce using rule 40 (factor -> constant .)
+    RGTPAREN        reduce using rule 40 (factor -> constant .)
+    AND             reduce using rule 40 (factor -> constant .)
+    DOUBEQUAL       reduce using rule 40 (factor -> constant .)
+    NOT             reduce using rule 40 (factor -> constant .)
+    OR              reduce using rule 40 (factor -> constant .)
+    LESSTHANEQUAL   reduce using rule 40 (factor -> constant .)
+    GREATTHANEQUAL  reduce using rule 40 (factor -> constant .)
+    GREATTHAN       reduce using rule 40 (factor -> constant .)
+    LESSTHAN        reduce using rule 40 (factor -> constant .)
+    SEMICOLON       reduce using rule 40 (factor -> constant .)
+    RGTBRACSQR      reduce using rule 40 (factor -> constant .)
 
 
 state 50
@@ -928,28 +918,6 @@ state 50
 
 state 51
 
-    (40) factor -> factoraux .
-
-    MULTIPLICATION  reduce using rule 40 (factor -> factoraux .)
-    DIVISION        reduce using rule 40 (factor -> factoraux .)
-    PLUS            reduce using rule 40 (factor -> factoraux .)
-    MINUS           reduce using rule 40 (factor -> factoraux .)
-    COMMA           reduce using rule 40 (factor -> factoraux .)
-    RGTPAREN        reduce using rule 40 (factor -> factoraux .)
-    SEMICOLON       reduce using rule 40 (factor -> factoraux .)
-    AND             reduce using rule 40 (factor -> factoraux .)
-    DOUBEQUAL       reduce using rule 40 (factor -> factoraux .)
-    NOT             reduce using rule 40 (factor -> factoraux .)
-    OR              reduce using rule 40 (factor -> factoraux .)
-    LESSTHANEQUAL   reduce using rule 40 (factor -> factoraux .)
-    GREATTHANEQUAL  reduce using rule 40 (factor -> factoraux .)
-    GREATTHAN       reduce using rule 40 (factor -> factoraux .)
-    LESSTHAN        reduce using rule 40 (factor -> factoraux .)
-    RGTBRACSQR      reduce using rule 40 (factor -> factoraux .)
-
-
-state 52
-
     (27) constant -> array .
 
     MULTIPLICATION  reduce using rule 27 (constant -> array .)
@@ -970,7 +938,7 @@ state 52
     RGTBRACSQR      reduce using rule 27 (constant -> array .)
 
 
-state 53
+state 52
 
     (28) constant -> cteN .
 
@@ -992,9 +960,9 @@ state 53
     RGTBRACSQR      reduce using rule 28 (constant -> cteN .)
 
 
-state 54
+state 53
 
-    (42) factoraux -> MINUS . constant
+    (41) factor -> MINUS . constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1006,19 +974,19 @@ state 54
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    cteN                           shift and go to state 53
-    array                          shift and go to state 52
-    constant                       shift and go to state 82
+    cteN                           shift and go to state 52
+    array                          shift and go to state 51
+    constant                       shift and go to state 81
     cteS                           shift and go to state 50
 
-state 55
+state 54
 
     (30) constant -> TRUE .
 
@@ -1040,9 +1008,9 @@ state 55
     RGTBRACSQR      reduce using rule 30 (constant -> TRUE .)
 
 
-state 56
+state 55
 
-    (43) factoraux -> PLUS . constant
+    (42) factor -> PLUS . constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1054,72 +1022,72 @@ state 56
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    cteN                           shift and go to state 53
-    array                          shift and go to state 52
-    constant                       shift and go to state 84
+    cteN                           shift and go to state 52
+    array                          shift and go to state 51
+    constant                       shift and go to state 83
     cteS                           shift and go to state 50
 
-state 57
+state 56
 
-    (59) term -> factor . termaux
-    (60) termaux -> . MULTIPLICATION term termaux
-    (61) termaux -> . DIVISION term termaux
-    (62) termaux -> . empty
-    (90) empty -> .
+    (58) term -> factor . termaux
+    (59) termaux -> . MULTIPLICATION term termaux
+    (60) termaux -> . DIVISION term termaux
+    (61) termaux -> . empty
+    (88) empty -> .
 
   ! shift/reduce conflict for MULTIPLICATION resolved as shift
   ! shift/reduce conflict for DIVISION resolved as shift
-    MULTIPLICATION  shift and go to state 86
-    DIVISION        shift and go to state 85
-    PLUS            reduce using rule 90 (empty -> .)
-    MINUS           reduce using rule 90 (empty -> .)
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    MULTIPLICATION  shift and go to state 85
+    DIVISION        shift and go to state 84
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
 
-  ! MULTIPLICATION  [ reduce using rule 90 (empty -> .) ]
-  ! DIVISION        [ reduce using rule 90 (empty -> .) ]
+  ! MULTIPLICATION  [ reduce using rule 88 (empty -> .) ]
+  ! DIVISION        [ reduce using rule 88 (empty -> .) ]
 
-    termaux                        shift and go to state 87
-    empty                          shift and go to state 88
+    termaux                        shift and go to state 86
+    empty                          shift and go to state 87
+
+state 57
+
+    (80) varsaux -> ID EQUAL call .
+
+    FUNCTION        reduce using rule 80 (varsaux -> ID EQUAL call .)
+    INT             reduce using rule 80 (varsaux -> ID EQUAL call .)
+    FLOAT           reduce using rule 80 (varsaux -> ID EQUAL call .)
+    CHAR            reduce using rule 80 (varsaux -> ID EQUAL call .)
+    BOOL            reduce using rule 80 (varsaux -> ID EQUAL call .)
+    STRING          reduce using rule 80 (varsaux -> ID EQUAL call .)
+    PRIOMH          reduce using rule 80 (varsaux -> ID EQUAL call .)
+    IF              reduce using rule 80 (varsaux -> ID EQUAL call .)
+    WHILE           reduce using rule 80 (varsaux -> ID EQUAL call .)
+    PRINT           reduce using rule 80 (varsaux -> ID EQUAL call .)
+    READ            reduce using rule 80 (varsaux -> ID EQUAL call .)
+    ID              reduce using rule 80 (varsaux -> ID EQUAL call .)
+    RGTBRAC         reduce using rule 80 (varsaux -> ID EQUAL call .)
+    RETURN          reduce using rule 80 (varsaux -> ID EQUAL call .)
+
 
 state 58
-
-    (81) varsaux -> ID EQUAL call .
-
-    FUNCTION        reduce using rule 81 (varsaux -> ID EQUAL call .)
-    INT             reduce using rule 81 (varsaux -> ID EQUAL call .)
-    FLOAT           reduce using rule 81 (varsaux -> ID EQUAL call .)
-    CHAR            reduce using rule 81 (varsaux -> ID EQUAL call .)
-    BOOL            reduce using rule 81 (varsaux -> ID EQUAL call .)
-    STRING          reduce using rule 81 (varsaux -> ID EQUAL call .)
-    PRIOMH          reduce using rule 81 (varsaux -> ID EQUAL call .)
-    IF              reduce using rule 81 (varsaux -> ID EQUAL call .)
-    WHILE           reduce using rule 81 (varsaux -> ID EQUAL call .)
-    PRINT           reduce using rule 81 (varsaux -> ID EQUAL call .)
-    READ            reduce using rule 81 (varsaux -> ID EQUAL call .)
-    ID              reduce using rule 81 (varsaux -> ID EQUAL call .)
-    RGTBRAC         reduce using rule 81 (varsaux -> ID EQUAL call .)
-    RETURN          reduce using rule 81 (varsaux -> ID EQUAL call .)
-
-
-state 59
 
     (34) cteS -> STRING .
 
@@ -1128,6 +1096,9 @@ state 59
     PLUS            reduce using rule 34 (cteS -> STRING .)
     MINUS           reduce using rule 34 (cteS -> STRING .)
     SEMICOLON       reduce using rule 34 (cteS -> STRING .)
+    COMMA           reduce using rule 34 (cteS -> STRING .)
+    RGTPAREN        reduce using rule 34 (cteS -> STRING .)
+    RGTBRACSQR      reduce using rule 34 (cteS -> STRING .)
     AND             reduce using rule 34 (cteS -> STRING .)
     DOUBEQUAL       reduce using rule 34 (cteS -> STRING .)
     NOT             reduce using rule 34 (cteS -> STRING .)
@@ -1136,23 +1107,19 @@ state 59
     GREATTHANEQUAL  reduce using rule 34 (cteS -> STRING .)
     GREATTHAN       reduce using rule 34 (cteS -> STRING .)
     LESSTHAN        reduce using rule 34 (cteS -> STRING .)
-    COMMA           reduce using rule 34 (cteS -> STRING .)
-    RGTPAREN        reduce using rule 34 (cteS -> STRING .)
-    RGTBRACSQR      reduce using rule 34 (cteS -> STRING .)
 
 
-state 60
+state 59
 
     (39) factor -> LFTPAREN . expression RGTPAREN
-    (44) expression -> . exp
-    (45) expression -> . exp expressionaux exp
+    (43) expression -> . exp
+    (44) expression -> . exp expressionaux exp
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1164,34 +1131,32 @@ state 60
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 66
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-    expression                     shift and go to state 89
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 65
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+    expression                     shift and go to state 88
 
-state 61
+state 60
 
-    (85) call -> ID . LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> ID . LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (84) call -> ID . LFTPAREN exp callaux RGTPAREN SEMICOLON
     (26) constant -> ID .
     (5) array -> ID . LFTBRACSQR exp RGTBRACSQR
 
-    LFTPAREN        shift and go to state 78
+    LFTPAREN        shift and go to state 77
     MULTIPLICATION  reduce using rule 26 (constant -> ID .)
     DIVISION        reduce using rule 26 (constant -> ID .)
     PLUS            reduce using rule 26 (constant -> ID .)
@@ -1206,41 +1171,41 @@ state 61
     LESSTHAN        reduce using rule 26 (constant -> ID .)
     SEMICOLON       reduce using rule 26 (constant -> ID .)
     COMMA           reduce using rule 26 (constant -> ID .)
-    LFTBRACSQR      shift and go to state 79
+    LFTBRACSQR      shift and go to state 78
 
 
-state 62
+state 61
 
     (35) exp -> term . expaux
     (36) expaux -> . PLUS exp expaux
     (37) expaux -> . MINUS exp expaux
     (38) expaux -> . empty
-    (90) empty -> .
+    (88) empty -> .
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
-    PLUS            shift and go to state 91
-    MINUS           shift and go to state 92
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    PLUS            shift and go to state 90
+    MINUS           shift and go to state 91
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
 
-  ! PLUS            [ reduce using rule 90 (empty -> .) ]
-  ! MINUS           [ reduce using rule 90 (empty -> .) ]
+  ! PLUS            [ reduce using rule 88 (empty -> .) ]
+  ! MINUS           [ reduce using rule 88 (empty -> .) ]
 
-    expaux                         shift and go to state 90
-    empty                          shift and go to state 93
+    expaux                         shift and go to state 89
+    empty                          shift and go to state 92
 
-state 63
+state 62
 
     (31) constant -> FALSE .
 
@@ -1262,7 +1227,7 @@ state 63
     RGTBRACSQR      reduce using rule 31 (constant -> FALSE .)
 
 
-state 64
+state 63
 
     (33) cteN -> INT .
 
@@ -1270,9 +1235,6 @@ state 64
     DIVISION        reduce using rule 33 (cteN -> INT .)
     PLUS            reduce using rule 33 (cteN -> INT .)
     MINUS           reduce using rule 33 (cteN -> INT .)
-    RGTPAREN        reduce using rule 33 (cteN -> INT .)
-    COMMA           reduce using rule 33 (cteN -> INT .)
-    SEMICOLON       reduce using rule 33 (cteN -> INT .)
     RGTBRACSQR      reduce using rule 33 (cteN -> INT .)
     AND             reduce using rule 33 (cteN -> INT .)
     DOUBEQUAL       reduce using rule 33 (cteN -> INT .)
@@ -1282,9 +1244,12 @@ state 64
     GREATTHANEQUAL  reduce using rule 33 (cteN -> INT .)
     GREATTHAN       reduce using rule 33 (cteN -> INT .)
     LESSTHAN        reduce using rule 33 (cteN -> INT .)
+    SEMICOLON       reduce using rule 33 (cteN -> INT .)
+    COMMA           reduce using rule 33 (cteN -> INT .)
+    RGTPAREN        reduce using rule 33 (cteN -> INT .)
 
 
-state 65
+state 64
 
     (32) cteN -> FLOAT .
 
@@ -1292,9 +1257,6 @@ state 65
     DIVISION        reduce using rule 32 (cteN -> FLOAT .)
     PLUS            reduce using rule 32 (cteN -> FLOAT .)
     MINUS           reduce using rule 32 (cteN -> FLOAT .)
-    RGTPAREN        reduce using rule 32 (cteN -> FLOAT .)
-    COMMA           reduce using rule 32 (cteN -> FLOAT .)
-    SEMICOLON       reduce using rule 32 (cteN -> FLOAT .)
     RGTBRACSQR      reduce using rule 32 (cteN -> FLOAT .)
     AND             reduce using rule 32 (cteN -> FLOAT .)
     DOUBEQUAL       reduce using rule 32 (cteN -> FLOAT .)
@@ -1304,93 +1266,128 @@ state 65
     GREATTHANEQUAL  reduce using rule 32 (cteN -> FLOAT .)
     GREATTHAN       reduce using rule 32 (cteN -> FLOAT .)
     LESSTHAN        reduce using rule 32 (cteN -> FLOAT .)
+    SEMICOLON       reduce using rule 32 (cteN -> FLOAT .)
+    COMMA           reduce using rule 32 (cteN -> FLOAT .)
+    RGTPAREN        reduce using rule 32 (cteN -> FLOAT .)
 
+
+state 65
+
+    (43) expression -> exp .
+    (44) expression -> exp . expressionaux exp
+    (45) expressionaux -> . AND
+    (46) expressionaux -> . DOUBEQUAL
+    (47) expressionaux -> . NOT
+    (48) expressionaux -> . OR
+    (49) expressionaux -> . LESSTHANEQUAL
+    (50) expressionaux -> . GREATTHANEQUAL
+    (51) expressionaux -> . GREATTHAN
+    (52) expressionaux -> . LESSTHAN
+
+    RGTPAREN        reduce using rule 43 (expression -> exp .)
+    SEMICOLON       reduce using rule 43 (expression -> exp .)
+    COMMA           reduce using rule 43 (expression -> exp .)
+    AND             shift and go to state 93
+    DOUBEQUAL       shift and go to state 100
+    NOT             shift and go to state 99
+    OR              shift and go to state 101
+    LESSTHANEQUAL   shift and go to state 97
+    GREATTHANEQUAL  shift and go to state 95
+    GREATTHAN       shift and go to state 96
+    LESSTHAN        shift and go to state 98
+
+    expressionaux                  shift and go to state 94
 
 state 66
 
-    (44) expression -> exp .
-    (45) expression -> exp . expressionaux exp
-    (46) expressionaux -> . AND
-    (47) expressionaux -> . DOUBEQUAL
-    (48) expressionaux -> . NOT
-    (49) expressionaux -> . OR
-    (50) expressionaux -> . LESSTHANEQUAL
-    (51) expressionaux -> . GREATTHANEQUAL
-    (52) expressionaux -> . GREATTHAN
-    (53) expressionaux -> . LESSTHAN
+    (79) varsaux -> ID EQUAL expression . SEMICOLON
+    (81) varsaux -> ID EQUAL expression . COMMA varsaux
 
-    SEMICOLON       reduce using rule 44 (expression -> exp .)
-    COMMA           reduce using rule 44 (expression -> exp .)
-    RGTPAREN        reduce using rule 44 (expression -> exp .)
-    AND             shift and go to state 94
-    DOUBEQUAL       shift and go to state 101
-    NOT             shift and go to state 100
-    OR              shift and go to state 102
-    LESSTHANEQUAL   shift and go to state 98
-    GREATTHANEQUAL  shift and go to state 96
-    GREATTHAN       shift and go to state 97
-    LESSTHAN        shift and go to state 99
+    SEMICOLON       shift and go to state 102
+    COMMA           shift and go to state 103
 
-    expressionaux                  shift and go to state 95
 
 state 67
 
-    (80) varsaux -> ID EQUAL expression . SEMICOLON
-    (82) varsaux -> ID EQUAL expression . COMMA varsaux
+    (82) varsaux -> ID LFTBRACSQR INT . RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> ID LFTBRACSQR INT . RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
-    SEMICOLON       shift and go to state 103
-    COMMA           shift and go to state 104
+    RGTBRACSQR      shift and go to state 104
 
 
 state 68
 
-    (83) varsaux -> ID LFTBRACSQR INT . RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> ID LFTBRACSQR INT . RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (55) parameter -> type . ID
+    (56) parameter -> type . ID COMMA parameter
 
-    RGTBRACSQR      shift and go to state 105
+    ID              shift and go to state 105
 
 
 state 69
 
-    (56) parameter -> type . ID
-    (57) parameter -> type . ID COMMA parameter
+    (75) function -> FUNCTION functionaux ID LFTPAREN parameter . RGTPAREN blockreturn
 
-    ID              shift and go to state 106
+    RGTPAREN        shift and go to state 106
 
 
 state 70
 
-    (76) function -> FUNCTION functionaux ID LFTPAREN parameter . RGTPAREN blockreturn
+    (57) parameter -> empty .
 
-    RGTPAREN        shift and go to state 107
+    RGTPAREN        reduce using rule 57 (parameter -> empty .)
 
 
 state 71
 
-    (58) parameter -> empty .
+    (87) read -> READ LFTPAREN . ID RGTPAREN SEMICOLON
 
-    RGTPAREN        reduce using rule 58 (parameter -> empty .)
+    ID              shift and go to state 107
 
 
 state 72
 
-    (89) read -> READ LFTPAREN . ID RGTPAREN SEMICOLON
+    (53) loop -> WHILE LFTPAREN . expression RGTPAREN block
+    (43) expression -> . exp
+    (44) expression -> . exp expressionaux exp
+    (35) exp -> . term expaux
+    (58) term -> . factor termaux
+    (39) factor -> . LFTPAREN expression RGTPAREN
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE
+    (31) constant -> . FALSE
+    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (32) cteN -> . FLOAT
+    (33) cteN -> . INT
+    (34) cteS -> . STRING
 
-    ID              shift and go to state 108
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
+    term                           shift and go to state 61
+    constant                       shift and go to state 49
+    cteS                           shift and go to state 50
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 65
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+    expression                     shift and go to state 108
 
 state 73
 
-    (54) loop -> WHILE LFTPAREN . expression RGTPAREN block
-    (44) expression -> . exp
-    (45) expression -> . exp expressionaux exp
-    (35) exp -> . term expaux
-    (59) term -> . factor termaux
-    (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (54) write -> PRINT LFTPAREN . constant RGTPAREN SEMICOLON
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1402,63 +1399,31 @@ state 73
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
-    constant                       shift and go to state 49
+    cteN                           shift and go to state 52
+    array                          shift and go to state 51
+    constant                       shift and go to state 109
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 66
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-    expression                     shift and go to state 109
 
 state 74
-
-    (55) write -> PRINT LFTPAREN . constant RGTPAREN SEMICOLON
-    (26) constant -> . ID
-    (27) constant -> . array
-    (28) constant -> . cteN
-    (29) constant -> . cteS
-    (30) constant -> . TRUE
-    (31) constant -> . FALSE
-    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
-    (32) cteN -> . FLOAT
-    (33) cteN -> . INT
-    (34) cteS -> . STRING
-
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
-
-    cteN                           shift and go to state 53
-    array                          shift and go to state 52
-    constant                       shift and go to state 110
-    cteS                           shift and go to state 50
-
-state 75
 
     (20) blockaux -> statement blockaux .
 
     RGTBRAC         reduce using rule 20 (blockaux -> statement blockaux .)
 
 
-state 76
+state 75
 
     (19) block -> LFTBRAC blockaux RGTBRAC .
 
+    ELSEIF          reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
+    ELSE            reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
     IF              reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
     WHILE           reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
     PRINT           reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
@@ -1471,25 +1436,21 @@ state 76
     STRING          reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
     RGTBRAC         reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
     RETURN          reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
-    ELSEIF          reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
-    ELSE            reduce using rule 19 (block -> LFTBRAC blockaux RGTBRAC .)
 
 
-state 77
+state 76
 
     (11) assignment -> assignmentaux EQUAL . expression SEMICOLON
     (12) assignment -> assignmentaux EQUAL . call
-    (44) expression -> . exp
-    (45) expression -> . exp expressionaux exp
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (43) expression -> . exp
+    (44) expression -> . exp expressionaux exp
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1501,38 +1462,73 @@ state 77
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    ID              shift and go to state 61
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    ID              shift and go to state 60
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    call                           shift and go to state 111
-    exp                            shift and go to state 66
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-    expression                     shift and go to state 112
+    cteN                           shift and go to state 52
+    call                           shift and go to state 110
+    exp                            shift and go to state 65
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+    expression                     shift and go to state 111
+
+state 77
+
+    (84) call -> ID LFTPAREN . exp callaux RGTPAREN SEMICOLON
+    (35) exp -> . term expaux
+    (58) term -> . factor termaux
+    (39) factor -> . LFTPAREN expression RGTPAREN
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE
+    (31) constant -> . FALSE
+    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (32) cteN -> . FLOAT
+    (33) cteN -> . INT
+    (34) cteS -> . STRING
+
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
+
+    cteS                           shift and go to state 50
+    term                           shift and go to state 61
+    constant                       shift and go to state 49
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 112
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
 state 78
 
-    (85) call -> ID LFTPAREN . exp RGTPAREN SEMICOLON
-    (86) call -> ID LFTPAREN . exp callaux RGTPAREN SEMICOLON
+    (5) array -> ID LFTBRACSQR . exp RGTBRACSQR
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1544,78 +1540,36 @@ state 78
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
+    cteN                           shift and go to state 52
     exp                            shift and go to state 113
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
 state 79
 
-    (5) array -> ID LFTBRACSQR . exp RGTBRACSQR
-    (35) exp -> . term expaux
-    (59) term -> . factor termaux
-    (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
-    (26) constant -> . ID
-    (27) constant -> . array
-    (28) constant -> . cteN
-    (29) constant -> . cteS
-    (30) constant -> . TRUE
-    (31) constant -> . FALSE
-    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
-    (32) cteN -> . FLOAT
-    (33) cteN -> . INT
-    (34) cteS -> . STRING
-
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
-
-    cteS                           shift and go to state 50
-    term                           shift and go to state 62
-    constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 114
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-
-state 80
-
     (24) conditionaux -> LFTPAREN . expression RGTPAREN block ELSEIF conditionaux
     (25) conditionaux -> LFTPAREN . expression RGTPAREN block
-    (44) expression -> . exp
-    (45) expression -> . exp expressionaux exp
+    (43) expression -> . exp
+    (44) expression -> . exp expressionaux exp
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1627,27 +1581,26 @@ state 80
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 66
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
-    expression                     shift and go to state 115
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 65
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+    expression                     shift and go to state 114
 
-state 81
+state 80
 
     (22) condition -> IF conditionaux .
     (23) condition -> IF conditionaux . ELSE block
@@ -1664,32 +1617,32 @@ state 81
     STRING          reduce using rule 22 (condition -> IF conditionaux .)
     RGTBRAC         reduce using rule 22 (condition -> IF conditionaux .)
     RETURN          reduce using rule 22 (condition -> IF conditionaux .)
-    ELSE            shift and go to state 116
+    ELSE            shift and go to state 115
+
+
+state 81
+
+    (41) factor -> MINUS constant .
+
+    MULTIPLICATION  reduce using rule 41 (factor -> MINUS constant .)
+    DIVISION        reduce using rule 41 (factor -> MINUS constant .)
+    PLUS            reduce using rule 41 (factor -> MINUS constant .)
+    MINUS           reduce using rule 41 (factor -> MINUS constant .)
+    COMMA           reduce using rule 41 (factor -> MINUS constant .)
+    RGTPAREN        reduce using rule 41 (factor -> MINUS constant .)
+    AND             reduce using rule 41 (factor -> MINUS constant .)
+    DOUBEQUAL       reduce using rule 41 (factor -> MINUS constant .)
+    NOT             reduce using rule 41 (factor -> MINUS constant .)
+    OR              reduce using rule 41 (factor -> MINUS constant .)
+    LESSTHANEQUAL   reduce using rule 41 (factor -> MINUS constant .)
+    GREATTHANEQUAL  reduce using rule 41 (factor -> MINUS constant .)
+    GREATTHAN       reduce using rule 41 (factor -> MINUS constant .)
+    LESSTHAN        reduce using rule 41 (factor -> MINUS constant .)
+    SEMICOLON       reduce using rule 41 (factor -> MINUS constant .)
+    RGTBRACSQR      reduce using rule 41 (factor -> MINUS constant .)
 
 
 state 82
-
-    (42) factoraux -> MINUS constant .
-
-    MULTIPLICATION  reduce using rule 42 (factoraux -> MINUS constant .)
-    DIVISION        reduce using rule 42 (factoraux -> MINUS constant .)
-    PLUS            reduce using rule 42 (factoraux -> MINUS constant .)
-    MINUS           reduce using rule 42 (factoraux -> MINUS constant .)
-    AND             reduce using rule 42 (factoraux -> MINUS constant .)
-    DOUBEQUAL       reduce using rule 42 (factoraux -> MINUS constant .)
-    NOT             reduce using rule 42 (factoraux -> MINUS constant .)
-    OR              reduce using rule 42 (factoraux -> MINUS constant .)
-    LESSTHANEQUAL   reduce using rule 42 (factoraux -> MINUS constant .)
-    GREATTHANEQUAL  reduce using rule 42 (factoraux -> MINUS constant .)
-    GREATTHAN       reduce using rule 42 (factoraux -> MINUS constant .)
-    LESSTHAN        reduce using rule 42 (factoraux -> MINUS constant .)
-    SEMICOLON       reduce using rule 42 (factoraux -> MINUS constant .)
-    COMMA           reduce using rule 42 (factoraux -> MINUS constant .)
-    RGTPAREN        reduce using rule 42 (factoraux -> MINUS constant .)
-    RGTBRACSQR      reduce using rule 42 (factoraux -> MINUS constant .)
-
-
-state 83
 
     (26) constant -> ID .
     (5) array -> ID . LFTBRACSQR exp RGTBRACSQR
@@ -1710,40 +1663,39 @@ state 83
     COMMA           reduce using rule 26 (constant -> ID .)
     RGTPAREN        reduce using rule 26 (constant -> ID .)
     RGTBRACSQR      reduce using rule 26 (constant -> ID .)
-    LFTBRACSQR      shift and go to state 79
+    LFTBRACSQR      shift and go to state 78
+
+
+state 83
+
+    (42) factor -> PLUS constant .
+
+    MULTIPLICATION  reduce using rule 42 (factor -> PLUS constant .)
+    DIVISION        reduce using rule 42 (factor -> PLUS constant .)
+    PLUS            reduce using rule 42 (factor -> PLUS constant .)
+    MINUS           reduce using rule 42 (factor -> PLUS constant .)
+    COMMA           reduce using rule 42 (factor -> PLUS constant .)
+    RGTPAREN        reduce using rule 42 (factor -> PLUS constant .)
+    AND             reduce using rule 42 (factor -> PLUS constant .)
+    DOUBEQUAL       reduce using rule 42 (factor -> PLUS constant .)
+    NOT             reduce using rule 42 (factor -> PLUS constant .)
+    OR              reduce using rule 42 (factor -> PLUS constant .)
+    LESSTHANEQUAL   reduce using rule 42 (factor -> PLUS constant .)
+    GREATTHANEQUAL  reduce using rule 42 (factor -> PLUS constant .)
+    GREATTHAN       reduce using rule 42 (factor -> PLUS constant .)
+    LESSTHAN        reduce using rule 42 (factor -> PLUS constant .)
+    SEMICOLON       reduce using rule 42 (factor -> PLUS constant .)
+    RGTBRACSQR      reduce using rule 42 (factor -> PLUS constant .)
 
 
 state 84
 
-    (43) factoraux -> PLUS constant .
-
-    MULTIPLICATION  reduce using rule 43 (factoraux -> PLUS constant .)
-    DIVISION        reduce using rule 43 (factoraux -> PLUS constant .)
-    PLUS            reduce using rule 43 (factoraux -> PLUS constant .)
-    MINUS           reduce using rule 43 (factoraux -> PLUS constant .)
-    AND             reduce using rule 43 (factoraux -> PLUS constant .)
-    DOUBEQUAL       reduce using rule 43 (factoraux -> PLUS constant .)
-    NOT             reduce using rule 43 (factoraux -> PLUS constant .)
-    OR              reduce using rule 43 (factoraux -> PLUS constant .)
-    LESSTHANEQUAL   reduce using rule 43 (factoraux -> PLUS constant .)
-    GREATTHANEQUAL  reduce using rule 43 (factoraux -> PLUS constant .)
-    GREATTHAN       reduce using rule 43 (factoraux -> PLUS constant .)
-    LESSTHAN        reduce using rule 43 (factoraux -> PLUS constant .)
-    SEMICOLON       reduce using rule 43 (factoraux -> PLUS constant .)
-    COMMA           reduce using rule 43 (factoraux -> PLUS constant .)
-    RGTPAREN        reduce using rule 43 (factoraux -> PLUS constant .)
-    RGTBRACSQR      reduce using rule 43 (factoraux -> PLUS constant .)
-
-
-state 85
-
-    (61) termaux -> DIVISION . term termaux
-    (59) term -> . factor termaux
+    (60) termaux -> DIVISION . term termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1755,117 +1707,116 @@ state 85
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
+
+    cteS                           shift and go to state 50
+    term                           shift and go to state 116
+    constant                       shift and go to state 49
+    cteN                           shift and go to state 52
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+
+state 85
+
+    (59) termaux -> MULTIPLICATION . term termaux
+    (58) term -> . factor termaux
+    (39) factor -> . LFTPAREN expression RGTPAREN
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE
+    (31) constant -> . FALSE
+    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (32) cteN -> . FLOAT
+    (33) cteN -> . INT
+    (34) cteS -> . STRING
+
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
     term                           shift and go to state 117
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
 state 86
 
-    (60) termaux -> MULTIPLICATION . term termaux
-    (59) term -> . factor termaux
-    (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
-    (26) constant -> . ID
-    (27) constant -> . array
-    (28) constant -> . cteN
-    (29) constant -> . cteS
-    (30) constant -> . TRUE
-    (31) constant -> . FALSE
-    (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
-    (32) cteN -> . FLOAT
-    (33) cteN -> . INT
-    (34) cteS -> . STRING
+    (58) term -> factor termaux .
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    PLUS            reduce using rule 58 (term -> factor termaux .)
+    MINUS           reduce using rule 58 (term -> factor termaux .)
+    AND             reduce using rule 58 (term -> factor termaux .)
+    DOUBEQUAL       reduce using rule 58 (term -> factor termaux .)
+    NOT             reduce using rule 58 (term -> factor termaux .)
+    OR              reduce using rule 58 (term -> factor termaux .)
+    LESSTHANEQUAL   reduce using rule 58 (term -> factor termaux .)
+    GREATTHANEQUAL  reduce using rule 58 (term -> factor termaux .)
+    GREATTHAN       reduce using rule 58 (term -> factor termaux .)
+    LESSTHAN        reduce using rule 58 (term -> factor termaux .)
+    RGTPAREN        reduce using rule 58 (term -> factor termaux .)
+    RGTBRACSQR      reduce using rule 58 (term -> factor termaux .)
+    SEMICOLON       reduce using rule 58 (term -> factor termaux .)
+    COMMA           reduce using rule 58 (term -> factor termaux .)
+    MULTIPLICATION  reduce using rule 58 (term -> factor termaux .)
+    DIVISION        reduce using rule 58 (term -> factor termaux .)
 
-    cteS                           shift and go to state 50
-    term                           shift and go to state 118
-    constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
 
 state 87
 
-    (59) term -> factor termaux .
+    (61) termaux -> empty .
 
-    PLUS            reduce using rule 59 (term -> factor termaux .)
-    MINUS           reduce using rule 59 (term -> factor termaux .)
-    RGTPAREN        reduce using rule 59 (term -> factor termaux .)
-    COMMA           reduce using rule 59 (term -> factor termaux .)
-    SEMICOLON       reduce using rule 59 (term -> factor termaux .)
-    AND             reduce using rule 59 (term -> factor termaux .)
-    DOUBEQUAL       reduce using rule 59 (term -> factor termaux .)
-    NOT             reduce using rule 59 (term -> factor termaux .)
-    OR              reduce using rule 59 (term -> factor termaux .)
-    LESSTHANEQUAL   reduce using rule 59 (term -> factor termaux .)
-    GREATTHANEQUAL  reduce using rule 59 (term -> factor termaux .)
-    GREATTHAN       reduce using rule 59 (term -> factor termaux .)
-    LESSTHAN        reduce using rule 59 (term -> factor termaux .)
-    RGTBRACSQR      reduce using rule 59 (term -> factor termaux .)
-    MULTIPLICATION  reduce using rule 59 (term -> factor termaux .)
-    DIVISION        reduce using rule 59 (term -> factor termaux .)
+    MULTIPLICATION  reduce using rule 61 (termaux -> empty .)
+    DIVISION        reduce using rule 61 (termaux -> empty .)
+    PLUS            reduce using rule 61 (termaux -> empty .)
+    MINUS           reduce using rule 61 (termaux -> empty .)
+    AND             reduce using rule 61 (termaux -> empty .)
+    DOUBEQUAL       reduce using rule 61 (termaux -> empty .)
+    NOT             reduce using rule 61 (termaux -> empty .)
+    OR              reduce using rule 61 (termaux -> empty .)
+    LESSTHANEQUAL   reduce using rule 61 (termaux -> empty .)
+    GREATTHANEQUAL  reduce using rule 61 (termaux -> empty .)
+    GREATTHAN       reduce using rule 61 (termaux -> empty .)
+    LESSTHAN        reduce using rule 61 (termaux -> empty .)
+    SEMICOLON       reduce using rule 61 (termaux -> empty .)
+    COMMA           reduce using rule 61 (termaux -> empty .)
+    RGTPAREN        reduce using rule 61 (termaux -> empty .)
+    RGTBRACSQR      reduce using rule 61 (termaux -> empty .)
 
 
 state 88
 
-    (62) termaux -> empty .
+    (39) factor -> LFTPAREN expression . RGTPAREN
 
-    MULTIPLICATION  reduce using rule 62 (termaux -> empty .)
-    DIVISION        reduce using rule 62 (termaux -> empty .)
-    PLUS            reduce using rule 62 (termaux -> empty .)
-    MINUS           reduce using rule 62 (termaux -> empty .)
-    AND             reduce using rule 62 (termaux -> empty .)
-    DOUBEQUAL       reduce using rule 62 (termaux -> empty .)
-    NOT             reduce using rule 62 (termaux -> empty .)
-    OR              reduce using rule 62 (termaux -> empty .)
-    LESSTHANEQUAL   reduce using rule 62 (termaux -> empty .)
-    GREATTHANEQUAL  reduce using rule 62 (termaux -> empty .)
-    GREATTHAN       reduce using rule 62 (termaux -> empty .)
-    LESSTHAN        reduce using rule 62 (termaux -> empty .)
-    SEMICOLON       reduce using rule 62 (termaux -> empty .)
-    COMMA           reduce using rule 62 (termaux -> empty .)
-    RGTPAREN        reduce using rule 62 (termaux -> empty .)
-    RGTBRACSQR      reduce using rule 62 (termaux -> empty .)
+    RGTPAREN        shift and go to state 118
 
 
 state 89
 
-    (39) factor -> LFTPAREN expression . RGTPAREN
-
-    RGTPAREN        shift and go to state 119
-
-
-state 90
-
     (35) exp -> term expaux .
 
+    COMMA           reduce using rule 35 (exp -> term expaux .)
+    RGTPAREN        reduce using rule 35 (exp -> term expaux .)
     AND             reduce using rule 35 (exp -> term expaux .)
     DOUBEQUAL       reduce using rule 35 (exp -> term expaux .)
     NOT             reduce using rule 35 (exp -> term expaux .)
@@ -1875,23 +1826,20 @@ state 90
     GREATTHAN       reduce using rule 35 (exp -> term expaux .)
     LESSTHAN        reduce using rule 35 (exp -> term expaux .)
     SEMICOLON       reduce using rule 35 (exp -> term expaux .)
-    RGTBRACSQR      reduce using rule 35 (exp -> term expaux .)
-    RGTPAREN        reduce using rule 35 (exp -> term expaux .)
     PLUS            reduce using rule 35 (exp -> term expaux .)
     MINUS           reduce using rule 35 (exp -> term expaux .)
-    COMMA           reduce using rule 35 (exp -> term expaux .)
+    RGTBRACSQR      reduce using rule 35 (exp -> term expaux .)
 
 
-state 91
+state 90
 
     (36) expaux -> PLUS . exp expaux
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1903,35 +1851,33 @@ state 91
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 120
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 119
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
-state 92
+state 91
 
     (37) expaux -> MINUS . exp expaux
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -1943,26 +1889,25 @@ state 92
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 121
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 120
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
-state 93
+state 92
 
     (38) expaux -> empty .
 
@@ -1982,31 +1927,30 @@ state 93
     RGTBRACSQR      reduce using rule 38 (expaux -> empty .)
 
 
+state 93
+
+    (45) expressionaux -> AND .
+
+    LFTPAREN        reduce using rule 45 (expressionaux -> AND .)
+    MINUS           reduce using rule 45 (expressionaux -> AND .)
+    PLUS            reduce using rule 45 (expressionaux -> AND .)
+    ID              reduce using rule 45 (expressionaux -> AND .)
+    TRUE            reduce using rule 45 (expressionaux -> AND .)
+    FALSE           reduce using rule 45 (expressionaux -> AND .)
+    FLOAT           reduce using rule 45 (expressionaux -> AND .)
+    INT             reduce using rule 45 (expressionaux -> AND .)
+    STRING          reduce using rule 45 (expressionaux -> AND .)
+
+
 state 94
 
-    (46) expressionaux -> AND .
-
-    LFTPAREN        reduce using rule 46 (expressionaux -> AND .)
-    MINUS           reduce using rule 46 (expressionaux -> AND .)
-    PLUS            reduce using rule 46 (expressionaux -> AND .)
-    ID              reduce using rule 46 (expressionaux -> AND .)
-    TRUE            reduce using rule 46 (expressionaux -> AND .)
-    FALSE           reduce using rule 46 (expressionaux -> AND .)
-    FLOAT           reduce using rule 46 (expressionaux -> AND .)
-    INT             reduce using rule 46 (expressionaux -> AND .)
-    STRING          reduce using rule 46 (expressionaux -> AND .)
-
-
-state 95
-
-    (45) expression -> exp expressionaux . exp
+    (44) expression -> exp expressionaux . exp
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -2018,212 +1962,211 @@ state 95
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
     cteS                           shift and go to state 50
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 122
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 121
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
+
+state 95
+
+    (50) expressionaux -> GREATTHANEQUAL .
+
+    LFTPAREN        reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    MINUS           reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    PLUS            reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    ID              reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    TRUE            reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    FALSE           reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    FLOAT           reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    INT             reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+    STRING          reduce using rule 50 (expressionaux -> GREATTHANEQUAL .)
+
 
 state 96
 
-    (51) expressionaux -> GREATTHANEQUAL .
+    (51) expressionaux -> GREATTHAN .
 
-    LFTPAREN        reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    MINUS           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    PLUS            reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    ID              reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    TRUE            reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    FALSE           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    FLOAT           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    INT             reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
-    STRING          reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    LFTPAREN        reduce using rule 51 (expressionaux -> GREATTHAN .)
+    MINUS           reduce using rule 51 (expressionaux -> GREATTHAN .)
+    PLUS            reduce using rule 51 (expressionaux -> GREATTHAN .)
+    ID              reduce using rule 51 (expressionaux -> GREATTHAN .)
+    TRUE            reduce using rule 51 (expressionaux -> GREATTHAN .)
+    FALSE           reduce using rule 51 (expressionaux -> GREATTHAN .)
+    FLOAT           reduce using rule 51 (expressionaux -> GREATTHAN .)
+    INT             reduce using rule 51 (expressionaux -> GREATTHAN .)
+    STRING          reduce using rule 51 (expressionaux -> GREATTHAN .)
 
 
 state 97
 
-    (52) expressionaux -> GREATTHAN .
+    (49) expressionaux -> LESSTHANEQUAL .
 
-    LFTPAREN        reduce using rule 52 (expressionaux -> GREATTHAN .)
-    MINUS           reduce using rule 52 (expressionaux -> GREATTHAN .)
-    PLUS            reduce using rule 52 (expressionaux -> GREATTHAN .)
-    ID              reduce using rule 52 (expressionaux -> GREATTHAN .)
-    TRUE            reduce using rule 52 (expressionaux -> GREATTHAN .)
-    FALSE           reduce using rule 52 (expressionaux -> GREATTHAN .)
-    FLOAT           reduce using rule 52 (expressionaux -> GREATTHAN .)
-    INT             reduce using rule 52 (expressionaux -> GREATTHAN .)
-    STRING          reduce using rule 52 (expressionaux -> GREATTHAN .)
+    LFTPAREN        reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    MINUS           reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    PLUS            reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    ID              reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    TRUE            reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    FALSE           reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    FLOAT           reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    INT             reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
+    STRING          reduce using rule 49 (expressionaux -> LESSTHANEQUAL .)
 
 
 state 98
 
-    (50) expressionaux -> LESSTHANEQUAL .
+    (52) expressionaux -> LESSTHAN .
 
-    LFTPAREN        reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    MINUS           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    PLUS            reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    ID              reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    TRUE            reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    FALSE           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    FLOAT           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    INT             reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
-    STRING          reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    LFTPAREN        reduce using rule 52 (expressionaux -> LESSTHAN .)
+    MINUS           reduce using rule 52 (expressionaux -> LESSTHAN .)
+    PLUS            reduce using rule 52 (expressionaux -> LESSTHAN .)
+    ID              reduce using rule 52 (expressionaux -> LESSTHAN .)
+    TRUE            reduce using rule 52 (expressionaux -> LESSTHAN .)
+    FALSE           reduce using rule 52 (expressionaux -> LESSTHAN .)
+    FLOAT           reduce using rule 52 (expressionaux -> LESSTHAN .)
+    INT             reduce using rule 52 (expressionaux -> LESSTHAN .)
+    STRING          reduce using rule 52 (expressionaux -> LESSTHAN .)
 
 
 state 99
 
-    (53) expressionaux -> LESSTHAN .
+    (47) expressionaux -> NOT .
 
-    LFTPAREN        reduce using rule 53 (expressionaux -> LESSTHAN .)
-    MINUS           reduce using rule 53 (expressionaux -> LESSTHAN .)
-    PLUS            reduce using rule 53 (expressionaux -> LESSTHAN .)
-    ID              reduce using rule 53 (expressionaux -> LESSTHAN .)
-    TRUE            reduce using rule 53 (expressionaux -> LESSTHAN .)
-    FALSE           reduce using rule 53 (expressionaux -> LESSTHAN .)
-    FLOAT           reduce using rule 53 (expressionaux -> LESSTHAN .)
-    INT             reduce using rule 53 (expressionaux -> LESSTHAN .)
-    STRING          reduce using rule 53 (expressionaux -> LESSTHAN .)
+    LFTPAREN        reduce using rule 47 (expressionaux -> NOT .)
+    MINUS           reduce using rule 47 (expressionaux -> NOT .)
+    PLUS            reduce using rule 47 (expressionaux -> NOT .)
+    ID              reduce using rule 47 (expressionaux -> NOT .)
+    TRUE            reduce using rule 47 (expressionaux -> NOT .)
+    FALSE           reduce using rule 47 (expressionaux -> NOT .)
+    FLOAT           reduce using rule 47 (expressionaux -> NOT .)
+    INT             reduce using rule 47 (expressionaux -> NOT .)
+    STRING          reduce using rule 47 (expressionaux -> NOT .)
 
 
 state 100
 
-    (48) expressionaux -> NOT .
+    (46) expressionaux -> DOUBEQUAL .
 
-    LFTPAREN        reduce using rule 48 (expressionaux -> NOT .)
-    MINUS           reduce using rule 48 (expressionaux -> NOT .)
-    PLUS            reduce using rule 48 (expressionaux -> NOT .)
-    ID              reduce using rule 48 (expressionaux -> NOT .)
-    TRUE            reduce using rule 48 (expressionaux -> NOT .)
-    FALSE           reduce using rule 48 (expressionaux -> NOT .)
-    FLOAT           reduce using rule 48 (expressionaux -> NOT .)
-    INT             reduce using rule 48 (expressionaux -> NOT .)
-    STRING          reduce using rule 48 (expressionaux -> NOT .)
+    LFTPAREN        reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    MINUS           reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    PLUS            reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    ID              reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    TRUE            reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    FALSE           reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    FLOAT           reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    INT             reduce using rule 46 (expressionaux -> DOUBEQUAL .)
+    STRING          reduce using rule 46 (expressionaux -> DOUBEQUAL .)
 
 
 state 101
 
-    (47) expressionaux -> DOUBEQUAL .
+    (48) expressionaux -> OR .
 
-    LFTPAREN        reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    MINUS           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    PLUS            reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    ID              reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    TRUE            reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    FALSE           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    FLOAT           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    INT             reduce using rule 47 (expressionaux -> DOUBEQUAL .)
-    STRING          reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    LFTPAREN        reduce using rule 48 (expressionaux -> OR .)
+    MINUS           reduce using rule 48 (expressionaux -> OR .)
+    PLUS            reduce using rule 48 (expressionaux -> OR .)
+    ID              reduce using rule 48 (expressionaux -> OR .)
+    TRUE            reduce using rule 48 (expressionaux -> OR .)
+    FALSE           reduce using rule 48 (expressionaux -> OR .)
+    FLOAT           reduce using rule 48 (expressionaux -> OR .)
+    INT             reduce using rule 48 (expressionaux -> OR .)
+    STRING          reduce using rule 48 (expressionaux -> OR .)
 
 
 state 102
 
-    (49) expressionaux -> OR .
+    (79) varsaux -> ID EQUAL expression SEMICOLON .
 
-    LFTPAREN        reduce using rule 49 (expressionaux -> OR .)
-    MINUS           reduce using rule 49 (expressionaux -> OR .)
-    PLUS            reduce using rule 49 (expressionaux -> OR .)
-    ID              reduce using rule 49 (expressionaux -> OR .)
-    TRUE            reduce using rule 49 (expressionaux -> OR .)
-    FALSE           reduce using rule 49 (expressionaux -> OR .)
-    FLOAT           reduce using rule 49 (expressionaux -> OR .)
-    INT             reduce using rule 49 (expressionaux -> OR .)
-    STRING          reduce using rule 49 (expressionaux -> OR .)
+    FUNCTION        reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    INT             reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    CHAR            reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    BOOL            reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    STRING          reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    PRIOMH          reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    IF              reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    WHILE           reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    PRINT           reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    READ            reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    ID              reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    RGTBRAC         reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
+    RETURN          reduce using rule 79 (varsaux -> ID EQUAL expression SEMICOLON .)
 
 
 state 103
 
-    (80) varsaux -> ID EQUAL expression SEMICOLON .
-
-    FUNCTION        reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    INT             reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    FLOAT           reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    CHAR            reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    BOOL            reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    STRING          reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    PRIOMH          reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    IF              reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    WHILE           reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    PRINT           reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    READ            reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    ID              reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    RGTBRAC         reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-    RETURN          reduce using rule 80 (varsaux -> ID EQUAL expression SEMICOLON .)
-
-
-state 104
-
-    (82) varsaux -> ID EQUAL expression COMMA . varsaux
-    (80) varsaux -> . ID EQUAL expression SEMICOLON
-    (81) varsaux -> . ID EQUAL call
-    (82) varsaux -> . ID EQUAL expression COMMA varsaux
-    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (81) varsaux -> ID EQUAL expression COMMA . varsaux
+    (79) varsaux -> . ID EQUAL expression SEMICOLON
+    (80) varsaux -> . ID EQUAL call
+    (81) varsaux -> . ID EQUAL expression COMMA varsaux
+    (82) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
     ID              shift and go to state 23
 
-    varsaux                        shift and go to state 123
+    varsaux                        shift and go to state 122
+
+state 104
+
+    (82) varsaux -> ID LFTBRACSQR INT RGTBRACSQR . EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR . EQUAL arrayvalues COMMA varsaux
+
+    EQUAL           shift and go to state 123
+
 
 state 105
 
-    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR . EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> ID LFTBRACSQR INT RGTBRACSQR . EQUAL arrayvalues COMMA varsaux
+    (55) parameter -> type ID .
+    (56) parameter -> type ID . COMMA parameter
 
-    EQUAL           shift and go to state 124
+    RGTPAREN        reduce using rule 55 (parameter -> type ID .)
+    COMMA           shift and go to state 124
 
 
 state 106
 
-    (56) parameter -> type ID .
-    (57) parameter -> type ID . COMMA parameter
-
-    RGTPAREN        reduce using rule 56 (parameter -> type ID .)
-    COMMA           shift and go to state 125
-
-
-state 107
-
-    (76) function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN . blockreturn
+    (75) function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN . blockreturn
     (15) blockreturn -> . LFTBRAC blockreturnaux RGTBRAC
     (16) blockreturn -> . LFTBRAC blockreturnaux RETURN exp SEMICOLON RGTBRAC
 
-    LFTBRAC         shift and go to state 126
+    LFTBRAC         shift and go to state 125
 
-    blockreturn                    shift and go to state 127
+    blockreturn                    shift and go to state 126
+
+state 107
+
+    (87) read -> READ LFTPAREN ID . RGTPAREN SEMICOLON
+
+    RGTPAREN        shift and go to state 127
+
 
 state 108
 
-    (89) read -> READ LFTPAREN ID . RGTPAREN SEMICOLON
+    (53) loop -> WHILE LFTPAREN expression . RGTPAREN block
 
     RGTPAREN        shift and go to state 128
 
 
 state 109
 
-    (54) loop -> WHILE LFTPAREN expression . RGTPAREN block
+    (54) write -> PRINT LFTPAREN constant . RGTPAREN SEMICOLON
 
     RGTPAREN        shift and go to state 129
 
 
 state 110
-
-    (55) write -> PRINT LFTPAREN constant . RGTPAREN SEMICOLON
-
-    RGTPAREN        shift and go to state 130
-
-
-state 111
 
     (12) assignment -> assignmentaux EQUAL call .
 
@@ -2241,121 +2184,117 @@ state 111
     RETURN          reduce using rule 12 (assignment -> assignmentaux EQUAL call .)
 
 
-state 112
+state 111
 
     (11) assignment -> assignmentaux EQUAL expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 131
+    SEMICOLON       shift and go to state 130
 
+
+state 112
+
+    (84) call -> ID LFTPAREN exp . callaux RGTPAREN SEMICOLON
+    (85) callaux -> . COMMA exp callaux
+    (86) callaux -> . empty
+    (88) empty -> .
+
+    COMMA           shift and go to state 132
+    RGTPAREN        reduce using rule 88 (empty -> .)
+
+    empty                          shift and go to state 133
+    callaux                        shift and go to state 131
 
 state 113
 
-    (85) call -> ID LFTPAREN exp . RGTPAREN SEMICOLON
-    (86) call -> ID LFTPAREN exp . callaux RGTPAREN SEMICOLON
-    (87) callaux -> . COMMA exp callaux
-    (88) callaux -> . empty
-    (90) empty -> .
-
-  ! shift/reduce conflict for RGTPAREN resolved as shift
-    RGTPAREN        shift and go to state 132
-    COMMA           shift and go to state 134
-
-  ! RGTPAREN        [ reduce using rule 90 (empty -> .) ]
-
-    empty                          shift and go to state 135
-    callaux                        shift and go to state 133
-
-state 114
-
     (5) array -> ID LFTBRACSQR exp . RGTBRACSQR
 
-    RGTBRACSQR      shift and go to state 136
+    RGTBRACSQR      shift and go to state 134
 
 
-state 115
+state 114
 
     (24) conditionaux -> LFTPAREN expression . RGTPAREN block ELSEIF conditionaux
     (25) conditionaux -> LFTPAREN expression . RGTPAREN block
 
-    RGTPAREN        shift and go to state 137
+    RGTPAREN        shift and go to state 135
 
 
-state 116
+state 115
 
     (23) condition -> IF conditionaux ELSE . block
     (19) block -> . LFTBRAC blockaux RGTBRAC
 
     LFTBRAC         shift and go to state 26
 
-    block                          shift and go to state 138
+    block                          shift and go to state 136
+
+state 116
+
+    (60) termaux -> DIVISION term . termaux
+    (59) termaux -> . MULTIPLICATION term termaux
+    (60) termaux -> . DIVISION term termaux
+    (61) termaux -> . empty
+    (88) empty -> .
+
+  ! shift/reduce conflict for MULTIPLICATION resolved as shift
+  ! shift/reduce conflict for DIVISION resolved as shift
+    MULTIPLICATION  shift and go to state 85
+    DIVISION        shift and go to state 84
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+  ! MULTIPLICATION  [ reduce using rule 88 (empty -> .) ]
+  ! DIVISION        [ reduce using rule 88 (empty -> .) ]
+
+    termaux                        shift and go to state 137
+    empty                          shift and go to state 87
 
 state 117
 
-    (61) termaux -> DIVISION term . termaux
-    (60) termaux -> . MULTIPLICATION term termaux
-    (61) termaux -> . DIVISION term termaux
-    (62) termaux -> . empty
-    (90) empty -> .
+    (59) termaux -> MULTIPLICATION term . termaux
+    (59) termaux -> . MULTIPLICATION term termaux
+    (60) termaux -> . DIVISION term termaux
+    (61) termaux -> . empty
+    (88) empty -> .
 
   ! shift/reduce conflict for MULTIPLICATION resolved as shift
   ! shift/reduce conflict for DIVISION resolved as shift
-    MULTIPLICATION  shift and go to state 86
-    DIVISION        shift and go to state 85
-    PLUS            reduce using rule 90 (empty -> .)
-    MINUS           reduce using rule 90 (empty -> .)
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    MULTIPLICATION  shift and go to state 85
+    DIVISION        shift and go to state 84
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
 
-  ! MULTIPLICATION  [ reduce using rule 90 (empty -> .) ]
-  ! DIVISION        [ reduce using rule 90 (empty -> .) ]
+  ! MULTIPLICATION  [ reduce using rule 88 (empty -> .) ]
+  ! DIVISION        [ reduce using rule 88 (empty -> .) ]
 
-    termaux                        shift and go to state 139
-    empty                          shift and go to state 88
+    termaux                        shift and go to state 138
+    empty                          shift and go to state 87
 
 state 118
-
-    (60) termaux -> MULTIPLICATION term . termaux
-    (60) termaux -> . MULTIPLICATION term termaux
-    (61) termaux -> . DIVISION term termaux
-    (62) termaux -> . empty
-    (90) empty -> .
-
-  ! shift/reduce conflict for MULTIPLICATION resolved as shift
-  ! shift/reduce conflict for DIVISION resolved as shift
-    MULTIPLICATION  shift and go to state 86
-    DIVISION        shift and go to state 85
-    PLUS            reduce using rule 90 (empty -> .)
-    MINUS           reduce using rule 90 (empty -> .)
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
-
-  ! MULTIPLICATION  [ reduce using rule 90 (empty -> .) ]
-  ! DIVISION        [ reduce using rule 90 (empty -> .) ]
-
-    termaux                        shift and go to state 140
-    empty                          shift and go to state 88
-
-state 119
 
     (39) factor -> LFTPAREN expression RGTPAREN .
 
@@ -2365,7 +2304,6 @@ state 119
     MINUS           reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     COMMA           reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     RGTPAREN        reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
-    SEMICOLON       reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     AND             reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     DOUBEQUAL       reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     NOT             reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
@@ -2374,169 +2312,169 @@ state 119
     GREATTHANEQUAL  reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     GREATTHAN       reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     LESSTHAN        reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
+    SEMICOLON       reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
     RGTBRACSQR      reduce using rule 39 (factor -> LFTPAREN expression RGTPAREN .)
 
 
-state 120
+state 119
 
     (36) expaux -> PLUS exp . expaux
     (36) expaux -> . PLUS exp expaux
     (37) expaux -> . MINUS exp expaux
     (38) expaux -> . empty
-    (90) empty -> .
+    (88) empty -> .
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
-    PLUS            shift and go to state 91
-    MINUS           shift and go to state 92
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    PLUS            shift and go to state 90
+    MINUS           shift and go to state 91
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
 
-  ! PLUS            [ reduce using rule 90 (empty -> .) ]
-  ! MINUS           [ reduce using rule 90 (empty -> .) ]
+  ! PLUS            [ reduce using rule 88 (empty -> .) ]
+  ! MINUS           [ reduce using rule 88 (empty -> .) ]
 
-    expaux                         shift and go to state 141
-    empty                          shift and go to state 93
+    expaux                         shift and go to state 139
+    empty                          shift and go to state 92
 
-state 121
+state 120
 
     (37) expaux -> MINUS exp . expaux
     (36) expaux -> . PLUS exp expaux
     (37) expaux -> . MINUS exp expaux
     (38) expaux -> . empty
-    (90) empty -> .
+    (88) empty -> .
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
-    PLUS            shift and go to state 91
-    MINUS           shift and go to state 92
-    AND             reduce using rule 90 (empty -> .)
-    DOUBEQUAL       reduce using rule 90 (empty -> .)
-    NOT             reduce using rule 90 (empty -> .)
-    OR              reduce using rule 90 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 90 (empty -> .)
-    GREATTHANEQUAL  reduce using rule 90 (empty -> .)
-    GREATTHAN       reduce using rule 90 (empty -> .)
-    LESSTHAN        reduce using rule 90 (empty -> .)
-    SEMICOLON       reduce using rule 90 (empty -> .)
-    COMMA           reduce using rule 90 (empty -> .)
-    RGTPAREN        reduce using rule 90 (empty -> .)
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    PLUS            shift and go to state 90
+    MINUS           shift and go to state 91
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
 
-  ! PLUS            [ reduce using rule 90 (empty -> .) ]
-  ! MINUS           [ reduce using rule 90 (empty -> .) ]
+  ! PLUS            [ reduce using rule 88 (empty -> .) ]
+  ! MINUS           [ reduce using rule 88 (empty -> .) ]
 
-    expaux                         shift and go to state 142
-    empty                          shift and go to state 93
+    expaux                         shift and go to state 140
+    empty                          shift and go to state 92
+
+state 121
+
+    (44) expression -> exp expressionaux exp .
+
+    RGTPAREN        reduce using rule 44 (expression -> exp expressionaux exp .)
+    SEMICOLON       reduce using rule 44 (expression -> exp expressionaux exp .)
+    COMMA           reduce using rule 44 (expression -> exp expressionaux exp .)
+
 
 state 122
 
-    (45) expression -> exp expressionaux exp .
+    (81) varsaux -> ID EQUAL expression COMMA varsaux .
 
-    SEMICOLON       reduce using rule 45 (expression -> exp expressionaux exp .)
-    COMMA           reduce using rule 45 (expression -> exp expressionaux exp .)
-    RGTPAREN        reduce using rule 45 (expression -> exp expressionaux exp .)
+    FUNCTION        reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    INT             reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    FLOAT           reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    CHAR            reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    BOOL            reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    STRING          reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    PRIOMH          reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    IF              reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    WHILE           reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    PRINT           reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    READ            reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    ID              reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    RGTBRAC         reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    RETURN          reduce using rule 81 (varsaux -> ID EQUAL expression COMMA varsaux .)
 
 
 state 123
 
-    (82) varsaux -> ID EQUAL expression COMMA varsaux .
+    (82) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL . arrayvalues SEMICOLON
+    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL . arrayvalues COMMA varsaux
+    (6) arrayvalues -> . LFTBRACSQR arrayvaluesaux RGTBRACSQR
 
-    FUNCTION        reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    INT             reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    FLOAT           reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    CHAR            reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    BOOL            reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    STRING          reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    PRIOMH          reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    IF              reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    WHILE           reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    PRINT           reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    READ            reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    ID              reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    RGTBRAC         reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
-    RETURN          reduce using rule 82 (varsaux -> ID EQUAL expression COMMA varsaux .)
+    LFTBRACSQR      shift and go to state 141
 
+    arrayvalues                    shift and go to state 142
 
 state 124
 
-    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL . arrayvalues SEMICOLON
-    (84) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL . arrayvalues COMMA varsaux
-    (6) arrayvalues -> . LFTBRACSQR arrayvaluesaux RGTBRACSQR
-
-    LFTBRACSQR      shift and go to state 143
-
-    arrayvalues                    shift and go to state 144
-
-state 125
-
-    (57) parameter -> type ID COMMA . parameter
-    (56) parameter -> . type ID
-    (57) parameter -> . type ID COMMA parameter
-    (58) parameter -> . empty
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
-    (90) empty -> .
+    (56) parameter -> type ID COMMA . parameter
+    (55) parameter -> . type ID
+    (56) parameter -> . type ID COMMA parameter
+    (57) parameter -> . empty
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
+    (88) empty -> .
 
     INT             shift and go to state 12
     FLOAT           shift and go to state 14
     CHAR            shift and go to state 7
     BOOL            shift and go to state 15
     STRING          shift and go to state 11
-    RGTPAREN        reduce using rule 90 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
 
-    parameter                      shift and go to state 145
-    type                           shift and go to state 69
-    empty                          shift and go to state 71
+    parameter                      shift and go to state 143
+    type                           shift and go to state 68
+    empty                          shift and go to state 70
 
-state 126
+state 125
 
     (15) blockreturn -> LFTBRAC . blockreturnaux RGTBRAC
     (16) blockreturn -> LFTBRAC . blockreturnaux RETURN exp SEMICOLON RGTBRAC
     (17) blockreturnaux -> . statement blockreturnaux
     (18) blockreturnaux -> . empty
-    (63) statement -> . assignment
-    (64) statement -> . condition
-    (65) statement -> . vars
-    (66) statement -> . loop
-    (67) statement -> . write
-    (68) statement -> . read
-    (69) statement -> . call
-    (90) empty -> .
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . vars
+    (65) statement -> . loop
+    (66) statement -> . write
+    (67) statement -> . read
+    (68) statement -> . call
+    (88) empty -> .
     (11) assignment -> . assignmentaux EQUAL expression SEMICOLON
     (12) assignment -> . assignmentaux EQUAL call
     (22) condition -> . IF conditionaux
     (23) condition -> . IF conditionaux ELSE block
-    (79) vars -> . type varsaux
-    (54) loop -> . WHILE LFTPAREN expression RGTPAREN block
-    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
-    (89) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (78) vars -> . type varsaux
+    (53) loop -> . WHILE LFTPAREN expression RGTPAREN block
+    (54) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (87) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (13) assignmentaux -> . ID
     (14) assignmentaux -> . array
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
     (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
 
-    RGTBRAC         reduce using rule 90 (empty -> .)
-    RETURN          reduce using rule 90 (empty -> .)
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
     IF              shift and go to state 47
     WHILE           shift and go to state 34
     PRINT           shift and go to state 35
@@ -2557,48 +2495,48 @@ state 126
     assignmentaux                  shift and go to state 44
     call                           shift and go to state 39
     condition                      shift and go to state 46
-    statement                      shift and go to state 146
-    blockreturnaux                 shift and go to state 147
+    statement                      shift and go to state 144
+    blockreturnaux                 shift and go to state 145
     array                          shift and go to state 36
-    empty                          shift and go to state 148
+    empty                          shift and go to state 146
+
+state 126
+
+    (75) function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .
+
+    FUNCTION        reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    INT             reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    FLOAT           reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    CHAR            reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    BOOL            reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    STRING          reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    PRIOMH          reduce using rule 75 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+
 
 state 127
 
-    (76) function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .
+    (87) read -> READ LFTPAREN ID RGTPAREN . SEMICOLON
 
-    FUNCTION        reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    INT             reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    FLOAT           reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    CHAR            reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    BOOL            reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    STRING          reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
-    PRIOMH          reduce using rule 76 (function -> FUNCTION functionaux ID LFTPAREN parameter RGTPAREN blockreturn .)
+    SEMICOLON       shift and go to state 147
 
 
 state 128
 
-    (89) read -> READ LFTPAREN ID RGTPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 149
-
-
-state 129
-
-    (54) loop -> WHILE LFTPAREN expression RGTPAREN . block
+    (53) loop -> WHILE LFTPAREN expression RGTPAREN . block
     (19) block -> . LFTBRAC blockaux RGTBRAC
 
     LFTBRAC         shift and go to state 26
 
-    block                          shift and go to state 150
+    block                          shift and go to state 148
+
+state 129
+
+    (54) write -> PRINT LFTPAREN constant RGTPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 149
+
 
 state 130
-
-    (55) write -> PRINT LFTPAREN constant RGTPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 151
-
-
-state 131
 
     (11) assignment -> assignmentaux EQUAL expression SEMICOLON .
 
@@ -2616,30 +2554,22 @@ state 131
     RETURN          reduce using rule 11 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
 
 
+state 131
+
+    (84) call -> ID LFTPAREN exp callaux . RGTPAREN SEMICOLON
+
+    RGTPAREN        shift and go to state 150
+
+
 state 132
 
-    (85) call -> ID LFTPAREN exp RGTPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 152
-
-
-state 133
-
-    (86) call -> ID LFTPAREN exp callaux . RGTPAREN SEMICOLON
-
-    RGTPAREN        shift and go to state 153
-
-
-state 134
-
-    (87) callaux -> COMMA . exp callaux
+    (85) callaux -> COMMA . exp callaux
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -2651,33 +2581,32 @@ state 134
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 154
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 151
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
-state 135
+state 133
 
-    (88) callaux -> empty .
+    (86) callaux -> empty .
 
-    RGTPAREN        reduce using rule 88 (callaux -> empty .)
+    RGTPAREN        reduce using rule 86 (callaux -> empty .)
 
 
-state 136
+state 134
 
     (5) array -> ID LFTBRACSQR exp RGTBRACSQR .
 
@@ -2685,6 +2614,7 @@ state 136
     DIVISION        reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     PLUS            reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     MINUS           reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    SEMICOLON       reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     AND             reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     DOUBEQUAL       reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     NOT             reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
@@ -2693,14 +2623,13 @@ state 136
     GREATTHANEQUAL  reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     GREATTHAN       reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     LESSTHAN        reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
-    RGTPAREN        reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
-    SEMICOLON       reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     COMMA           reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    RGTPAREN        reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     RGTBRACSQR      reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
     EQUAL           reduce using rule 5 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
 
 
-state 137
+state 135
 
     (24) conditionaux -> LFTPAREN expression RGTPAREN . block ELSEIF conditionaux
     (25) conditionaux -> LFTPAREN expression RGTPAREN . block
@@ -2708,9 +2637,9 @@ state 137
 
     LFTBRAC         shift and go to state 26
 
-    block                          shift and go to state 155
+    block                          shift and go to state 152
 
-state 138
+state 136
 
     (23) condition -> IF conditionaux ELSE block .
 
@@ -2728,51 +2657,51 @@ state 138
     RETURN          reduce using rule 23 (condition -> IF conditionaux ELSE block .)
 
 
+state 137
+
+    (60) termaux -> DIVISION term termaux .
+
+    MULTIPLICATION  reduce using rule 60 (termaux -> DIVISION term termaux .)
+    DIVISION        reduce using rule 60 (termaux -> DIVISION term termaux .)
+    PLUS            reduce using rule 60 (termaux -> DIVISION term termaux .)
+    MINUS           reduce using rule 60 (termaux -> DIVISION term termaux .)
+    AND             reduce using rule 60 (termaux -> DIVISION term termaux .)
+    DOUBEQUAL       reduce using rule 60 (termaux -> DIVISION term termaux .)
+    NOT             reduce using rule 60 (termaux -> DIVISION term termaux .)
+    OR              reduce using rule 60 (termaux -> DIVISION term termaux .)
+    LESSTHANEQUAL   reduce using rule 60 (termaux -> DIVISION term termaux .)
+    GREATTHANEQUAL  reduce using rule 60 (termaux -> DIVISION term termaux .)
+    GREATTHAN       reduce using rule 60 (termaux -> DIVISION term termaux .)
+    LESSTHAN        reduce using rule 60 (termaux -> DIVISION term termaux .)
+    SEMICOLON       reduce using rule 60 (termaux -> DIVISION term termaux .)
+    COMMA           reduce using rule 60 (termaux -> DIVISION term termaux .)
+    RGTPAREN        reduce using rule 60 (termaux -> DIVISION term termaux .)
+    RGTBRACSQR      reduce using rule 60 (termaux -> DIVISION term termaux .)
+
+
+state 138
+
+    (59) termaux -> MULTIPLICATION term termaux .
+
+    MULTIPLICATION  reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    DIVISION        reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    PLUS            reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    MINUS           reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    AND             reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    DOUBEQUAL       reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    NOT             reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    OR              reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    LESSTHANEQUAL   reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    GREATTHANEQUAL  reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    GREATTHAN       reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    LESSTHAN        reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    SEMICOLON       reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    COMMA           reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    RGTPAREN        reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+    RGTBRACSQR      reduce using rule 59 (termaux -> MULTIPLICATION term termaux .)
+
+
 state 139
-
-    (61) termaux -> DIVISION term termaux .
-
-    MULTIPLICATION  reduce using rule 61 (termaux -> DIVISION term termaux .)
-    DIVISION        reduce using rule 61 (termaux -> DIVISION term termaux .)
-    PLUS            reduce using rule 61 (termaux -> DIVISION term termaux .)
-    MINUS           reduce using rule 61 (termaux -> DIVISION term termaux .)
-    AND             reduce using rule 61 (termaux -> DIVISION term termaux .)
-    DOUBEQUAL       reduce using rule 61 (termaux -> DIVISION term termaux .)
-    NOT             reduce using rule 61 (termaux -> DIVISION term termaux .)
-    OR              reduce using rule 61 (termaux -> DIVISION term termaux .)
-    LESSTHANEQUAL   reduce using rule 61 (termaux -> DIVISION term termaux .)
-    GREATTHANEQUAL  reduce using rule 61 (termaux -> DIVISION term termaux .)
-    GREATTHAN       reduce using rule 61 (termaux -> DIVISION term termaux .)
-    LESSTHAN        reduce using rule 61 (termaux -> DIVISION term termaux .)
-    SEMICOLON       reduce using rule 61 (termaux -> DIVISION term termaux .)
-    COMMA           reduce using rule 61 (termaux -> DIVISION term termaux .)
-    RGTPAREN        reduce using rule 61 (termaux -> DIVISION term termaux .)
-    RGTBRACSQR      reduce using rule 61 (termaux -> DIVISION term termaux .)
-
-
-state 140
-
-    (60) termaux -> MULTIPLICATION term termaux .
-
-    MULTIPLICATION  reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    DIVISION        reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    PLUS            reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    MINUS           reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    AND             reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    DOUBEQUAL       reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    NOT             reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    OR              reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    LESSTHANEQUAL   reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    GREATTHANEQUAL  reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    GREATTHAN       reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    LESSTHAN        reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    SEMICOLON       reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    COMMA           reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    RGTPAREN        reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-    RGTBRACSQR      reduce using rule 60 (termaux -> MULTIPLICATION term termaux .)
-
-
-state 141
 
     (36) expaux -> PLUS exp expaux .
 
@@ -2792,7 +2721,7 @@ state 141
     RGTBRACSQR      reduce using rule 36 (expaux -> PLUS exp expaux .)
 
 
-state 142
+state 140
 
     (37) expaux -> MINUS exp expaux .
 
@@ -2812,73 +2741,74 @@ state 142
     RGTBRACSQR      reduce using rule 37 (expaux -> MINUS exp expaux .)
 
 
-state 143
+state 141
 
     (6) arrayvalues -> LFTBRACSQR . arrayvaluesaux RGTBRACSQR
-    (7) arrayvaluesaux -> . cteN arrayvaluesaux2
-    (8) arrayvaluesaux -> . cteS arrayvaluesaux2
+    (7) arrayvaluesaux -> . cteN
+    (8) arrayvaluesaux -> . cteS
+    (9) arrayvaluesaux -> . cteN COMMA arrayvaluesaux
+    (10) arrayvaluesaux -> . cteS COMMA arrayvaluesaux
     (32) cteN -> . FLOAT
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    cteS                           shift and go to state 156
-    cteN                           shift and go to state 157
-    arrayvaluesaux                 shift and go to state 158
+    cteS                           shift and go to state 153
+    cteN                           shift and go to state 154
+    arrayvaluesaux                 shift and go to state 155
+
+state 142
+
+    (82) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues . SEMICOLON
+    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues . COMMA varsaux
+
+    SEMICOLON       shift and go to state 156
+    COMMA           shift and go to state 157
+
+
+state 143
+
+    (56) parameter -> type ID COMMA parameter .
+
+    RGTPAREN        reduce using rule 56 (parameter -> type ID COMMA parameter .)
+
 
 state 144
-
-    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues . SEMICOLON
-    (84) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues . COMMA varsaux
-
-    SEMICOLON       shift and go to state 159
-    COMMA           shift and go to state 160
-
-
-state 145
-
-    (57) parameter -> type ID COMMA parameter .
-
-    RGTPAREN        reduce using rule 57 (parameter -> type ID COMMA parameter .)
-
-
-state 146
 
     (17) blockreturnaux -> statement . blockreturnaux
     (17) blockreturnaux -> . statement blockreturnaux
     (18) blockreturnaux -> . empty
-    (63) statement -> . assignment
-    (64) statement -> . condition
-    (65) statement -> . vars
-    (66) statement -> . loop
-    (67) statement -> . write
-    (68) statement -> . read
-    (69) statement -> . call
-    (90) empty -> .
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . vars
+    (65) statement -> . loop
+    (66) statement -> . write
+    (67) statement -> . read
+    (68) statement -> . call
+    (88) empty -> .
     (11) assignment -> . assignmentaux EQUAL expression SEMICOLON
     (12) assignment -> . assignmentaux EQUAL call
     (22) condition -> . IF conditionaux
     (23) condition -> . IF conditionaux ELSE block
-    (79) vars -> . type varsaux
-    (54) loop -> . WHILE LFTPAREN expression RGTPAREN block
-    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
-    (89) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
-    (85) call -> . ID LFTPAREN exp RGTPAREN SEMICOLON
-    (86) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
+    (78) vars -> . type varsaux
+    (53) loop -> . WHILE LFTPAREN expression RGTPAREN block
+    (54) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (87) read -> . READ LFTPAREN ID RGTPAREN SEMICOLON
+    (84) call -> . ID LFTPAREN exp callaux RGTPAREN SEMICOLON
     (13) assignmentaux -> . ID
     (14) assignmentaux -> . array
-    (70) type -> . INT
-    (71) type -> . FLOAT
-    (72) type -> . CHAR
-    (73) type -> . BOOL
-    (74) type -> . STRING
+    (69) type -> . INT
+    (70) type -> . FLOAT
+    (71) type -> . CHAR
+    (72) type -> . BOOL
+    (73) type -> . STRING
     (5) array -> . ID LFTBRACSQR exp RGTBRACSQR
 
-    RGTBRAC         reduce using rule 90 (empty -> .)
-    RETURN          reduce using rule 90 (empty -> .)
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
     IF              shift and go to state 47
     WHILE           shift and go to state 34
     PRINT           shift and go to state 35
@@ -2898,22 +2828,22 @@ state 146
     write                          shift and go to state 37
     assignmentaux                  shift and go to state 44
     call                           shift and go to state 39
-    empty                          shift and go to state 148
-    statement                      shift and go to state 146
-    blockreturnaux                 shift and go to state 161
+    empty                          shift and go to state 146
+    statement                      shift and go to state 144
+    blockreturnaux                 shift and go to state 158
     array                          shift and go to state 36
     condition                      shift and go to state 46
 
-state 147
+state 145
 
     (15) blockreturn -> LFTBRAC blockreturnaux . RGTBRAC
     (16) blockreturn -> LFTBRAC blockreturnaux . RETURN exp SEMICOLON RGTBRAC
 
-    RGTBRAC         shift and go to state 163
-    RETURN          shift and go to state 162
+    RGTBRAC         shift and go to state 160
+    RETURN          shift and go to state 159
 
 
-state 148
+state 146
 
     (18) blockreturnaux -> empty .
 
@@ -2921,106 +2851,86 @@ state 148
     RETURN          reduce using rule 18 (blockreturnaux -> empty .)
 
 
+state 147
+
+    (87) read -> READ LFTPAREN ID RGTPAREN SEMICOLON .
+
+    IF              reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    WHILE           reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    PRINT           reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    READ            reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    ID              reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    INT             reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    FLOAT           reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    CHAR            reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    BOOL            reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    STRING          reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    RGTBRAC         reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    RETURN          reduce using rule 87 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+
+
+state 148
+
+    (53) loop -> WHILE LFTPAREN expression RGTPAREN block .
+
+    IF              reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    WHILE           reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    PRINT           reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    READ            reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    ID              reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    INT             reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    FLOAT           reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    CHAR            reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    BOOL            reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    STRING          reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    RGTBRAC         reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    RETURN          reduce using rule 53 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+
+
 state 149
 
-    (89) read -> READ LFTPAREN ID RGTPAREN SEMICOLON .
+    (54) write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .
 
-    IF              reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    WHILE           reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    PRINT           reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    READ            reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    ID              reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    INT             reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    FLOAT           reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    CHAR            reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    BOOL            reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    STRING          reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    RGTBRAC         reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
-    RETURN          reduce using rule 89 (read -> READ LFTPAREN ID RGTPAREN SEMICOLON .)
+    IF              reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    WHILE           reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    PRINT           reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    READ            reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    ID              reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    INT             reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    FLOAT           reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    CHAR            reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    BOOL            reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    STRING          reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    RGTBRAC         reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    RETURN          reduce using rule 54 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
 
 
 state 150
 
-    (54) loop -> WHILE LFTPAREN expression RGTPAREN block .
+    (84) call -> ID LFTPAREN exp callaux RGTPAREN . SEMICOLON
 
-    IF              reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    WHILE           reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    PRINT           reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    READ            reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    ID              reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    INT             reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    FLOAT           reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    CHAR            reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    BOOL            reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    STRING          reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    RGTBRAC         reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
-    RETURN          reduce using rule 54 (loop -> WHILE LFTPAREN expression RGTPAREN block .)
+    SEMICOLON       shift and go to state 161
 
 
 state 151
 
-    (55) write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .
+    (85) callaux -> COMMA exp . callaux
+    (85) callaux -> . COMMA exp callaux
+    (86) callaux -> . empty
+    (88) empty -> .
 
-    IF              reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    WHILE           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    PRINT           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    READ            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    ID              reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    INT             reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    FLOAT           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    CHAR            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    BOOL            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    STRING          reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    RGTBRAC         reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
-    RETURN          reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    COMMA           shift and go to state 132
+    RGTPAREN        reduce using rule 88 (empty -> .)
 
+    empty                          shift and go to state 133
+    callaux                        shift and go to state 162
 
 state 152
-
-    (85) call -> ID LFTPAREN exp RGTPAREN SEMICOLON .
-
-    IF              reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    WHILE           reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    PRINT           reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    READ            reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    ID              reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    INT             reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    FLOAT           reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    CHAR            reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    BOOL            reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    STRING          reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    RGTBRAC         reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    RETURN          reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    FUNCTION        reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-    PRIOMH          reduce using rule 85 (call -> ID LFTPAREN exp RGTPAREN SEMICOLON .)
-
-
-state 153
-
-    (86) call -> ID LFTPAREN exp callaux RGTPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 164
-
-
-state 154
-
-    (87) callaux -> COMMA exp . callaux
-    (87) callaux -> . COMMA exp callaux
-    (88) callaux -> . empty
-    (90) empty -> .
-
-    COMMA           shift and go to state 134
-    RGTPAREN        reduce using rule 90 (empty -> .)
-
-    empty                          shift and go to state 135
-    callaux                        shift and go to state 165
-
-state 155
 
     (24) conditionaux -> LFTPAREN expression RGTPAREN block . ELSEIF conditionaux
     (25) conditionaux -> LFTPAREN expression RGTPAREN block .
 
-    ELSEIF          shift and go to state 166
+    ELSEIF          shift and go to state 163
     ELSE            reduce using rule 25 (conditionaux -> LFTPAREN expression RGTPAREN block .)
     IF              reduce using rule 25 (conditionaux -> LFTPAREN expression RGTPAREN block .)
     WHILE           reduce using rule 25 (conditionaux -> LFTPAREN expression RGTPAREN block .)
@@ -3036,73 +2946,65 @@ state 155
     RETURN          reduce using rule 25 (conditionaux -> LFTPAREN expression RGTPAREN block .)
 
 
-state 156
+state 153
 
-    (8) arrayvaluesaux -> cteS . arrayvaluesaux2
-    (9) arrayvaluesaux2 -> . COMMA arrayvaluesaux
-    (10) arrayvaluesaux2 -> . empty
-    (90) empty -> .
+    (8) arrayvaluesaux -> cteS .
+    (10) arrayvaluesaux -> cteS . COMMA arrayvaluesaux
 
-    COMMA           shift and go to state 167
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    RGTBRACSQR      reduce using rule 8 (arrayvaluesaux -> cteS .)
+    COMMA           shift and go to state 164
 
-    empty                          shift and go to state 168
-    arrayvaluesaux2                shift and go to state 169
 
-state 157
+state 154
 
-    (7) arrayvaluesaux -> cteN . arrayvaluesaux2
-    (9) arrayvaluesaux2 -> . COMMA arrayvaluesaux
-    (10) arrayvaluesaux2 -> . empty
-    (90) empty -> .
+    (7) arrayvaluesaux -> cteN .
+    (9) arrayvaluesaux -> cteN . COMMA arrayvaluesaux
 
-    COMMA           shift and go to state 167
-    RGTBRACSQR      reduce using rule 90 (empty -> .)
+    RGTBRACSQR      reduce using rule 7 (arrayvaluesaux -> cteN .)
+    COMMA           shift and go to state 165
 
-    empty                          shift and go to state 168
-    arrayvaluesaux2                shift and go to state 170
 
-state 158
+state 155
 
     (6) arrayvalues -> LFTBRACSQR arrayvaluesaux . RGTBRACSQR
 
-    RGTBRACSQR      shift and go to state 171
+    RGTBRACSQR      shift and go to state 166
 
 
-state 159
+state 156
 
-    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .
+    (82) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .
 
-    FUNCTION        reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    INT             reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    FLOAT           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    CHAR            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    BOOL            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    STRING          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    PRIOMH          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    IF              reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    WHILE           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    PRINT           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    READ            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    ID              reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    RGTBRAC         reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
-    RETURN          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    FUNCTION        reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    INT             reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    FLOAT           reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    CHAR            reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    BOOL            reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    STRING          reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    PRIOMH          reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    IF              reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    WHILE           reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    PRINT           reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    READ            reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    ID              reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    RGTBRAC         reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
+    RETURN          reduce using rule 82 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON .)
 
 
-state 160
+state 157
 
-    (84) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA . varsaux
-    (80) varsaux -> . ID EQUAL expression SEMICOLON
-    (81) varsaux -> . ID EQUAL call
-    (82) varsaux -> . ID EQUAL expression COMMA varsaux
-    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
-    (84) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
+    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA . varsaux
+    (79) varsaux -> . ID EQUAL expression SEMICOLON
+    (80) varsaux -> . ID EQUAL call
+    (81) varsaux -> . ID EQUAL expression COMMA varsaux
+    (82) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
+    (83) varsaux -> . ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux
 
     ID              shift and go to state 23
 
-    varsaux                        shift and go to state 172
+    varsaux                        shift and go to state 167
 
-state 161
+state 158
 
     (17) blockreturnaux -> statement blockreturnaux .
 
@@ -3110,16 +3012,15 @@ state 161
     RETURN          reduce using rule 17 (blockreturnaux -> statement blockreturnaux .)
 
 
-state 162
+state 159
 
     (16) blockreturn -> LFTBRAC blockreturnaux RETURN . exp SEMICOLON RGTBRAC
     (35) exp -> . term expaux
-    (59) term -> . factor termaux
+    (58) term -> . factor termaux
     (39) factor -> . LFTPAREN expression RGTPAREN
-    (40) factor -> . factoraux
-    (41) factoraux -> . constant
-    (42) factoraux -> . MINUS constant
-    (43) factoraux -> . PLUS constant
+    (40) factor -> . constant
+    (41) factor -> . MINUS constant
+    (42) factor -> . PLUS constant
     (26) constant -> . ID
     (27) constant -> . array
     (28) constant -> . cteN
@@ -3131,26 +3032,25 @@ state 162
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    LFTPAREN        shift and go to state 60
-    MINUS           shift and go to state 54
-    PLUS            shift and go to state 56
-    ID              shift and go to state 83
-    TRUE            shift and go to state 55
-    FALSE           shift and go to state 63
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    LFTPAREN        shift and go to state 59
+    MINUS           shift and go to state 53
+    PLUS            shift and go to state 55
+    ID              shift and go to state 82
+    TRUE            shift and go to state 54
+    FALSE           shift and go to state 62
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
     cteS                           shift and go to state 50
-    term                           shift and go to state 62
+    term                           shift and go to state 61
     constant                       shift and go to state 49
-    cteN                           shift and go to state 53
-    exp                            shift and go to state 173
-    factor                         shift and go to state 57
-    factoraux                      shift and go to state 51
-    array                          shift and go to state 52
+    cteN                           shift and go to state 52
+    exp                            shift and go to state 168
+    factor                         shift and go to state 56
+    array                          shift and go to state 51
 
-state 163
+state 160
 
     (15) blockreturn -> LFTBRAC blockreturnaux RGTBRAC .
 
@@ -3163,82 +3063,82 @@ state 163
     PRIOMH          reduce using rule 15 (blockreturn -> LFTBRAC blockreturnaux RGTBRAC .)
 
 
-state 164
+state 161
 
-    (86) call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .
+    (84) call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .
 
-    IF              reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    WHILE           reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    PRINT           reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    READ            reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    ID              reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    INT             reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    FLOAT           reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    CHAR            reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    BOOL            reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    STRING          reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    RGTBRAC         reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    RETURN          reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    FUNCTION        reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-    PRIOMH          reduce using rule 86 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
-
-
-state 165
-
-    (87) callaux -> COMMA exp callaux .
-
-    RGTPAREN        reduce using rule 87 (callaux -> COMMA exp callaux .)
+    IF              reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    WHILE           reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    PRINT           reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    READ            reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    ID              reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    INT             reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    FLOAT           reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    CHAR            reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    BOOL            reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    STRING          reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    RGTBRAC         reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    RETURN          reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    FUNCTION        reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
+    PRIOMH          reduce using rule 84 (call -> ID LFTPAREN exp callaux RGTPAREN SEMICOLON .)
 
 
-state 166
+state 162
+
+    (85) callaux -> COMMA exp callaux .
+
+    RGTPAREN        reduce using rule 85 (callaux -> COMMA exp callaux .)
+
+
+state 163
 
     (24) conditionaux -> LFTPAREN expression RGTPAREN block ELSEIF . conditionaux
     (24) conditionaux -> . LFTPAREN expression RGTPAREN block ELSEIF conditionaux
     (25) conditionaux -> . LFTPAREN expression RGTPAREN block
 
-    LFTPAREN        shift and go to state 80
+    LFTPAREN        shift and go to state 79
 
-    conditionaux                   shift and go to state 174
+    conditionaux                   shift and go to state 169
 
-state 167
+state 164
 
-    (9) arrayvaluesaux2 -> COMMA . arrayvaluesaux
-    (7) arrayvaluesaux -> . cteN arrayvaluesaux2
-    (8) arrayvaluesaux -> . cteS arrayvaluesaux2
+    (10) arrayvaluesaux -> cteS COMMA . arrayvaluesaux
+    (7) arrayvaluesaux -> . cteN
+    (8) arrayvaluesaux -> . cteS
+    (9) arrayvaluesaux -> . cteN COMMA arrayvaluesaux
+    (10) arrayvaluesaux -> . cteS COMMA arrayvaluesaux
     (32) cteN -> . FLOAT
     (33) cteN -> . INT
     (34) cteS -> . STRING
 
-    FLOAT           shift and go to state 65
-    INT             shift and go to state 64
-    STRING          shift and go to state 59
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
-    cteS                           shift and go to state 156
-    cteN                           shift and go to state 157
-    arrayvaluesaux                 shift and go to state 175
+    cteS                           shift and go to state 153
+    cteN                           shift and go to state 154
+    arrayvaluesaux                 shift and go to state 170
 
-state 168
+state 165
 
-    (10) arrayvaluesaux2 -> empty .
+    (9) arrayvaluesaux -> cteN COMMA . arrayvaluesaux
+    (7) arrayvaluesaux -> . cteN
+    (8) arrayvaluesaux -> . cteS
+    (9) arrayvaluesaux -> . cteN COMMA arrayvaluesaux
+    (10) arrayvaluesaux -> . cteS COMMA arrayvaluesaux
+    (32) cteN -> . FLOAT
+    (33) cteN -> . INT
+    (34) cteS -> . STRING
 
-    RGTBRACSQR      reduce using rule 10 (arrayvaluesaux2 -> empty .)
+    FLOAT           shift and go to state 64
+    INT             shift and go to state 63
+    STRING          shift and go to state 58
 
+    cteS                           shift and go to state 153
+    cteN                           shift and go to state 154
+    arrayvaluesaux                 shift and go to state 171
 
-state 169
-
-    (8) arrayvaluesaux -> cteS arrayvaluesaux2 .
-
-    RGTBRACSQR      reduce using rule 8 (arrayvaluesaux -> cteS arrayvaluesaux2 .)
-
-
-state 170
-
-    (7) arrayvaluesaux -> cteN arrayvaluesaux2 .
-
-    RGTBRACSQR      reduce using rule 7 (arrayvaluesaux -> cteN arrayvaluesaux2 .)
-
-
-state 171
+state 166
 
     (6) arrayvalues -> LFTBRACSQR arrayvaluesaux RGTBRACSQR .
 
@@ -3246,34 +3146,34 @@ state 171
     COMMA           reduce using rule 6 (arrayvalues -> LFTBRACSQR arrayvaluesaux RGTBRACSQR .)
 
 
-state 172
+state 167
 
-    (84) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .
+    (83) varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .
 
-    FUNCTION        reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    INT             reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    FLOAT           reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    CHAR            reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    BOOL            reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    STRING          reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    PRIOMH          reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    IF              reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    WHILE           reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    PRINT           reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    READ            reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    ID              reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    RGTBRAC         reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
-    RETURN          reduce using rule 84 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    FUNCTION        reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    INT             reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    FLOAT           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    CHAR            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    BOOL            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    STRING          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    PRIOMH          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    IF              reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    WHILE           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    PRINT           reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    READ            reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    ID              reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    RGTBRAC         reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
+    RETURN          reduce using rule 83 (varsaux -> ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux .)
 
 
-state 173
+state 168
 
     (16) blockreturn -> LFTBRAC blockreturnaux RETURN exp . SEMICOLON RGTBRAC
 
-    SEMICOLON       shift and go to state 176
+    SEMICOLON       shift and go to state 172
 
 
-state 174
+state 169
 
     (24) conditionaux -> LFTPAREN expression RGTPAREN block ELSEIF conditionaux .
 
@@ -3292,21 +3192,28 @@ state 174
     RETURN          reduce using rule 24 (conditionaux -> LFTPAREN expression RGTPAREN block ELSEIF conditionaux .)
 
 
-state 175
+state 170
 
-    (9) arrayvaluesaux2 -> COMMA arrayvaluesaux .
+    (10) arrayvaluesaux -> cteS COMMA arrayvaluesaux .
 
-    RGTBRACSQR      reduce using rule 9 (arrayvaluesaux2 -> COMMA arrayvaluesaux .)
+    RGTBRACSQR      reduce using rule 10 (arrayvaluesaux -> cteS COMMA arrayvaluesaux .)
 
 
-state 176
+state 171
+
+    (9) arrayvaluesaux -> cteN COMMA arrayvaluesaux .
+
+    RGTBRACSQR      reduce using rule 9 (arrayvaluesaux -> cteN COMMA arrayvaluesaux .)
+
+
+state 172
 
     (16) blockreturn -> LFTBRAC blockreturnaux RETURN exp SEMICOLON . RGTBRAC
 
-    RGTBRAC         shift and go to state 177
+    RGTBRAC         shift and go to state 173
 
 
-state 177
+state 173
 
     (16) blockreturn -> LFTBRAC blockreturnaux RETURN exp SEMICOLON RGTBRAC .
 
@@ -3321,16 +3228,15 @@ state 177
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for MULTIPLICATION in state 57 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 57 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 62 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 62 resolved as shift
-WARNING: shift/reduce conflict for RGTPAREN in state 113 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICATION in state 56 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 56 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 61 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 61 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICATION in state 116 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 116 resolved as shift
 WARNING: shift/reduce conflict for MULTIPLICATION in state 117 resolved as shift
 WARNING: shift/reduce conflict for DIVISION in state 117 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICATION in state 118 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 118 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 119 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 119 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 120 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 120 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 121 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 121 resolved as shift
