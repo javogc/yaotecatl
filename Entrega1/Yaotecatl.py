@@ -105,17 +105,14 @@ def p_assignmentaux(p):
     | array'''  
 
 def p_blockreturn(p):
-    '''blockreturn : LFTBRAC blockreturnaux RGTBRAC 
-    | LFTBRAC blockreturnaux RETURN exp SEMICOLON RGTBRAC ''' 
-def p_blockreturnaux(p):
-    '''blockreturnaux : statement blockreturnaux 
+    '''blockreturn : LFTBRAC blockneutral RGTBRAC 
+    | LFTBRAC blockneutral RETURN exp SEMICOLON RGTBRAC ''' 
+def p_blockneutral(p):
+    '''blockneutral : statement blockneutral 
+    | vars blockneutral
     | empty ''' 
-
 def p_block(p):
-    '''block : LFTBRAC blockaux RGTBRAC'''   
-def p_blockaux(p):
-    '''blockaux : statement blockaux 
-    | empty '''     
+    '''block : LFTBRAC blockneutral RGTBRAC'''       
 
 def p_condition(p):
     '''condition : IF conditionaux 
@@ -125,7 +122,6 @@ def p_conditionaux(p):
 def p_conditionaux2(p):
     '''conditionaux2 : ELSEIF conditionaux 
     | empty ''' 
-
 
 def p_constant(p):
     '''constant : ID 
@@ -191,7 +187,6 @@ def p_statement(p):
     '''statement : assignment 
     | condition 
     | loop 
-    | vars
     | write 
     | read 
     | call  ''' 
