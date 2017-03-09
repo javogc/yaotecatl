@@ -95,14 +95,11 @@ def p_array(p):
 def p_arrayvalues(p):
     '''arrayvalues : LFTBRACSQR arrayvaluesaux RGTBRACSQR '''
 def p_arrayvaluesaux(p):
-    '''arrayvaluesaux : cteN 
-    | cteS  
-    | cteN COMMA arrayvaluesaux
-    | cteS COMMA arrayvaluesaux '''        
+    '''arrayvaluesaux : constant  
+    | constant COMMA arrayvaluesaux '''        
 
 def p_assignment(p):
-    '''assignment : assignmentaux EQUAL expression SEMICOLON 
-    | assignmentaux EQUAL call '''    
+    '''assignment : assignmentaux EQUAL expression SEMICOLON '''    
 def p_assignmentaux(p):
     '''assignmentaux : ID 
     | array'''  
@@ -136,7 +133,8 @@ def p_constant(p):
     | cteN
     | cteS
     | TRUE 
-    | FALSE '''
+    | FALSE
+    | call2 '''
 
 def p_cteN(p):
     '''cteN : FLOAT 
@@ -192,8 +190,8 @@ def p_termaux(p):
 def p_statement(p):
     '''statement : assignment 
     | condition 
-    | vars 
     | loop 
+    | vars
     | write 
     | read 
     | call  ''' 
@@ -218,7 +216,6 @@ def p_vars(p):
     '''vars : type varsaux     ''' 
 def p_varsaux(p):
     '''varsaux : ID EQUAL expression SEMICOLON
-    | ID EQUAL call 
     | ID EQUAL expression COMMA varsaux 
     | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues SEMICOLON
     | ID LFTBRACSQR INT RGTBRACSQR EQUAL arrayvalues COMMA varsaux '''
@@ -229,9 +226,14 @@ def p_callaux(p):
     '''callaux : COMMA exp callaux
     | empty ''' 
 
+def p_call2(p):
+    '''call2 : ID LFTPAREN exp callaux RGTPAREN  ''' 
 
 def p_read(p):
-    '''read : READ LFTPAREN ID RGTPAREN SEMICOLON '''                              
+    '''read : READ LFTPAREN readaux RGTPAREN SEMICOLON '''   
+def p_readaux(p):
+    '''readaux : ID
+    | array '''                                  
 
 def p_empty(p):
     '''empty : '''

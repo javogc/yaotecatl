@@ -4,7 +4,7 @@ program nomPrograma {
 	int varGlobal = 3;
 
 	function void voidFunct(float varX ) {
-		int i = 0, z = 3;
+		int i = 0;
 	}
 
 
@@ -18,7 +18,7 @@ program nomPrograma {
 	priomh {
 		 int a = varA;
 
-		int x = 5;
+		int x = 5 + funct(2);
 		x = 12;
 		bool bval = true, varVerdadera = true, varFalsa = false;
 
@@ -28,7 +28,7 @@ program nomPrograma {
 
 		string x[2] = ["hola","adios"];
 		
-		int arrDos[3] = [1,2,3];
+		int arrDos[3] = [funct(2),2,3];
 		arrDos[0] = 200;
 		arrDos[1] = intFunct(2, false);
 
@@ -36,7 +36,7 @@ program nomPrograma {
 		while(1 <= x){
 			
 			if(x == 12){
-				read(x);
+				read(x[2]);
 			}
 
 			elseif(x != 14){
@@ -55,6 +55,7 @@ program nomPrograma {
 		}
 
 		voidFunct(3.90);
+
 
 		
 
