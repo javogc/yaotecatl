@@ -18,7 +18,7 @@ program nomPrograma {
 	priomh {
 		 int a = varA;
 
-		int x = 5 + funct(2);
+		int x = 5 + funct(2) + 2 / 2 * otraFunt(2,true,varX);
 		x = 12;
 		bool bval = true, varVerdadera = true, varFalsa = false;
 
