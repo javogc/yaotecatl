@@ -12,13 +12,13 @@ program nomPrograma {
 	    int  a = (varY / 2);
 
 		return a;
-	}
 
+	}
 
 	priomh {
 		 int a = varA;
 
-		int x = 5 + funct(2) + 2 / 2 * otraFunt(2,true,varX);
+		int x = 5 + funct(2) + 2 / 2 * (otraFunt(2,true,varX) / 2);
 		x = 12;
 		bool bval = true, varVerdadera = true, varFalsa = false;
 
@@ -51,14 +51,8 @@ program nomPrograma {
 			else{
 				print("Cuanto vale la X ?");
 			}	
-
 		}
-
 		voidFunct(3.90);
-
-
-		
-
 	}
 
 }

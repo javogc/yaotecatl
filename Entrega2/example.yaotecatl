@@ -1,0 +1,56 @@
+
+program nomPrograma {
+	
+	int GLOBAL = true;
+	bool arrBo[2] = [true,false];
+
+	function void voidFunct(float varX ) {
+		string varFunct = "WUJU";
+	}
+
+
+	function int intFunct(int varY, bool bVar) {
+	  
+
+		return a;
+
+	}
+
+	priomh {
+		 
+
+		x = 12;
+		bool bval = true, varVerdadera = true, varFalsa = false;
+
+
+		string sval = "variable";
+
+
+		string m[2] = ["hola","adios"];
+		
+
+		
+		while(1 <= x){
+			
+			if(x == 12){
+				read(x[2]);
+			}
+
+			elseif(x != 14){
+				x = (x - 1);
+			}
+
+			elseif( (bval && varVerdadera) || varFalsa ){
+				int valor = intFunct(10, true);
+				valor = intFunct (20, false);
+			}
+
+			else{
+				print("Cuanto vale la X ?");
+			}	
+		}
+		voidFunct(3.90);
+	}
+
+}
+
