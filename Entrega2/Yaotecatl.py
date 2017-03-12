@@ -249,9 +249,7 @@ def p_function(p):
 
     addFunctDict(nameOfFunct, typeOfFunct, funcParameters) #agrega el nombre, tipo y parametros al diccionario de funciones
 
-    print('Table of Local(function) Variables: %s' % localVarDict)
-    print('------------------------------------')
-    print('------------------------------------')
+    
     
     localVarDict.clear() #limpia el diccionario de variables locales para usarlo en otra funcion
 
