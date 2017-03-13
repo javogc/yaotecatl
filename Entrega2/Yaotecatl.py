@@ -113,7 +113,7 @@ def p_program(p):
     print('------------------------------------')
 
     print('Table of Global Variables: %s' % globalVarDict)
-    print('------------------------------------')
+    print('-------------------------------------')
     print('------------------------------------')
 
     print('Table of Local(main) Variables: %s' % localVarDict)
@@ -326,7 +326,7 @@ def p_checkType(p):
         funcIndicator = False
 
     elif codeTypeVoid == True:
-        typeOfFunct = listOfTypes("void") 
+        typeOfFunct = 4
         codeTypeVoid = False
 
     else:
@@ -415,8 +415,7 @@ def listOfTypes(auxType):
         return 102            
     elif auxType == "boolArr":
         return 103
-    elif auxType == "void":
-        return 4          
+            
 
 def addFunctDict(functName, functType, functParameters):
     
