@@ -32,6 +32,8 @@ tokens = ['LFTBRAC', 'RGTBRAC', 'LFTPAREN','RGTPAREN', 'LFTBRACSQR', 'RGTBRACSQR
           'NOT','OR','SEMICOLON', 'EQUAL', 'LESSTHANEQUAL', 'GREATTHANEQUAL', 'GREATTHAN', 'LESSTHAN',  
           'PLUS', 'MINUS', 'MULTIPLICATION', 'DIVISION', 'ID', 'COMMA' ] + list(reserved.values())
 
+t_PLUS = r'\+'
+t_MINUS = r'\-'
 t_LFTBRAC = r'\{'
 t_RGTBRAC = r'\}'
 t_LFTPAREN = r'\('
@@ -49,8 +51,6 @@ t_LESSTHANEQUAL = r'\<='
 t_GREATTHANEQUAL = r'\>='
 t_GREATTHAN = r'\>'
 t_LESSTHAN = r'\<'
-t_PLUS = r'\+'
-t_MINUS = r'\-'
 t_MULTIPLICATION = r'\*'
 t_DIVISION = r'\/'
 t_INT = r'[0-9]+'
@@ -124,7 +124,7 @@ def p_program(p):
 def p_auxprogram(p):
     '''auxprogram : vars auxprogram 
     | function auxprogram 
-    | empty'''
+    | '''
 
 def p_array(p):
     '''array : ID LFTBRACSQR exp RGTBRACSQR'''
@@ -177,17 +177,17 @@ def p_cteS(p):
     '''cteS : STRING'''
 
 def p_exp(p):
-    '''exp : term expaux  '''   
-def p_expaux(p):
-    '''expaux : PLUS exp expaux 
-    | MINUS exp expaux 
-    | empty '''    
+    '''exp : term
+    | term PLUS exp
+    | term MINUS exp  '''   
+
+
 
 def p_factor(p):
-    '''factor : LFTPAREN expression RGTPAREN
-    | constant
+    '''factor : PLUS constant 
     | MINUS constant
-    | PLUS constant ''' 
+    | LFTPAREN expression RGTPAREN
+    | constant ''' 
 
 def p_expression(p):
     '''expression : exp 
@@ -214,11 +214,11 @@ def p_parameter(p):
     | empty  '''   
 
 def p_term(p):
-    '''term : factor termaux  ''' 
-def p_termaux(p):
-    '''termaux : MULTIPLICATION term termaux 
-    | DIVISION term termaux 
-    | empty  ''' 
+    '''term : factor MULTIPLICATION term
+    | factor DIVISION term 
+    | factor  ''' 
+
+     
 
 def p_statement(p):
     '''statement : assignment 
@@ -249,7 +249,7 @@ def p_function(p):
 
     addFunctDict(nameOfFunct, typeOfFunct, funcParameters) #agrega el nombre, tipo y parametros al diccionario de funciones
 
-    
+    print('Table of Local(function) Variables: %s' % localVarDict)
     
     localVarDict.clear() #limpia el diccionario de variables locales para usarlo en otra funcion
 
