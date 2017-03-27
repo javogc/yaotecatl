@@ -25,7 +25,7 @@ cube = {
       
     }
 
-def getTypeString(auxType):
+def typeOfVar(auxType):
     
 
 
@@ -47,10 +47,11 @@ def getTypeString(auxType):
         return "boolArr"
 
 def checkSemanticCube(op1, op2, operator):
+   # print(op1)
+   # print(operator)
+    #print(op2)
 
- 
-    
-    return cube[getTypeString(op1)][getTypeString(op2)][operator]
+    return cube[typeOfVar(op1)][typeOfVar(op2)][operator]
 
 
 

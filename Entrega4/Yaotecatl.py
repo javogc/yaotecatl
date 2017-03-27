@@ -1,6 +1,7 @@
 from cuboSemantico import *
 from lex import *
-
+import collections
+from collections import OrderedDict
 
 
 
@@ -9,18 +10,18 @@ from lex import *
 import ply.yacc as yacc
 
 
-quadruples = []
+quadruplesList = [] #lista/arreglo que guardara un objeto diccionario que sera cada quadruplo
 
 scopeVar = 'global' #variable que cambiara entre local y global para crear las tablas
 
 globalVarDict = dict()  #diccionario que tendra las variables globales
-
+localVarDict = dict() #diccionario que tendra las variables locales
+constantDict = dict() #dicionario que tendra las constantes
 funcDict = dict() #diccionario que tendra las funciones del programa con sus parametros 
+
 funcParameters = [] #arreglo en donde se guardaran los parametros y despues meterlos al diccionario del funciones.
 codeTypeVoid = False #variable que cambiara dependiendo si la funcion es void o no
 funcIndicator = False #variable que cambiara dependiendo si estas en una funcion o variable para colocar el tipo
-
-localVarDict = dict() #diccionario que tendra las variables locales
 
 nameOfFunct = "" #variable que guardara el nombre de la funccion y despues la metera al diccionario de funciones
 typeOfFunct = "" #variable que guardara el tipo de la funccion y despues la metera al diccionario de funciones
@@ -28,19 +29,13 @@ typeOfFunct = "" #variable que guardara el tipo de la funccion y despues la mete
 nameOfVar = "" #variable que guardara el nombre del ID que encontro y despues la metera al diccionario ya sea global o local
 typeOfVar = "" #variable que guardara el tipo del ID que encontro y despues la metera al diccionario ya sea global o local
 
-popper = []
+popper = [] #pila que tendra los operadores hasta ser sacados
 
-pilaO = []
-typePila = []
+pilaO = [] #pila que tendra los operandos y despues los operador cuando se haga pop en el popper
 
+isInt = False #variable para saber si la constante es int o no
 
-
-
-
-
-
-constants = {'true':{'value':True, 'type':3}, 'false':{'value':False, 'type':3}}
-
+jumps = []
 
 #-------------------------Reglas del compilador-----------------
 
@@ -60,8 +55,15 @@ def p_program(p):
     #print('------------------------------------')
     #print('------------------------------------')
 
-    print("quadruples")
-    print(quadruples)
+    #para imprimir los cuadrulos uno por uno
+    countQuadruples = 0 
+    for p in quadruplesList:
+
+        print "Quadruple:", countQuadruples
+        
+        print p
+        print
+        countQuadruples = countQuadruples + 1;
 
     
     #print(checkSemanticCube("int" ,"float" ,"+"))
@@ -74,11 +76,11 @@ def p_auxprogram(p):
 def p_array(p):
     '''array : ID LFTBRACSQR exp RGTBRACSQR'''
 
-def p_arrayvalues(p):
-    '''arrayvalues : LFTBRACSQR arrayvaluesaux RGTBRACSQR '''
-def p_arrayvaluesaux(p):
-    '''arrayvaluesaux : constant  
-    | constant COMMA arrayvaluesaux '''        
+def p_arrayvals(p):
+    '''arrayvals : LFTBRACSQR arrayvalsaux RGTBRACSQR '''
+def p_arrayvalsaux(p):
+    '''arrayvalsaux : constant  
+    | constant COMMA arrayvalsaux '''        
 
 def p_assignment(p):
     '''assignment : assignmentaux EQUAL expression SEMICOLON '''    
@@ -120,8 +122,8 @@ def p_constant(p):
  
 
 def p_cteN(p):
-    '''cteN : FLOAT addConstant
-    | INT addConstant'''
+    '''cteN : FLOAT codeAddConst
+    | INT codeAddConst'''
 
     p[0] = p[1]
 
@@ -131,8 +133,8 @@ def p_cteS(p):
 
 def p_exp(p):
     '''exp : term
-    | term PLUS saveOperation exp
-    | term MINUS saveOperation exp  '''   
+    | term PLUS codeAddOperator exp
+    | term MINUS codeAddOperator exp  '''   
 
 def p_factoraux(p):
     '''factoraux : constant
@@ -140,50 +142,50 @@ def p_factoraux(p):
     | MINUS constant ''' 
 
     global pilaO
-   
-    operand = {}
 
-    if len(p) == 2:
-        operand = getOperand(p[1])
+    if len(p) == 2: #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[1]
+        pilaO.append(searchForOperand(p[1]))
  
-    else:
-        operand = getOperand(p[2])
+    else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
+        pilaO.append(searchForOperand(p[2]))
     
-    pilaO.append(operand)
-    typePila.append(typeOfVar)
+    
+    
 
 def p_factor(p):
-    '''factor : LFTPAREN addFakeBottom expression RGTPAREN removeFakeBottom factorEnded
-    | factoraux factorEnded''' 
+    '''factor : LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    | factoraux codeAskFactor''' 
 
 def p_expression(p):
     '''expression : exp 
-    | exp expressionaux exp expressionEnded''' 
+    | exp expressionaux codeAddOperator exp codeAskExpression''' 
 def p_expressionaux(p):
-    '''expressionaux : AND saveOperation
-    | DOUBEQUAL saveOperation
-    | NOT saveOperation
-    | OR saveOperation
-    | LESSTHANEQUAL saveOperation
-    | GREATTHANEQUAL saveOperation
-    | GREATTHAN saveOperation
-    | LESSTHAN saveOperation'''                         
+    '''expressionaux : AND 
+    | DOUBEQUAL 
+    | NOT 
+    | OR 
+    | LESSTHANEQUAL 
+    | GREATTHANEQUAL 
+    | GREATTHAN 
+    | LESSTHAN '''   
+
+    p[0] = p[1]                      
 
 def p_loop(p):
-    '''loop : WHILE LFTPAREN expression RGTPAREN block ''' 
+    '''loop : WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTO ''' 
 
 def p_write(p):
     '''write : PRINT LFTPAREN constant RGTPAREN SEMICOLON ''' 
 
 def p_parameter(p):
-    '''parameter : type ID codeAddParameters
-    | type ID codeAddParameters COMMA parameter 
+    '''parameter : type codeCheckType ID codeAddParameters
+    | type codeCheckType ID codeAddParameters COMMA parameter 
     | empty  '''   
 
 def p_term(p):
-    '''term : factor MULTIPLICATION saveOperation term
-    | factor DIVISION saveOperation term 
-    | factor termEnded ''' 
+    '''term : factor MULTIPLICATION codeAddOperator term
+    | factor DIVISION codeAddOperator term 
+    | factor codeAskTerm ''' 
 
      
 
@@ -196,11 +198,13 @@ def p_statement(p):
     | call  ''' 
 
 def p_type(p):
-    '''type : INT checkType 
-    | FLOAT checkType
-    | CHAR checkType
-    | BOOL checkType
-    | STRING checkType  ''' 
+    '''type : INT  
+    | FLOAT 
+    | CHAR 
+    | BOOL 
+    | STRING   ''' 
+
+    p[0] = p[1]
 
 def p_main(p):
     '''main : PRIOMH codeScope block  ''' 
@@ -216,6 +220,7 @@ def p_function(p):
 
     addFunctDict(nameOfFunct, typeOfFunct, funcParameters) #agrega el nombre, tipo y parametros al diccionario de funciones
 
+    #print('Table of Local(funct) Variables: %s' % localVarDict)
     
     localVarDict.clear() #limpia el diccionario de variables locales para usarlo en otra funcion
 
@@ -223,16 +228,16 @@ def p_function(p):
   
 
 def p_functionaux(p):
-    '''functionaux : VOID codeTypeVoid checkType 
-    | funcIndicator type  '''  
+    '''functionaux : VOID codeTypeVoid codeCheckType 
+    | codeFuncIndicator type codeCheckType '''  
 
 def p_vars(p):
-    '''vars : type  varsaux     ''' 
+    '''vars : type codeCheckType varsaux     ''' 
 def p_varsaux(p):
     '''varsaux : ID codeAddVar EQUAL expression SEMICOLON
     | ID codeAddVar EQUAL expression COMMA varsaux 
-    | ID  codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR  EQUAL arrayvalues SEMICOLON
-    | ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR   EQUAL arrayvalues COMMA varsaux '''
+    | ID  codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals SEMICOLON
+    | ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR  EQUAL arrayvals COMMA varsaux '''
 
 
 def p_call(p):
@@ -265,6 +270,33 @@ def p_error(p):
 
 #-------------------------------------------------- VAR TABLE RULES -------------------------------------
 
+def p_codeGOTO(p):
+    '''codeGOTO : '''
+    quadruplesList[jumps.pop()]["RESULT"] = len(quadruplesList) + 1
+    addNewQuadruple('GOTO', "", "", jumps.pop())
+    
+
+
+
+def p_codeGOTOF(p):
+    '''codeGOTOF : '''
+    respGotof = pilaO.pop()
+
+    if respGotof['type'] == 3:
+
+        addNewQuadruple("GOTOF", respGotof, "", "")
+        jumps.append(len(quadruplesList)-1)
+
+
+    else:
+        print("Can't compare result, answer is not 'BOOL' type!")
+        exit(1)
+
+def p_codeWhileCondition(p):
+    '''codeWhileCondition : '''
+
+    jumps.append(len(quadruplesList))
+
 
 def p_codeScope(p):
     '''codeScope : '''
@@ -277,8 +309,8 @@ def p_codeScope(p):
         scopeVar = 'global'   
 
 
-def p_checkType(p):
-    '''checkType : '''
+def p_codeCheckType(p):
+    '''codeCheckType : '''
 
     global typeOfFunct
     global typeOfVar
@@ -298,8 +330,6 @@ def p_checkType(p):
     else:
         typeOfVar = listOfTypes(p[-1])
            
-
-    
 
 
 def p_codeAddVar(p):
@@ -350,134 +380,135 @@ def p_codeTypeVoid(p):
     codeTypeVoid = True #la variable se cambia a true porque el tipo sera para una funcion void
     
 
-def p_funcIndicator(p):
-    '''funcIndicator : '''
+def p_codeFuncIndicator(p):
+    '''codeFuncIndicator : '''
 
     global funcIndicator
     funcIndicator = True #la variable se cambia a true porque el tipo sera para una funcion no void
 
 
-
-
-
-
-
-
-
-
-
-
-
-def p_addConstant(p):
-    '''addConstant : empty'''
-    constType = -1
-    cte = num(p[-1])
-    if type(cte) is int:
-        constType = 0
-    else:
-        constType = 2
-    global constants
-    if not str(cte) in constants.keys():
-        constants[str(cte)] = {'value':cte, 'type':constType}
-
-
-
-
-def p_saveOperation(p):
-    '''saveOperation : empty'''
+def p_codeDeleteOpenParen(p): # Se acabo de hacer lo de adentro del parentesis
+    '''codeDeleteOpenParen : empty'''
     global popper
-    popper.append(p[-1])
-
-
-
-def p_addFakeBottom(p):
-    '''addFakeBottom : empty'''
-    global popper
-    popper.append('(')
-
-
-
-def p_removeFakeBottom(p):
-    '''removeFakeBottom : empty'''
-    global popper
-    print(popper)
+   
     popper.pop()
 
 
 
 
-def p_termEnded(p):
-    '''termEnded : empty'''
+def p_codeAddOpenParen(p): #abre parentesis en una operacion
+    '''codeAddOpenParen : empty'''
+    global popper
+    
+    popper.append('(')
+
+
+
+def p_codeAddConst(p): #agrega una constante ya sea int o double al diccionario de constantes
+    '''codeAddConst : empty'''
+
+    global constantDict
+
+    if isInt(p[-1]):
+        typeOfConst = 0
+    else:
+        typeOfConst = 1
+    
+    constantDict[str(p[-1])] = {'val':p[-1], 'type':typeOfConst}
+
+
+
+
+def p_codeAddOperator(p): #agrega un operador al popper
+    '''codeAddOperator : empty'''
+    global popper
+
+    popper.append(p[-1])
+
+
+
+def p_codeAskTerm(p):
+    '''codeAskTerm : empty'''
     global popper
     global pilaO
-    if len(popper) > 0:
-        if popper[-1] == '+' or popper[-1] == '-' or popper[-1] == '||':
-            operand2 = pilaO.pop()
-            operation = popper.pop()
-            operand1 = pilaO.pop()
 
-            resultType = checkSemanticCube( operand1['type'] ,operand2['type'] ,operation) 
+    if len(popper) > 0: #checa si el popper tiene algo dentro
+
+        if popper[-1] == '-' or popper[-1] == '+': #si el siguiente character es un + o - hacer pop al popper y dos veces a la pilaO
+
+            op2 = pilaO.pop()
+            op1 = pilaO.pop()
+            operator = popper.pop()
+
+            newType = checkSemanticCube( op1['type'] ,op2['type'] ,operator) #checar si los 2 operandos que sacaste son compatibles con el operador
             
-            if resultType < 10:
-                addQuadruple(operation, operand1, operand2, 0)
+            if newType < 10: # si si son compatibles los argrega al quadruplo
+                
+                respAux = {'val':"T1", 'type':newType}
 
-                typePila.append(resultType)
+                addNewQuadruple(operator, op1, op2, respAux)
 
-                pilaO.append({'value':0, 'type':resultType})
+                pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
 
-            else:
-                print('Error: Type mismatch')
+            else: #Si no son compatibles marca error
+                print("You cant evaluate those operands with that operator!")
                 exit(1)
 
 
-def p_factorEnded(p):
-    '''factorEnded : empty'''
+def p_codeAskFactor(p):
+    '''codeAskFactor : empty'''
     global popper
     global pilaO
-    if len(popper) > 0:
-        if popper[-1] == '*' or popper[-1] == '/' or popper[-1] == '&&':
-            operand1 = pilaO.pop()
-            operation = popper.pop()
-            operand2 = pilaO.pop()
-            
-            resultType = checkSemanticCube( operand1['type'] ,operand2['type'] ,operation) 
-          
-            if resultType < 10:
 
-                addQuadruple(operation, operand1, operand2, 0)
-                
-                typePila.append(resultType)
-                
-                pilaO.append({'value':0, 'type':resultType})
-            else:
-                print('Error: Type mismatch')
+    if len(popper) > 0: #checa si el popper tiene algo dentro
+
+        if popper[-1] == '*' or popper[-1] == '/': #si el siguiente character es un + o - hacer pop al popper y dos veces a la pilaO
+
+            op2 = pilaO.pop()
+            op1 = pilaO.pop()
+            operator = popper.pop()
+
+            newType = checkSemanticCube( op1['type'] ,op2['type'] ,operator) #checar si los 2 operandos que sacaste son compatibles con el operador
+            
+            if newType < 10: # si si son compatibles los argrega al quadruplo
+                respAux = {'val':"T1", 'type':newType}
+
+                addNewQuadruple(operator, op1, op2, respAux)
+
+                pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
+
+            else: #Si no son compatibles marca error
+                print("You cant evaluate those operands with that operator!")
                 exit(1)
 
 
 
 
-def p_expressionEnded(p):
-    '''expressionEnded : empty'''
+def p_codeAskExpression(p):
+    '''codeAskExpression : empty'''
     global popper
     global pilaO
+
     if len(popper) > 0:
 
-        if popper[-1] == '<' or popper[-1] == '>' or popper[-1] == '<=' or popper[-1] == '>=' or popper[-1] == '==' or popper[-1] == '!=':
-            operand1 = pilaO.pop()
-            operation = popper.pop()
-            operand2 = pilaO.pop()
-           
-            resultType = checkSemanticCube( operand1['type'] ,operand2['type'] ,operation)
+        if popper[-1] == '<' or popper[-1] == '>' or popper[-1] == '<=' or popper[-1] == '>=' or popper[-1] == '==' or popper[-1] == '!=' or popper[-1] == '||' or popper[-1] == '&&':
+
+            op2 = pilaO.pop()
+            op1 = pilaO.pop()
+            operator = popper.pop()
+
+            newType = checkSemanticCube( op1['type'] ,op2['type'] ,operator) #checar si los 2 operandos que sacaste son compatibles con el operador
             
-            if resultType < 10:
-                addQuadruple(operation, operand1, operand2, 0)
+            if newType < 10: # si si son compatibles los argrega al quadruplo
+                respAux = {'val':"T1", 'type':newType}
 
-                typePila.append(resultType)
-                
-                pilaO.append({'value':0, 'type':resultType})
+                addNewQuadruple(operator, op1, op2, respAux)
 
-            else:
-                print('Type mismatch')
+                pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
+
+            else: #Si no son compatibles marca error
+                print("You cant evaluate those operands with that operator!")
+                exit(1)
 
 
 
@@ -486,8 +517,15 @@ def p_expressionEnded(p):
 
 yacc.yacc()
 
+#----------------------------Funciones externas-------------------------
 
-
+#checa si es int o no 
+def isInt(x):
+  try:
+    int(x)
+    return True
+  except:
+    return False
 
 
 # le llega como parametro el tipo de la funcion o variable y regresa el numero con lo que las identificaremos
@@ -566,32 +604,35 @@ def AddVarDict(varName, varType):
 
 
 
-
-def getOperand(key):
-    if key in constants.keys():
-        return constants[key]
-    elif key in localVarDict.keys():
-        return localVarDict[key]
-    elif key in globalVarDict.keys():
+#Busca la variable o constante de todas las tablas/diccionarios y regresa un objeto diccionario
+def searchForOperand(key):
+    if key in globalVarDict.keys():
         return globalVarDict[key]
 
+    elif key in localVarDict.keys():
+        return localVarDict[key]
+
+    elif key in constantDict.keys():
+        return constantDict[key]    
+    
+    else:
+        print("Variable not found!", key) #imprime cual variable no fue declarada en ninguna de las tablas 
+   
 
 
 
-def num(s):
-    try:
-        return int(s)
-    except ValueError:
-        return float(s)
 
 
 
 
 
-
-def addQuadruple(operation, var1, var2, result):
-    global quadruples
-    quadruples.append({'op':operation, 'var1':var1, 'var2':var2, 'result':result})
+#crea un nuevo cuadruple utilizando un diccionario y lo agrega a la lista/arreglo de quadruples
+def addNewQuadruple(operator, op1, op2, result):
+    global quadruplesList
+    notOrderDict = OrderedDict() #para orderar el quadruplo como lo escribo
+    notOrderDict = {'OPERATOR':operator, 'OP1':op1, 'OP2':op2, 'RESULT':result }
+    orderDict = notOrderDict.copy()
+    quadruplesList.append(orderDict)
 
 
 

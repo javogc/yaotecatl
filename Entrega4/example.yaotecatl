@@ -1,39 +1,14 @@
 program id {
-	int a = "asfdasfsa";
-
-	function float fn(bool l, int i, int j) {
-		float y = "hello";
-		float a=3;
-		a=9;
-		b = 9999999;
-		return 2222222222;
-	}
-
-	float c[2]=[0.3];
-
-	function void pn(int i, int j) {
-		int y = 0;
-		float a=2;
-		a=9;
-		return 2;
-	}
+	
+	
+ 	float a = 3 * 2.2 / 2;
 
 	priomh {
-		int x[0] = [4, 3];
-		x[0] = 99;
-		while (88 >= 77) {
-			if (66 == 55) {
-				fun(5);
-				fuc(x, d);
-			} elseif (44 > 33) {
-				id = -10;
-				id = false && true;
-				id = 2+(0+2/3);
-			} else {
-				read(o);
-				print("print while int module");
-				print(o);
-			}
+		while(2 + a > 3 + 5){
+			int a = (2 + 3 / 5) * 3;
 		}
+		int x = 3 + 1;
+
+
 	}
 }
