@@ -1,0 +1,22 @@
+program id {
+			
+	int bval = 2;
+	int pop = 2 / bval;
+
+	
+	
+
+	function int dos(int c, int r, int t5){
+		int x = c + 2;
+		return x;	
+	}
+
+
+	priomh {
+		int a = 2;
+		 a = dos(1,3,4+1);
+		
+	
+
+	}
+}
