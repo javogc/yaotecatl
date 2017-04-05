@@ -36,10 +36,10 @@ pilaO = [] #pila que tendra los operandos y despues los operador cuando se haga 
 isInt = False #variable para saber si la constante es int o no
 
 jumps = [] #pila de jumps
-callPointer = 0 #para saber en que parametro estas y comparar argumentos con parametros
+callPointerDict = dict() #para saber en que parametro estas y comparar argumentos con parametros
 
-isCall = False           
-
+isCall = False #var que dira si la asignacion a una variable es el resultado de una funcion          
+counterCalls = 0 #cuantas funciones anidadas
 
 
 
@@ -62,6 +62,7 @@ def p_program(p):
     #print("------------------------------------")
 
     #para imprimir los cuadrulos uno por uno
+
     countQuadruples = 0 
     for p in quadruplesList:
 
@@ -103,6 +104,7 @@ def p_assignment(p):
     if p[3] == 4:
         print("can't use a void function for an assignment!")
         exit()
+
     # va a buscar que la variable que quieres cambiarle el valor si exista
     findVar = dict()
 
@@ -123,6 +125,7 @@ def p_assignment(p):
     newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
   
     if newType < 10: # si si son compatibles los argrega al quadruplo
+        
         addNewQuadruple("=", assignVar["val"], "", findVar["val"])
 
     else: #Si no son compatibles marca error
@@ -199,17 +202,20 @@ def p_factoraux(p):
 
 
     if not isCall:
-        isCall = False
         if len(p) == 2: #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[1]
+         
             pilaO.append(searchForOperand(p[1]))
           
  
         else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
+         
             pilaO.append(searchForOperand(p[2]))
              
     
         
-    else:
+    else: 
+        isCall = False
+  
         if p[1] == 4:
             print("can't use a void function for assignment") 
             exit()   
@@ -346,6 +352,7 @@ def p_varsaux(p):
     newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
   
     if newType < 10: # si si son compatibles los argrega al quadruplo
+       
         addNewQuadruple("=", assignVar["val"], "", findVar["val"])
 
     else: #Si no son compatibles marca error
@@ -358,7 +365,7 @@ def p_callaux(p):
     | empty """ 
 
 def p_call(p):
-    """call : ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB  """ 
+    """call : ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB   """ 
     p[0] = funcDict[p[1]]["type"]
 
 
@@ -418,45 +425,52 @@ def p_codeIsCalll(p):
 
 def p_codeGOSUB(p):
     '''codeGOSUB : empty'''
+    global counterCalls
 
+    counterCalls -= 1
     addNewQuadruple("GOSUB", "", "", funcDict[p[-9]]["Quadruple"]) # saca donde esta ubicada la funcion 
 
 #checa si es pusiste menos argumentos
 def p_codeVerifyNull(p):
     '''codeVerifyNull : empty'''
-
-    if callPointer + 1 != len(funcDict[nameOfFunct]["parameters"]):
+    global callPointerDict
+    global counterCalls
+    if callPointerDict[counterCalls]["pointer"] + 1 != len(funcDict[callPointerDict[counterCalls]["func"]]["parameters"]):
         print("Number of parameters is incorrect")
         exit()
         
 #checa si es pusiste de mas argumentos
 def p_codeVerifyNull2(p):
     '''codeVerifyNull2 : empty'''
-   
-    global callPointer   
-    if callPointer == len(funcDict[nameOfFunct]["parameters"]):
+    global counterCalls
+    global callPointerDict   
+    if callPointerDict[counterCalls]["pointer"] == len(funcDict[callPointerDict[counterCalls]["func"]]["parameters"]):
         print("Number of parameters is incorrect")
         exit()
     
 #mueve el pointer para comparar arg con param
 def p_codeMovePointer(p):
     '''codeMovePointer : empty'''
-    global callPointer
-    callPointer += 1
+    global counterCalls
+    global callPointerDict
+    callPointerDict[counterCalls]["pointer"] += 1 #le suma uno al counter de la funcion actual que es definida por el counterCalls
 
 #Agrega quad PARAM
 def p_codeAddArguments(p):
     '''codeAddArguments : empty'''
     global nameOfFunct
+    global counterCalls
+    global callPointerDict
+
     argument = pilaO.pop()
 
     p_codeVerifyNull2(p)
 
-    newType = checkSemanticCube( argument["type"] ,funcDict[nameOfFunct]["parameters"][callPointer]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
+    newType = checkSemanticCube( argument["type"] ,funcDict[nameOfFunct]["parameters"][callPointerDict[counterCalls]["pointer"]]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
             
     if newType < 10: # si si son compatibles los argrega al quadruplo
                 
-        addNewQuadruple("PARAM", argument["val"], "", funcDict[nameOfFunct]["parameters"][callPointer]["val"]) #usando el pinter sacamos el parametro que recibira el argumento
+        addNewQuadruple("PARAM", argument["val"], "", funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["val"]) #usando el pinter sacamos el parametro que recibira el argumento
 
     else: #Si no son compatibles marca error
         print("You cant evaluate those operands with that operator!")
@@ -466,37 +480,47 @@ def p_codeAddArguments(p):
 #genera el quad de ERA
 def p_codeEraQuad(p):
     '''codeEraQuad : empty'''
- 
-    global callPointer
+    global counterCalls
+    global callPointerDict
 
     addNewQuadruple("ERA", "", "", p[-3])
 
-    callPointer = 0
+    callPointerDict[counterCalls]["pointer"] = 0
 
 
 
 #checa que exista la funcion
 def p_codeVerifyFunct(p):
     '''codeVerifyFunct : empty'''
-   
+    global callPointerDict
     global nameOfFunct
+    global counterCalls
+
+
+
+
+    counterCalls += 1
+
     nameOfFunct = p[-1]
     if not p[-1] in funcDict.keys():
         print("That function you are trying to call doesnt't exist:", p[-1])
         exit()
+    else:
+        callPointerDict[counterCalls] = {"pointer":0, "func": p[-1]}
+
      
         
 
 def p_codeReturnQuad(p):
     """codeReturnQuad : """
-    varRespuesta = pilaO.pop() #saca lo ultimo metido a la pila que fue lo que se regresara
+    varRespuesta = pilaO[-1] #saca lo ultimo metido a la pila que fue lo que se regresara
     if varRespuesta["type"] != funcDict[nameOfFunct]["type"]: #si el tipo del return value NO es igual que el tipo de la funcion marca error
         print("Type of funct is not the same as the type of the return value!")
         exit()
     else:
         addNewQuadruple("RETURN", "", "", varRespuesta["val"])
-
-        pilaO.append(varRespuesta) #vuelve a meter la respuesta puesto que se la asignara a la variable que llamo la funcion
+        
+        
       
         
 #agrega la funcion con el numero de quadruplo en que esta para poder regresar aqui en el GOSUB
@@ -522,6 +546,7 @@ def p_codeLocationMain(p):
 def p_codeGOTOMain(p):
     """codeGOTOMain : """
     addNewQuadruple("GOTOM", "", "", "")
+    
     jumps.append(len(quadruplesList)-1)
 
 
@@ -731,7 +756,7 @@ def p_codeAskTerm(p):
                 respAux = {"val":"T1", "type":newType}
 
                 addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
-
+               
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
 
             else: #Si no son compatibles marca error
@@ -758,7 +783,7 @@ def p_codeAskFactor(p):
                 respAux = {"val":"T1", "type":newType}
 
                 addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
-
+               
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
 
             else: #Si no son compatibles marca error
@@ -787,7 +812,7 @@ def p_codeAskExpression(p):
                 respAux = {"val":"T1", "type":newType}
 
                 addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
-
+              
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
 
             else: #Si no son compatibles marca error
