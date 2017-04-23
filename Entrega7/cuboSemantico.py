@@ -52,7 +52,7 @@ def checkSemanticCube(op1, op2, operator):
     #print(op2)
 
     return cube[typeOfVar(op1)][typeOfVar(op2)][operator]
-
+    
 
 
 

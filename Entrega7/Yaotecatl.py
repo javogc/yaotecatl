@@ -2,7 +2,7 @@ from cuboSemantico import *
 from lex import *
 import collections
 from collections import OrderedDict
-
+from collections import deque
 
 
 #------------------------------Comienzo de Yacc --------------------------------------------
@@ -40,6 +40,8 @@ callPointerDict = dict() #para saber en que parametro estas y comparar argumento
 
 isCall = False #var que dira si la asignacion a una variable es el resultado de una funcion          
 counterCalls = 0 #cuantas funciones anidadas
+newDir = 0
+arrValues = []
 
 
 globalVarDir = dict() #diccionario que tiene las direcciones de memoria globales
@@ -125,14 +127,73 @@ def p_auxprogramfunct(p):
     """auxprogramfunct : function auxprogramfunct 
     | empty """      
 
+
 def p_array(p):
     """array : ID LFTBRACSQR exp RGTBRACSQR"""
 
+    global newDir
+
+    findVar = dict() #buscara la variable
+
+    if p[1] in globalVarDict.keys():
+        findVar = globalVarDict[p[1]]
+        findVar["scope"] = "global"
+        
+
+    elif p[1] in localVarDict.keys():
+        findVar = localVarDict[p[1]]
+        findVar["scope"] = "local"
+
+
+    else:
+        print("Variable not found!", p[1]) #imprime cual variable no fue declarada en ninguna de las tablas 
+        exit()  
+
+
+
+
+    indexArr = pilaO.pop()["dir"]
+
+    addNewQuadruple("VERIFY", indexArr, "", findVar["arrSize"])
+
+    auxDir = findVar["dir"]
+
+
+
+    constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] }
+    constVarDir["int"] += 1
+
+
+    specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" 
+
+    addNewQuadruple("+",indexArr, constantDict[str(auxDir)]["dir"], specialDir  )
+
+
+    pilaO.append({"dir":specialDir, "type":findVar["type"]})
+    
+    tempVarDir[listOfTypesReversed(findVar["type"])] += 1
+
+   
+    p[0] = p[1]
+
+
+
+
 def p_arrayvals(p):
     """arrayvals : LFTBRACSQR arrayvalsaux RGTBRACSQR """
+
 def p_arrayvalsaux(p):
-    """arrayvalsaux : constant  
-    | constant COMMA arrayvalsaux """        
+    """arrayvalsaux : cteNcteS codeAddValueArray 
+    | cteNcteS codeAddValueArray COMMA arrayvalsaux """        
+
+def p_cteNcteS(p):
+    """cteNcteS : cteN  
+    | cteS"""   
+
+    p[0] = p[1]
+
+
+
 
 def p_assignment(p):
     """assignment : assignmentaux EQUAL expression SEMICOLON"""    
@@ -161,8 +222,10 @@ def p_assignment(p):
     newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
   
     if newType < 10: # si si son compatibles los argrega al quadruplo
-        
-        addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
+        if findVar["type"] < 20:
+            addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
+        else:
+            addNewQuadruple("=", assignVar["dir"], "", pilaO.pop()["dir"])   
 
     else: #Si no son compatibles marca error
             print("You cant evaluate those operands with that operator!" + findVar["val"] )
@@ -365,35 +428,85 @@ def p_varsaux(p):
     """varsaux : ID codeAddVar EQUAL expression varsaux2 
     | ID  codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 """
 
-    if p[4] == 4:
-        print("can't use a void function for an assignment!")
-        exit()
+    global globalVarDict
+
+    global scopeVar
+
+    global localVarDict
 
 
-    findVar = dict()
+    if p[4] == 4: # el 4 es expression y si la expression es call y es una funcion void saldra error
+            print("can't use a void function for an assignment!")
+            exit()
+
+
+    findVar = dict() #buscara la variable
 
     if p[1] in globalVarDict.keys():
         findVar = globalVarDict[p[1]]
-    
+        findVar["scope"] = "global"
+        
 
     elif p[1] in localVarDict.keys():
         findVar = localVarDict[p[1]]
+        findVar["scope"] = "local"
+
 
     else:
         print("Variable not found!", p[1]) #imprime cual variable no fue declarada en ninguna de las tablas 
-        exit()    
+        exit()  
 
-    assignVar = pilaO.pop() #saca la variable que tiene la respuesta final para ser asignada despues 
 
-    newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
-  
-    if newType < 10: # si si son compatibles los argrega al quadruplo
+    if len(p) > 7: # si la regla es el arreglo
+        arrSize = int(p[4])
+
+        if scopeVar == "global":
+            globalVarDir[listOfTypesReversed(globalVarDict[nameOfVar]['type'])] += arrSize - 1 #le sumara el size del arreglo a la memoria global
+
+            varGlobal[nameOfVar]["arrSize"] = arrSize
+
+        else:
+            localVarDir[listOfTypesReversed(localVarDict[nameOfVar]['type'])] += arrSize - 1 #le sumara el size del arreglo a la memoria local
+
+
+            localVarDict[nameOfVar]["arrSize"] = arrSize
+
+
         
-        addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
+        if findVar["arrSize"] == len(arrValues):   # que el size del arreglo sea igual a la de sus asignaciones [1,2,3]
+            savedDir = findVar["dir"] #guarda la direccion actual del arreglo a la que le asignaremos valores para ir sumandole uno a la direccion por cada valor
 
-    else: #Si no son compatibles marca error
-            print("You cant evaluate those operands with that operator!" + findVar["val"] )
-            exit()    
+            for i in range(0, findVar["arrSize"]):
+                arrValAux = arrValues.pop(0)
+       
+                checktype = checkSemanticCube( findVar["type"] ,constantDict[arrValAux]['type'] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
+                
+                if checktype >= 10:
+                    print("array value types don't match!")
+                    exit()
+
+            
+                addNewQuadruple("=", constantDict[arrValAux]['dir'], "", savedDir) #se le asigna el valor a la direccion actual del arreglo
+                
+                savedDir += 1 #le suma 1 a la direccion para asiganrle el siguiente valor
+        else:
+            print("Error: Array size doesn't match!")   
+            exit()     
+
+    else:          
+
+        assignVar = pilaO.pop() #saca la variable que tiene la respuesta final para ser asignada despues 
+
+        newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
+      
+        if newType < 10: # si si son compatibles los argrega al quadruplo
+            
+
+            addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
+
+        else: #Si no son compatibles marca error
+                print("You cant evaluate those operands with that operator!" + findVar["val"] )
+                exit()    
 
 
 def p_callaux(p):
@@ -453,6 +566,18 @@ def p_error(p):
 
 #-------------------------------------------------- OTHER RULES -------------------------------------
 
+
+
+#codigo para agregar valor del arreglo al arreglo creado llamado arrayValues y despues usarlo para asignar a cada valor del array
+def p_codeAddValueArray(p):
+    '''codeAddValueArray : empty'''
+    global arrValues
+
+    arrValues.append(p[-1])
+
+
+
+#codigo para asignar una variable temporal el return de la funcion
 def p_codeTempReturn(p):
     '''codeTempReturn : empty'''
     global nameOfFunct
@@ -701,8 +826,8 @@ def p_codeAddVarArreglo(p):
     global nameOfVar
 
     nameOfVar = p[-1]
-
-    AddVarDict(nameOfVar, typeOfVar + 100)    #llama la funcion para agregar la variable al diccionario y le suma 100 al tipo ya que es un arreglo 
+    
+    AddVarDict(nameOfVar, (typeOfVar + 100))    #llama la funcion para agregar la variable al diccionario y le suma 100 al tipo ya que es un arreglo 
 
 
 def p_codeAddParameters(p):
@@ -934,13 +1059,13 @@ def listOfTypesReversed(auxType):
     elif auxType == 3:
         return "bool"       
     elif auxType == 100:
-        return "intArr"
+        return "int"
     elif auxType == 101:
-        return "floatArr" 
+        return "float" 
     elif auxType == 102:
-        return "stringArr"            
+        return "string"            
     elif auxType == 103:
-        return "boolArr"
+        return "bool"
 
 
 
