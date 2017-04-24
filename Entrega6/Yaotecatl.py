@@ -42,6 +42,42 @@ isCall = False #var que dira si la asignacion a una variable es el resultado de 
 counterCalls = 0 #cuantas funciones anidadas
 
 
+globalVarDir = dict() #diccionario que tiene las direcciones de memoria globales
+globalVarDir["bool"] = 10000
+globalVarDir["int"] = 14000
+globalVarDir["float"] = 18000
+globalVarDir["string"] = 22000
+
+
+localVarDir = dict() #diccionario que tiene las direcciones de memoria locales
+localVarDir["bool"] = 26000
+localVarDir["int"] = 30000
+localVarDir["float"] = 34000
+localVarDir["string"] = 38000
+
+
+constVarDir = dict() #diccionario que tiene las direcciones de memoria constantes
+constVarDir["bool"] = 42000
+constVarDir["int"] = 46000
+constVarDir["float"] = 50000
+constVarDir["string"] = 54000
+
+
+tempVarDir = dict() #diccionario que tiene las direcciones de memoria temporales
+tempVarDir["bool"] = 58000
+tempVarDir["int"] = 62000
+tempVarDir["float"] = 66000
+tempVarDir["string"] = 70000 
+
+
+
+
+
+
+
+
+
+
 
 #-------------------------Reglas del compilador-----------------
 
@@ -126,7 +162,7 @@ def p_assignment(p):
   
     if newType < 10: # si si son compatibles los argrega al quadruplo
         
-        addNewQuadruple("=", assignVar["val"], "", findVar["val"])
+        addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
 
     else: #Si no son compatibles marca error
             print("You cant evaluate those operands with that operator!" + findVar["val"] )
@@ -254,15 +290,15 @@ def p_write(p):
 
     if p[3] in globalVarDict.keys():
         findVar = globalVarDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["val"]) 
+        addNewQuadruple("PRINT", "", "", findVar["dir"]) 
 
     elif p[3] in localVarDict.keys():
         findVar = localVarDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["val"]) 
+        addNewQuadruple("PRINT", "", "", findVar["dir"]) 
 
     elif p[3] in constantDict.keys():
         findVar = constantDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["val"])    
+        addNewQuadruple("PRINT", "", "", findVar["dir"])    
     
     else:
         print("Variable not found!", p[3]) #imprime cual variable no fue declarada en ninguna de las tablas 
@@ -352,8 +388,8 @@ def p_varsaux(p):
     newType = checkSemanticCube( findVar["type"] ,assignVar["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
   
     if newType < 10: # si si son compatibles los argrega al quadruplo
-       
-        addNewQuadruple("=", assignVar["val"], "", findVar["val"])
+        
+        addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
 
     else: #Si no son compatibles marca error
             print("You cant evaluate those operands with that operator!" + findVar["val"] )
@@ -365,7 +401,7 @@ def p_callaux(p):
     | empty """ 
 
 def p_call(p):
-    """call : ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB   """ 
+    """call : ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn  """ 
     p[0] = funcDict[p[1]]["type"]
 
 
@@ -378,15 +414,15 @@ def p_read(p):
 
     if p[3] in globalVarDict.keys():
         findVar = globalVarDict[p[3]]
-        addNewQuadruple("READ", "", "", findVar["val"]) 
+        addNewQuadruple("READ", "", "", findVar["dir"]) 
 
     elif p[3] in localVarDict.keys():
         findVar = localVarDict[p[3]]
-        addNewQuadruple("READ", "", "", findVar["val"]) 
+        addNewQuadruple("READ", "", "", findVar["dir"]) 
 
     elif p[3] in constantDict.keys():
         findVar = constantDict[p[3]]
-        addNewQuadruple("READ", "", "", findVar["val"])    
+        addNewQuadruple("READ", "", "", findVar["dir"])    
     
     else:
         print("Variable not found!", p[3]) #imprime cual variable no fue declarada en ninguna de las tablas 
@@ -416,6 +452,25 @@ def p_error(p):
 
 
 #-------------------------------------------------- OTHER RULES -------------------------------------
+
+def p_codeTempReturn(p):
+    '''codeTempReturn : empty'''
+    global nameOfFunct
+    nameOfFunct = p[-10]
+
+    if funcDict[nameOfFunct]["type"] != 4:
+
+        respAux = {"dir": tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])], "type":funcDict[nameOfFunct]["type"]}
+
+        addNewQuadruple('=', nameOfFunct, "", respAux["dir"])
+
+        pilaO.append(respAux)
+
+
+        tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])] += 1
+
+
+
 #para saber que es una funcion
 def p_codeIsCalll(p):
     '''codeIsCalll : empty'''
@@ -470,7 +525,7 @@ def p_codeAddArguments(p):
             
     if newType < 10: # si si son compatibles los argrega al quadruplo
                 
-        addNewQuadruple("PARAM", argument["val"], "", funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["val"]) #usando el pinter sacamos el parametro que recibira el argumento
+        addNewQuadruple("PARAM", argument["dir"], "", funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["dir"]) #usando el pinter sacamos el parametro que recibira el argumento
 
     else: #Si no son compatibles marca error
         print("You cant evaluate those operands with that operator!")
@@ -513,12 +568,12 @@ def p_codeVerifyFunct(p):
 
 def p_codeReturnQuad(p):
     """codeReturnQuad : """
-    varRespuesta = pilaO[-1] #saca lo ultimo metido a la pila que fue lo que se regresara
+    varRespuesta = pilaO.pop() #saca lo ultimo metido a la pila que fue lo que se regresara
     if varRespuesta["type"] != funcDict[nameOfFunct]["type"]: #si el tipo del return value NO es igual que el tipo de la funcion marca error
         print("Type of funct is not the same as the type of the return value!")
         exit()
     else:
-        addNewQuadruple("RETURN", "", "", varRespuesta["val"])
+        addNewQuadruple("RETURN", "", "", varRespuesta["dir"])
         
         
       
@@ -575,7 +630,7 @@ def p_codeGOTOF(p):
 
     if respGotof["type"] == 3: #checa si el tipo de la variable es BOOL
 
-        addNewQuadruple("GOTOF", respGotof, "", "")
+        addNewQuadruple("GOTOF", respGotof["dir"], "", "")
         jumps.append(len(quadruplesList)-1)
 
     else:
@@ -705,13 +760,16 @@ def p_codeAddOpenParen(p): #abre parentesis en una operacion
 def p_codeAddConstBool(p): #agrega una constante bool al diccionario de constantes
     """codeAddConstBool : empty"""
 
-    constantDict[p[-1]] = {"val": p[-1], "type":3 }
+    constantDict[p[-1]] = {"val": p[-1], "type":3, "dir": constVarDir["bool"]  }
+
+    constVarDir["bool"] += 1
 
 def p_codeAddConstString(p): #agrega una constante string al diccionario de constantes
     """codeAddConstString : empty"""
     
-    constantDict[p[-1]] = {"val": p[-1], "type":2 }
+    constantDict[p[-1]] = {"val": p[-1], "type":2, "dir": constVarDir["string"] }
 
+    constVarDir["string"] += 1
 
 def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccionario de constantes
     """codeAddConstNumber : empty"""
@@ -720,10 +778,14 @@ def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccio
 
     if isInt(p[-1]):
         typeOfConst = 0
+        constantDict[str(p[-1])] = {"val":p[-1], "type":typeOfConst, "dir": constVarDir["int"] }
+        constVarDir["int"] += 1
     else:
         typeOfConst = 1
+        constantDict[str(p[-1])] = {"val":p[-1], "type":typeOfConst, "dir": constVarDir["float"] }
+        constVarDir["float"] += 1
     
-    constantDict[str(p[-1])] = {"val":p[-1], "type":typeOfConst}
+    
 
 
 
@@ -753,11 +815,12 @@ def p_codeAskTerm(p):
             
             if newType < 10: # si si son compatibles los argrega al quadruplo
                 
-                respAux = {"val":"T1", "type":newType}
+                respAux = {"dir":tempVarDir[listOfTypesReversed(newType)], "type":newType}
 
-                addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
-               
+                addNewQuadruple(operator, op1["dir"], op2["dir"], respAux["dir"])
+              
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
+                tempVarDir[listOfTypesReversed(newType)] += 1
 
             else: #Si no son compatibles marca error
                 print("You cant evaluate those operands with that operator!")
@@ -780,12 +843,12 @@ def p_codeAskFactor(p):
             newType = checkSemanticCube( op1["type"] ,op2["type"] ,operator) #checar si los 2 operandos que sacaste son compatibles con el operador
             
             if newType < 10: # si si son compatibles los argrega al quadruplo
-                respAux = {"val":"T1", "type":newType}
+                respAux = {"dir":tempVarDir[listOfTypesReversed(newType)], "type":newType}
 
-                addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
-               
+                addNewQuadruple(operator, op1["dir"], op2["dir"], respAux["dir"])
+              
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
-
+                tempVarDir[listOfTypesReversed(newType)] += 1
             else: #Si no son compatibles marca error
                 print("You cant evaluate those operands with that operator!")
                 exit()
@@ -809,11 +872,13 @@ def p_codeAskExpression(p):
             newType = checkSemanticCube( op1["type"] ,op2["type"] ,operator) #checar si los 2 operandos que sacaste son compatibles con el operador
             
             if newType < 10: # si si son compatibles los argrega al quadruplo
-                respAux = {"val":"T1", "type":newType}
 
-                addNewQuadruple(operator, op1["val"], op2["val"], respAux["val"])
+                respAux = {"dir":tempVarDir[listOfTypesReversed(newType)], "type":newType}
+
+                addNewQuadruple(operator, op1["dir"], op2["dir"], respAux["dir"])
               
                 pilaO.append(respAux) #la respuesta es agregada a la pilaO con su nuevo tipo
+                tempVarDir[listOfTypesReversed(newType)] += 1
 
             else: #Si no son compatibles marca error
                 print("You cant evaluate those operands with that operator!")
@@ -890,7 +955,10 @@ def addFunctDict(functName, functType, functParameters, numOfQuadruple):
         
     else:
         funcDict[functName] = {"val":functName, "type":functType, "parameters":functParameters, "Quadruple": numOfQuadruple } #guarda la funcion en el diccionario
-
+        
+        if functType != 4:
+            funcDict[functName]["dir"] = globalVarDir[listOfTypesReversed(functType)]
+            globalVarDir[listOfTypesReversed(functType)] += 1
 
 def AddVarDict(varName, varType): 
     global scopeVar
@@ -902,11 +970,15 @@ def AddVarDict(varName, varType):
             print("Error in global table, variable already exists!")
 
         else:
-            globalVarDict[varName] = {"val":varName, "type":varType}  # si no existe agregarla al diccionario
-            
+            globalVarDict[varName] = {"val":varName, "type":varType, "dir": globalVarDir[listOfTypesReversed(varType)] }  # si no existe agregarla al diccionario
+            globalVarDir[listOfTypesReversed(varType)] += 1
+
+
     else:       #hacer lo mismo que en global pero en local
         if not varName in localVarDict.keys():
-            localVarDict[varName] = {"val":varName, "type":varType}
+            localVarDict[varName] = {"val":varName, "type":varType, "dir": localVarDir[listOfTypesReversed(varType)] }
+            localVarDir[listOfTypesReversed(varType)] += 1
+
         else:
             rint("Error in local table, variable already exists!")
 

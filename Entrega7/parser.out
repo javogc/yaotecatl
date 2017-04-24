@@ -1,0 +1,4294 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC
+Rule 2     auxprogramvars -> vars auxprogramvars
+Rule 3     auxprogramvars -> empty
+Rule 4     auxprogramfunct -> function auxprogramfunct
+Rule 5     auxprogramfunct -> empty
+Rule 6     array -> ID LFTBRACSQR exp RGTBRACSQR
+Rule 7     arrayvals -> LFTBRACSQR arrayvalsaux RGTBRACSQR
+Rule 8     arrayvalsaux -> cteNcteS codeAddValueArray
+Rule 9     arrayvalsaux -> cteNcteS codeAddValueArray COMMA arrayvalsaux
+Rule 10    cteNcteS -> cteN
+Rule 11    cteNcteS -> cteS
+Rule 12    assignment -> assignmentaux EQUAL expression SEMICOLON
+Rule 13    assignmentaux -> ID
+Rule 14    assignmentaux -> array
+Rule 15    blockreturn -> LFTBRAC blockneutral RGTBRAC
+Rule 16    blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC
+Rule 17    blockneutral -> statement blockneutral
+Rule 18    blockneutral -> vars blockneutral
+Rule 19    blockneutral -> empty
+Rule 20    block -> LFTBRAC blockneutral RGTBRAC
+Rule 21    condition -> IF conditionaux codeEndIf
+Rule 22    condition -> IF conditionaux ELSE codeElse block codeEndIf
+Rule 23    conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2
+Rule 24    conditionaux2 -> codeNextIf ELSEIF conditionaux
+Rule 25    conditionaux2 -> empty
+Rule 26    constant -> ID
+Rule 27    constant -> array
+Rule 28    constant -> cteN
+Rule 29    constant -> cteS
+Rule 30    constant -> TRUE codeAddConstBool
+Rule 31    constant -> FALSE codeAddConstBool
+Rule 32    constant -> call codeIsCalll
+Rule 33    cteN -> FLOAT codeAddConstNumber
+Rule 34    cteN -> INT codeAddConstNumber
+Rule 35    cteS -> STRING codeAddConstString
+Rule 36    exp -> term
+Rule 37    exp -> term PLUS codeAddOperator exp
+Rule 38    exp -> term MINUS codeAddOperator exp
+Rule 39    factoraux -> constant
+Rule 40    factoraux -> PLUS constant
+Rule 41    factoraux -> MINUS constant
+Rule 42    factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+Rule 43    factor -> factoraux codeAskFactor
+Rule 44    expression -> exp
+Rule 45    expression -> exp expressionaux codeAddOperator exp codeAskExpression
+Rule 46    expressionaux -> AND
+Rule 47    expressionaux -> DOUBEQUAL
+Rule 48    expressionaux -> NOT
+Rule 49    expressionaux -> OR
+Rule 50    expressionaux -> LESSTHANEQUAL
+Rule 51    expressionaux -> GREATTHANEQUAL
+Rule 52    expressionaux -> GREATTHAN
+Rule 53    expressionaux -> LESSTHAN
+Rule 54    loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+Rule 55    write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON
+Rule 56    parameter -> type codeCheckType ID codeAddParameters
+Rule 57    parameter -> type codeCheckType ID codeAddParameters COMMA parameter
+Rule 58    parameter -> empty
+Rule 59    term -> factor MULTIPLICATION codeAddOperator term
+Rule 60    term -> factor DIVISION codeAddOperator term
+Rule 61    term -> factor codeAskTerm
+Rule 62    statement -> assignment
+Rule 63    statement -> condition
+Rule 64    statement -> loop
+Rule 65    statement -> write
+Rule 66    statement -> read
+Rule 67    statement -> call SEMICOLON
+Rule 68    type -> INT
+Rule 69    type -> FLOAT
+Rule 70    type -> CHAR
+Rule 71    type -> BOOL
+Rule 72    type -> STRING
+Rule 73    main -> codeLocationMain PRIOMH codeScope block
+Rule 74    function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+Rule 75    functionaux -> VOID codeTypeVoid codeCheckType
+Rule 76    functionaux -> codeFuncIndicator type codeCheckType
+Rule 77    vars -> type codeCheckType varsaux
+Rule 78    varsaux2 -> COMMA varsaux
+Rule 79    varsaux2 -> SEMICOLON
+Rule 80    varsaux -> ID codeAddVar EQUAL expression varsaux2
+Rule 81    varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2
+Rule 82    callaux -> codeMovePointer COMMA exp codeAddArguments callaux
+Rule 83    callaux -> empty
+Rule 84    call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+Rule 85    read -> READ LFTPAREN readaux RGTPAREN SEMICOLON
+Rule 86    readaux -> ID
+Rule 87    readaux -> array
+Rule 88    empty -> <empty>
+Rule 89    codeGotoElseIf -> <empty>
+Rule 90    codeAddValueArray -> empty
+Rule 91    codeTempReturn -> empty
+Rule 92    codeIsCalll -> empty
+Rule 93    codeGOSUB -> empty
+Rule 94    codeVerifyNull -> empty
+Rule 95    codeVerifyNull2 -> empty
+Rule 96    codeMovePointer -> empty
+Rule 97    codeAddArguments -> empty
+Rule 98    codeEraQuad -> empty
+Rule 99    codeVerifyFunct -> empty
+Rule 100   codeReturnQuad -> <empty>
+Rule 101   codeAddFunctQuad -> <empty>
+Rule 102   codeLocationMain -> <empty>
+Rule 103   codeGOTOMain -> <empty>
+Rule 104   codeElse -> <empty>
+Rule 105   codeEndIf -> <empty>
+Rule 106   codeNextIf -> <empty>
+Rule 107   codeGOTOF -> <empty>
+Rule 108   codeGOTOWhile -> <empty>
+Rule 109   codeWhileCondition -> <empty>
+Rule 110   codeScope -> <empty>
+Rule 111   codeCheckType -> <empty>
+Rule 112   codeAddVar -> <empty>
+Rule 113   codeAddVarArreglo -> <empty>
+Rule 114   codeAddParameters -> <empty>
+Rule 115   codeNameOfFunct -> <empty>
+Rule 116   codeTypeVoid -> <empty>
+Rule 117   codeFuncIndicator -> <empty>
+Rule 118   codeDeleteOpenParen -> empty
+Rule 119   codeAddOpenParen -> empty
+Rule 120   codeAddConstBool -> empty
+Rule 121   codeAddConstString -> empty
+Rule 122   codeAddConstNumber -> empty
+Rule 123   codeAddOperator -> empty
+Rule 124   codeAskTerm -> empty
+Rule 125   codeAskFactor -> empty
+Rule 126   codeAskExpression -> empty
+
+Terminals, with rules where they appear
+
+AND                  : 46
+BOOL                 : 71
+CHAR                 : 70
+COMMA                : 9 57 78 82
+DIVISION             : 60
+DOUBEQUAL            : 47
+ELSE                 : 22
+ELSEIF               : 24
+EQUAL                : 12 80 81
+FALSE                : 31
+FLOAT                : 33 69
+FUNCTION             : 74
+GREATTHAN            : 52
+GREATTHANEQUAL       : 51
+ID                   : 1 6 13 26 56 57 74 80 81 84 86
+IF                   : 21 22
+INT                  : 34 68 81
+LESSTHAN             : 53
+LESSTHANEQUAL        : 50
+LFTBRAC              : 1 15 16 20
+LFTBRACSQR           : 6 7 81
+LFTPAREN             : 23 42 54 55 74 84 85
+MINUS                : 38 41
+MULTIPLICATION       : 59
+NOT                  : 48
+OR                   : 49
+PLUS                 : 37 40
+PRINT                : 55
+PRIOMH               : 73
+PROGRAM              : 1
+READ                 : 85
+RETURN               : 16
+RGTBRAC              : 1 15 16 20
+RGTBRACSQR           : 6 7 81
+RGTPAREN             : 23 42 54 55 74 84 85
+SEMICOLON            : 12 16 55 67 79 85
+STRING               : 35 72
+TRUE                 : 30
+VOID                 : 75
+WHILE                : 54
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 14 27 87
+arrayvals            : 81
+arrayvalsaux         : 7 9
+assignment           : 62
+assignmentaux        : 12
+auxprogramfunct      : 1 4
+auxprogramvars       : 1 2
+block                : 22 23 54 73
+blockneutral         : 15 16 17 18 20
+blockreturn          : 74
+call                 : 32 67
+callaux              : 82 84
+codeAddArguments     : 82 84
+codeAddConstBool     : 30 31
+codeAddConstNumber   : 33 34
+codeAddConstString   : 35
+codeAddFunctQuad     : 74
+codeAddOpenParen     : 42
+codeAddOperator      : 37 38 45 59 60
+codeAddParameters    : 56 57
+codeAddValueArray    : 8 9
+codeAddVar           : 80
+codeAddVarArreglo    : 81
+codeAskExpression    : 45
+codeAskFactor        : 42 43
+codeAskTerm          : 61
+codeCheckType        : 56 57 75 76 77
+codeDeleteOpenParen  : 42
+codeElse             : 22
+codeEndIf            : 21 22
+codeEraQuad          : 84
+codeFuncIndicator    : 76
+codeGOSUB            : 84
+codeGOTOF            : 23 54
+codeGOTOMain         : 1
+codeGOTOWhile        : 54
+codeGotoElseIf       : 23
+codeIsCalll          : 32
+codeLocationMain     : 73
+codeMovePointer      : 82
+codeNameOfFunct      : 74
+codeNextIf           : 24
+codeReturnQuad       : 16
+codeScope            : 73 74 74
+codeTempReturn       : 84
+codeTypeVoid         : 75
+codeVerifyFunct      : 84
+codeVerifyNull       : 84
+codeVerifyNull2      : 
+codeWhileCondition   : 54
+condition            : 63
+conditionaux         : 21 22 24
+conditionaux2        : 23
+constant             : 39 40 41 55
+cteN                 : 10 28
+cteNcteS             : 8 9
+cteS                 : 11 29
+empty                : 3 5 19 25 58 83 90 91 92 93 94 95 96 97 98 99 118 119 120 121 122 123 124 125 126
+exp                  : 6 16 37 38 44 45 45 82 84
+expression           : 12 23 42 54 80
+expressionaux        : 45
+factor               : 59 60 61
+factoraux            : 43
+function             : 4
+functionaux          : 74
+loop                 : 64
+main                 : 1
+parameter            : 57 74
+program              : 0
+read                 : 66
+readaux              : 85
+statement            : 17
+term                 : 36 37 38 59 60
+type                 : 56 57 76 77
+vars                 : 2 18
+varsaux              : 77 78
+varsaux2             : 80 81
+write                : 65
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC
+
+    LFTBRAC         shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID LFTBRAC . auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC
+    (2) auxprogramvars -> . vars auxprogramvars
+    (3) auxprogramvars -> . empty
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+
+    FUNCTION        reduce using rule 88 (empty -> .)
+    PRIOMH          reduce using rule 88 (empty -> .)
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    auxprogramvars                 shift and go to state 5
+    vars                           shift and go to state 6
+    type                           shift and go to state 12
+    empty                          shift and go to state 13
+
+state 5
+
+    (1) program -> PROGRAM ID LFTBRAC auxprogramvars . codeGOTOMain auxprogramfunct main RGTBRAC
+    (103) codeGOTOMain -> .
+
+    FUNCTION        reduce using rule 103 (codeGOTOMain -> .)
+    PRIOMH          reduce using rule 103 (codeGOTOMain -> .)
+
+    codeGOTOMain                   shift and go to state 14
+
+state 6
+
+    (2) auxprogramvars -> vars . auxprogramvars
+    (2) auxprogramvars -> . vars auxprogramvars
+    (3) auxprogramvars -> . empty
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+
+    FUNCTION        reduce using rule 88 (empty -> .)
+    PRIOMH          reduce using rule 88 (empty -> .)
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    vars                           shift and go to state 6
+    auxprogramvars                 shift and go to state 15
+    type                           shift and go to state 12
+    empty                          shift and go to state 13
+
+state 7
+
+    (69) type -> FLOAT .
+
+    ID              reduce using rule 69 (type -> FLOAT .)
+
+
+state 8
+
+    (68) type -> INT .
+
+    ID              reduce using rule 68 (type -> INT .)
+
+
+state 9
+
+    (70) type -> CHAR .
+
+    ID              reduce using rule 70 (type -> CHAR .)
+
+
+state 10
+
+    (71) type -> BOOL .
+
+    ID              reduce using rule 71 (type -> BOOL .)
+
+
+state 11
+
+    (72) type -> STRING .
+
+    ID              reduce using rule 72 (type -> STRING .)
+
+
+state 12
+
+    (77) vars -> type . codeCheckType varsaux
+    (111) codeCheckType -> .
+
+    ID              reduce using rule 111 (codeCheckType -> .)
+
+    codeCheckType                  shift and go to state 16
+
+state 13
+
+    (3) auxprogramvars -> empty .
+
+    FUNCTION        reduce using rule 3 (auxprogramvars -> empty .)
+    PRIOMH          reduce using rule 3 (auxprogramvars -> empty .)
+
+
+state 14
+
+    (1) program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain . auxprogramfunct main RGTBRAC
+    (4) auxprogramfunct -> . function auxprogramfunct
+    (5) auxprogramfunct -> . empty
+    (74) function -> . FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (88) empty -> .
+
+    FUNCTION        shift and go to state 18
+    PRIOMH          reduce using rule 88 (empty -> .)
+
+    function                       shift and go to state 17
+    auxprogramfunct                shift and go to state 19
+    empty                          shift and go to state 20
+
+state 15
+
+    (2) auxprogramvars -> vars auxprogramvars .
+
+    FUNCTION        reduce using rule 2 (auxprogramvars -> vars auxprogramvars .)
+    PRIOMH          reduce using rule 2 (auxprogramvars -> vars auxprogramvars .)
+
+
+state 16
+
+    (77) vars -> type codeCheckType . varsaux
+    (80) varsaux -> . ID codeAddVar EQUAL expression varsaux2
+    (81) varsaux -> . ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2
+
+    ID              shift and go to state 21
+
+    varsaux                        shift and go to state 22
+
+state 17
+
+    (4) auxprogramfunct -> function . auxprogramfunct
+    (4) auxprogramfunct -> . function auxprogramfunct
+    (5) auxprogramfunct -> . empty
+    (74) function -> . FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (88) empty -> .
+
+    FUNCTION        shift and go to state 18
+    PRIOMH          reduce using rule 88 (empty -> .)
+
+    function                       shift and go to state 17
+    auxprogramfunct                shift and go to state 23
+    empty                          shift and go to state 20
+
+state 18
+
+    (74) function -> FUNCTION . codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (110) codeScope -> .
+
+    VOID            reduce using rule 110 (codeScope -> .)
+    INT             reduce using rule 110 (codeScope -> .)
+    FLOAT           reduce using rule 110 (codeScope -> .)
+    CHAR            reduce using rule 110 (codeScope -> .)
+    BOOL            reduce using rule 110 (codeScope -> .)
+    STRING          reduce using rule 110 (codeScope -> .)
+
+    codeScope                      shift and go to state 24
+
+state 19
+
+    (1) program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct . main RGTBRAC
+    (73) main -> . codeLocationMain PRIOMH codeScope block
+    (102) codeLocationMain -> .
+
+    PRIOMH          reduce using rule 102 (codeLocationMain -> .)
+
+    codeLocationMain               shift and go to state 26
+    main                           shift and go to state 25
+
+state 20
+
+    (5) auxprogramfunct -> empty .
+
+    PRIOMH          reduce using rule 5 (auxprogramfunct -> empty .)
+
+
+state 21
+
+    (80) varsaux -> ID . codeAddVar EQUAL expression varsaux2
+    (81) varsaux -> ID . codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2
+    (112) codeAddVar -> .
+    (113) codeAddVarArreglo -> .
+
+    EQUAL           reduce using rule 112 (codeAddVar -> .)
+    LFTBRACSQR      reduce using rule 113 (codeAddVarArreglo -> .)
+
+    codeAddVar                     shift and go to state 28
+    codeAddVarArreglo              shift and go to state 27
+
+state 22
+
+    (77) vars -> type codeCheckType varsaux .
+
+    IF              reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    WHILE           reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    PRINT           reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    READ            reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    ID              reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    INT             reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    FLOAT           reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    CHAR            reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    BOOL            reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    STRING          reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    RGTBRAC         reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    RETURN          reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    FUNCTION        reduce using rule 77 (vars -> type codeCheckType varsaux .)
+    PRIOMH          reduce using rule 77 (vars -> type codeCheckType varsaux .)
+
+
+state 23
+
+    (4) auxprogramfunct -> function auxprogramfunct .
+
+    PRIOMH          reduce using rule 4 (auxprogramfunct -> function auxprogramfunct .)
+
+
+state 24
+
+    (74) function -> FUNCTION codeScope . functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (75) functionaux -> . VOID codeTypeVoid codeCheckType
+    (76) functionaux -> . codeFuncIndicator type codeCheckType
+    (117) codeFuncIndicator -> .
+
+    VOID            shift and go to state 31
+    INT             reduce using rule 117 (codeFuncIndicator -> .)
+    FLOAT           reduce using rule 117 (codeFuncIndicator -> .)
+    CHAR            reduce using rule 117 (codeFuncIndicator -> .)
+    BOOL            reduce using rule 117 (codeFuncIndicator -> .)
+    STRING          reduce using rule 117 (codeFuncIndicator -> .)
+
+    functionaux                    shift and go to state 29
+    codeFuncIndicator              shift and go to state 30
+
+state 25
+
+    (1) program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main . RGTBRAC
+
+    RGTBRAC         shift and go to state 32
+
+
+state 26
+
+    (73) main -> codeLocationMain . PRIOMH codeScope block
+
+    PRIOMH          shift and go to state 33
+
+
+state 27
+
+    (81) varsaux -> ID codeAddVarArreglo . LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2
+
+    LFTBRACSQR      shift and go to state 34
+
+
+state 28
+
+    (80) varsaux -> ID codeAddVar . EQUAL expression varsaux2
+
+    EQUAL           shift and go to state 35
+
+
+state 29
+
+    (74) function -> FUNCTION codeScope functionaux . ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+
+    ID              shift and go to state 36
+
+
+state 30
+
+    (76) functionaux -> codeFuncIndicator . type codeCheckType
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    type                           shift and go to state 37
+
+state 31
+
+    (75) functionaux -> VOID . codeTypeVoid codeCheckType
+    (116) codeTypeVoid -> .
+
+    ID              reduce using rule 116 (codeTypeVoid -> .)
+
+    codeTypeVoid                   shift and go to state 38
+
+state 32
+
+    (1) program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID LFTBRAC auxprogramvars codeGOTOMain auxprogramfunct main RGTBRAC .)
+
+
+state 33
+
+    (73) main -> codeLocationMain PRIOMH . codeScope block
+    (110) codeScope -> .
+
+    LFTBRAC         reduce using rule 110 (codeScope -> .)
+
+    codeScope                      shift and go to state 39
+
+state 34
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR . INT RGTBRACSQR EQUAL arrayvals varsaux2
+
+    INT             shift and go to state 40
+
+
+state 35
+
+    (80) varsaux -> ID codeAddVar EQUAL . expression varsaux2
+    (44) expression -> . exp
+    (45) expression -> . exp expressionaux codeAddOperator exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 58
+    expression                     shift and go to state 59
+
+state 36
+
+    (74) function -> FUNCTION codeScope functionaux ID . codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (115) codeNameOfFunct -> .
+
+    LFTPAREN        reduce using rule 115 (codeNameOfFunct -> .)
+
+    codeNameOfFunct                shift and go to state 60
+
+state 37
+
+    (76) functionaux -> codeFuncIndicator type . codeCheckType
+    (111) codeCheckType -> .
+
+    ID              reduce using rule 111 (codeCheckType -> .)
+
+    codeCheckType                  shift and go to state 61
+
+state 38
+
+    (75) functionaux -> VOID codeTypeVoid . codeCheckType
+    (111) codeCheckType -> .
+
+    ID              reduce using rule 111 (codeCheckType -> .)
+
+    codeCheckType                  shift and go to state 62
+
+state 39
+
+    (73) main -> codeLocationMain PRIOMH codeScope . block
+    (20) block -> . LFTBRAC blockneutral RGTBRAC
+
+    LFTBRAC         shift and go to state 63
+
+    block                          shift and go to state 64
+
+state 40
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR INT . RGTBRACSQR EQUAL arrayvals varsaux2
+
+    RGTBRACSQR      shift and go to state 65
+
+
+state 41
+
+    (39) factoraux -> constant .
+
+    MULTIPLICATION  reduce using rule 39 (factoraux -> constant .)
+    DIVISION        reduce using rule 39 (factoraux -> constant .)
+    PLUS            reduce using rule 39 (factoraux -> constant .)
+    MINUS           reduce using rule 39 (factoraux -> constant .)
+    AND             reduce using rule 39 (factoraux -> constant .)
+    DOUBEQUAL       reduce using rule 39 (factoraux -> constant .)
+    NOT             reduce using rule 39 (factoraux -> constant .)
+    OR              reduce using rule 39 (factoraux -> constant .)
+    LESSTHANEQUAL   reduce using rule 39 (factoraux -> constant .)
+    GREATTHANEQUAL  reduce using rule 39 (factoraux -> constant .)
+    GREATTHAN       reduce using rule 39 (factoraux -> constant .)
+    LESSTHAN        reduce using rule 39 (factoraux -> constant .)
+    COMMA           reduce using rule 39 (factoraux -> constant .)
+    SEMICOLON       reduce using rule 39 (factoraux -> constant .)
+    RGTPAREN        reduce using rule 39 (factoraux -> constant .)
+    RGTBRACSQR      reduce using rule 39 (factoraux -> constant .)
+
+
+state 42
+
+    (43) factor -> factoraux . codeAskFactor
+    (125) codeAskFactor -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAskFactor                  shift and go to state 66
+    empty                          shift and go to state 67
+
+state 43
+
+    (27) constant -> array .
+
+    MULTIPLICATION  reduce using rule 27 (constant -> array .)
+    DIVISION        reduce using rule 27 (constant -> array .)
+    PLUS            reduce using rule 27 (constant -> array .)
+    MINUS           reduce using rule 27 (constant -> array .)
+    AND             reduce using rule 27 (constant -> array .)
+    DOUBEQUAL       reduce using rule 27 (constant -> array .)
+    NOT             reduce using rule 27 (constant -> array .)
+    OR              reduce using rule 27 (constant -> array .)
+    LESSTHANEQUAL   reduce using rule 27 (constant -> array .)
+    GREATTHANEQUAL  reduce using rule 27 (constant -> array .)
+    GREATTHAN       reduce using rule 27 (constant -> array .)
+    LESSTHAN        reduce using rule 27 (constant -> array .)
+    RGTPAREN        reduce using rule 27 (constant -> array .)
+    COMMA           reduce using rule 27 (constant -> array .)
+    SEMICOLON       reduce using rule 27 (constant -> array .)
+    RGTBRACSQR      reduce using rule 27 (constant -> array .)
+
+
+state 44
+
+    (28) constant -> cteN .
+
+    MULTIPLICATION  reduce using rule 28 (constant -> cteN .)
+    DIVISION        reduce using rule 28 (constant -> cteN .)
+    PLUS            reduce using rule 28 (constant -> cteN .)
+    MINUS           reduce using rule 28 (constant -> cteN .)
+    AND             reduce using rule 28 (constant -> cteN .)
+    DOUBEQUAL       reduce using rule 28 (constant -> cteN .)
+    NOT             reduce using rule 28 (constant -> cteN .)
+    OR              reduce using rule 28 (constant -> cteN .)
+    LESSTHANEQUAL   reduce using rule 28 (constant -> cteN .)
+    GREATTHANEQUAL  reduce using rule 28 (constant -> cteN .)
+    GREATTHAN       reduce using rule 28 (constant -> cteN .)
+    LESSTHAN        reduce using rule 28 (constant -> cteN .)
+    RGTPAREN        reduce using rule 28 (constant -> cteN .)
+    COMMA           reduce using rule 28 (constant -> cteN .)
+    SEMICOLON       reduce using rule 28 (constant -> cteN .)
+    RGTBRACSQR      reduce using rule 28 (constant -> cteN .)
+
+
+state 45
+
+    (41) factoraux -> MINUS . constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 68
+    call                           shift and go to state 49
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+
+state 46
+
+    (30) constant -> TRUE . codeAddConstBool
+    (120) codeAddConstBool -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddConstBool               shift and go to state 69
+    empty                          shift and go to state 70
+
+state 47
+
+    (40) factoraux -> PLUS . constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 71
+    call                           shift and go to state 49
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+
+state 48
+
+    (59) term -> factor . MULTIPLICATION codeAddOperator term
+    (60) term -> factor . DIVISION codeAddOperator term
+    (61) term -> factor . codeAskTerm
+    (124) codeAskTerm -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  shift and go to state 74
+    DIVISION        shift and go to state 72
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAskTerm                    shift and go to state 73
+    empty                          shift and go to state 75
+
+state 49
+
+    (32) constant -> call . codeIsCalll
+    (92) codeIsCalll -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    empty                          shift and go to state 76
+    codeIsCalll                    shift and go to state 77
+
+state 50
+
+    (35) cteS -> STRING . codeAddConstString
+    (121) codeAddConstString -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddConstString             shift and go to state 78
+    empty                          shift and go to state 79
+
+state 51
+
+    (29) constant -> cteS .
+
+    MULTIPLICATION  reduce using rule 29 (constant -> cteS .)
+    DIVISION        reduce using rule 29 (constant -> cteS .)
+    PLUS            reduce using rule 29 (constant -> cteS .)
+    MINUS           reduce using rule 29 (constant -> cteS .)
+    AND             reduce using rule 29 (constant -> cteS .)
+    DOUBEQUAL       reduce using rule 29 (constant -> cteS .)
+    NOT             reduce using rule 29 (constant -> cteS .)
+    OR              reduce using rule 29 (constant -> cteS .)
+    LESSTHANEQUAL   reduce using rule 29 (constant -> cteS .)
+    GREATTHANEQUAL  reduce using rule 29 (constant -> cteS .)
+    GREATTHAN       reduce using rule 29 (constant -> cteS .)
+    LESSTHAN        reduce using rule 29 (constant -> cteS .)
+    RGTPAREN        reduce using rule 29 (constant -> cteS .)
+    COMMA           reduce using rule 29 (constant -> cteS .)
+    SEMICOLON       reduce using rule 29 (constant -> cteS .)
+    RGTBRACSQR      reduce using rule 29 (constant -> cteS .)
+
+
+state 52
+
+    (42) factor -> LFTPAREN . codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (119) codeAddOpenParen -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOpenParen               shift and go to state 80
+    empty                          shift and go to state 81
+
+state 53
+
+    (26) constant -> ID .
+    (6) array -> ID . LFTBRACSQR exp RGTBRACSQR
+    (84) call -> ID . codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (99) codeVerifyFunct -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 26 (constant -> ID .)
+    DIVISION        reduce using rule 26 (constant -> ID .)
+    PLUS            reduce using rule 26 (constant -> ID .)
+    MINUS           reduce using rule 26 (constant -> ID .)
+    AND             reduce using rule 26 (constant -> ID .)
+    DOUBEQUAL       reduce using rule 26 (constant -> ID .)
+    NOT             reduce using rule 26 (constant -> ID .)
+    OR              reduce using rule 26 (constant -> ID .)
+    LESSTHANEQUAL   reduce using rule 26 (constant -> ID .)
+    GREATTHANEQUAL  reduce using rule 26 (constant -> ID .)
+    GREATTHAN       reduce using rule 26 (constant -> ID .)
+    LESSTHAN        reduce using rule 26 (constant -> ID .)
+    RGTPAREN        reduce using rule 26 (constant -> ID .)
+    COMMA           reduce using rule 26 (constant -> ID .)
+    SEMICOLON       reduce using rule 26 (constant -> ID .)
+    RGTBRACSQR      reduce using rule 26 (constant -> ID .)
+    LFTBRACSQR      shift and go to state 83
+    LFTPAREN        reduce using rule 88 (empty -> .)
+
+    codeVerifyFunct                shift and go to state 82
+    empty                          shift and go to state 84
+
+state 54
+
+    (36) exp -> term .
+    (37) exp -> term . PLUS codeAddOperator exp
+    (38) exp -> term . MINUS codeAddOperator exp
+
+    COMMA           reduce using rule 36 (exp -> term .)
+    SEMICOLON       reduce using rule 36 (exp -> term .)
+    RGTPAREN        reduce using rule 36 (exp -> term .)
+    AND             reduce using rule 36 (exp -> term .)
+    DOUBEQUAL       reduce using rule 36 (exp -> term .)
+    NOT             reduce using rule 36 (exp -> term .)
+    OR              reduce using rule 36 (exp -> term .)
+    LESSTHANEQUAL   reduce using rule 36 (exp -> term .)
+    GREATTHANEQUAL  reduce using rule 36 (exp -> term .)
+    GREATTHAN       reduce using rule 36 (exp -> term .)
+    LESSTHAN        reduce using rule 36 (exp -> term .)
+    RGTBRACSQR      reduce using rule 36 (exp -> term .)
+    PLUS            shift and go to state 85
+    MINUS           shift and go to state 86
+
+
+state 55
+
+    (31) constant -> FALSE . codeAddConstBool
+    (120) codeAddConstBool -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddConstBool               shift and go to state 87
+    empty                          shift and go to state 70
+
+state 56
+
+    (34) cteN -> INT . codeAddConstNumber
+    (122) codeAddConstNumber -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddConstNumber             shift and go to state 88
+    empty                          shift and go to state 89
+
+state 57
+
+    (33) cteN -> FLOAT . codeAddConstNumber
+    (122) codeAddConstNumber -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddConstNumber             shift and go to state 90
+    empty                          shift and go to state 89
+
+state 58
+
+    (44) expression -> exp .
+    (45) expression -> exp . expressionaux codeAddOperator exp codeAskExpression
+    (46) expressionaux -> . AND
+    (47) expressionaux -> . DOUBEQUAL
+    (48) expressionaux -> . NOT
+    (49) expressionaux -> . OR
+    (50) expressionaux -> . LESSTHANEQUAL
+    (51) expressionaux -> . GREATTHANEQUAL
+    (52) expressionaux -> . GREATTHAN
+    (53) expressionaux -> . LESSTHAN
+
+    SEMICOLON       reduce using rule 44 (expression -> exp .)
+    RGTPAREN        reduce using rule 44 (expression -> exp .)
+    COMMA           reduce using rule 44 (expression -> exp .)
+    AND             shift and go to state 91
+    DOUBEQUAL       shift and go to state 98
+    NOT             shift and go to state 97
+    OR              shift and go to state 99
+    LESSTHANEQUAL   shift and go to state 95
+    GREATTHANEQUAL  shift and go to state 93
+    GREATTHAN       shift and go to state 94
+    LESSTHAN        shift and go to state 96
+
+    expressionaux                  shift and go to state 92
+
+state 59
+
+    (80) varsaux -> ID codeAddVar EQUAL expression . varsaux2
+    (78) varsaux2 -> . COMMA varsaux
+    (79) varsaux2 -> . SEMICOLON
+
+    COMMA           shift and go to state 102
+    SEMICOLON       shift and go to state 100
+
+    varsaux2                       shift and go to state 101
+
+state 60
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct . LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+
+    LFTPAREN        shift and go to state 103
+
+
+state 61
+
+    (76) functionaux -> codeFuncIndicator type codeCheckType .
+
+    ID              reduce using rule 76 (functionaux -> codeFuncIndicator type codeCheckType .)
+
+
+state 62
+
+    (75) functionaux -> VOID codeTypeVoid codeCheckType .
+
+    ID              reduce using rule 75 (functionaux -> VOID codeTypeVoid codeCheckType .)
+
+
+state 63
+
+    (20) block -> LFTBRAC . blockneutral RGTBRAC
+    (17) blockneutral -> . statement blockneutral
+    (18) blockneutral -> . vars blockneutral
+    (19) blockneutral -> . empty
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . loop
+    (65) statement -> . write
+    (66) statement -> . read
+    (67) statement -> . call SEMICOLON
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (12) assignment -> . assignmentaux EQUAL expression SEMICOLON
+    (21) condition -> . IF conditionaux codeEndIf
+    (22) condition -> . IF conditionaux ELSE codeElse block codeEndIf
+    (54) loop -> . WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (85) read -> . READ LFTPAREN readaux RGTPAREN SEMICOLON
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (13) assignmentaux -> . ID
+    (14) assignmentaux -> . array
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    IF              shift and go to state 118
+    WHILE           shift and go to state 107
+    PRINT           shift and go to state 106
+    READ            shift and go to state 105
+    ID              shift and go to state 116
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    vars                           shift and go to state 104
+    array                          shift and go to state 108
+    write                          shift and go to state 109
+    call                           shift and go to state 111
+    type                           shift and go to state 12
+    empty                          shift and go to state 112
+    statement                      shift and go to state 113
+    read                           shift and go to state 110
+    assignment                     shift and go to state 114
+    assignmentaux                  shift and go to state 115
+    condition                      shift and go to state 117
+    blockneutral                   shift and go to state 119
+    loop                           shift and go to state 120
+
+state 64
+
+    (73) main -> codeLocationMain PRIOMH codeScope block .
+
+    RGTBRAC         reduce using rule 73 (main -> codeLocationMain PRIOMH codeScope block .)
+
+
+state 65
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR . EQUAL arrayvals varsaux2
+
+    EQUAL           shift and go to state 121
+
+
+state 66
+
+    (43) factor -> factoraux codeAskFactor .
+
+    MULTIPLICATION  reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    DIVISION        reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    PLUS            reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    MINUS           reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    SEMICOLON       reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    AND             reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    DOUBEQUAL       reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    NOT             reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    OR              reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    LESSTHANEQUAL   reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    GREATTHANEQUAL  reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    GREATTHAN       reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    LESSTHAN        reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    COMMA           reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    RGTPAREN        reduce using rule 43 (factor -> factoraux codeAskFactor .)
+    RGTBRACSQR      reduce using rule 43 (factor -> factoraux codeAskFactor .)
+
+
+state 67
+
+    (125) codeAskFactor -> empty .
+
+    MULTIPLICATION  reduce using rule 125 (codeAskFactor -> empty .)
+    DIVISION        reduce using rule 125 (codeAskFactor -> empty .)
+    PLUS            reduce using rule 125 (codeAskFactor -> empty .)
+    MINUS           reduce using rule 125 (codeAskFactor -> empty .)
+    AND             reduce using rule 125 (codeAskFactor -> empty .)
+    DOUBEQUAL       reduce using rule 125 (codeAskFactor -> empty .)
+    NOT             reduce using rule 125 (codeAskFactor -> empty .)
+    OR              reduce using rule 125 (codeAskFactor -> empty .)
+    LESSTHANEQUAL   reduce using rule 125 (codeAskFactor -> empty .)
+    GREATTHANEQUAL  reduce using rule 125 (codeAskFactor -> empty .)
+    GREATTHAN       reduce using rule 125 (codeAskFactor -> empty .)
+    LESSTHAN        reduce using rule 125 (codeAskFactor -> empty .)
+    COMMA           reduce using rule 125 (codeAskFactor -> empty .)
+    SEMICOLON       reduce using rule 125 (codeAskFactor -> empty .)
+    RGTPAREN        reduce using rule 125 (codeAskFactor -> empty .)
+    RGTBRACSQR      reduce using rule 125 (codeAskFactor -> empty .)
+
+
+state 68
+
+    (41) factoraux -> MINUS constant .
+
+    MULTIPLICATION  reduce using rule 41 (factoraux -> MINUS constant .)
+    DIVISION        reduce using rule 41 (factoraux -> MINUS constant .)
+    PLUS            reduce using rule 41 (factoraux -> MINUS constant .)
+    MINUS           reduce using rule 41 (factoraux -> MINUS constant .)
+    AND             reduce using rule 41 (factoraux -> MINUS constant .)
+    DOUBEQUAL       reduce using rule 41 (factoraux -> MINUS constant .)
+    NOT             reduce using rule 41 (factoraux -> MINUS constant .)
+    OR              reduce using rule 41 (factoraux -> MINUS constant .)
+    LESSTHANEQUAL   reduce using rule 41 (factoraux -> MINUS constant .)
+    GREATTHANEQUAL  reduce using rule 41 (factoraux -> MINUS constant .)
+    GREATTHAN       reduce using rule 41 (factoraux -> MINUS constant .)
+    LESSTHAN        reduce using rule 41 (factoraux -> MINUS constant .)
+    COMMA           reduce using rule 41 (factoraux -> MINUS constant .)
+    SEMICOLON       reduce using rule 41 (factoraux -> MINUS constant .)
+    RGTPAREN        reduce using rule 41 (factoraux -> MINUS constant .)
+    RGTBRACSQR      reduce using rule 41 (factoraux -> MINUS constant .)
+
+
+state 69
+
+    (30) constant -> TRUE codeAddConstBool .
+
+    MULTIPLICATION  reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    DIVISION        reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    PLUS            reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    MINUS           reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    AND             reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    DOUBEQUAL       reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    NOT             reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    OR              reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    LESSTHANEQUAL   reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    GREATTHANEQUAL  reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    GREATTHAN       reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    LESSTHAN        reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    RGTPAREN        reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    COMMA           reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    SEMICOLON       reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+    RGTBRACSQR      reduce using rule 30 (constant -> TRUE codeAddConstBool .)
+
+
+state 70
+
+    (120) codeAddConstBool -> empty .
+
+    MULTIPLICATION  reduce using rule 120 (codeAddConstBool -> empty .)
+    DIVISION        reduce using rule 120 (codeAddConstBool -> empty .)
+    PLUS            reduce using rule 120 (codeAddConstBool -> empty .)
+    MINUS           reduce using rule 120 (codeAddConstBool -> empty .)
+    AND             reduce using rule 120 (codeAddConstBool -> empty .)
+    DOUBEQUAL       reduce using rule 120 (codeAddConstBool -> empty .)
+    NOT             reduce using rule 120 (codeAddConstBool -> empty .)
+    OR              reduce using rule 120 (codeAddConstBool -> empty .)
+    LESSTHANEQUAL   reduce using rule 120 (codeAddConstBool -> empty .)
+    GREATTHANEQUAL  reduce using rule 120 (codeAddConstBool -> empty .)
+    GREATTHAN       reduce using rule 120 (codeAddConstBool -> empty .)
+    LESSTHAN        reduce using rule 120 (codeAddConstBool -> empty .)
+    COMMA           reduce using rule 120 (codeAddConstBool -> empty .)
+    SEMICOLON       reduce using rule 120 (codeAddConstBool -> empty .)
+    RGTPAREN        reduce using rule 120 (codeAddConstBool -> empty .)
+    RGTBRACSQR      reduce using rule 120 (codeAddConstBool -> empty .)
+
+
+state 71
+
+    (40) factoraux -> PLUS constant .
+
+    MULTIPLICATION  reduce using rule 40 (factoraux -> PLUS constant .)
+    DIVISION        reduce using rule 40 (factoraux -> PLUS constant .)
+    PLUS            reduce using rule 40 (factoraux -> PLUS constant .)
+    MINUS           reduce using rule 40 (factoraux -> PLUS constant .)
+    AND             reduce using rule 40 (factoraux -> PLUS constant .)
+    DOUBEQUAL       reduce using rule 40 (factoraux -> PLUS constant .)
+    NOT             reduce using rule 40 (factoraux -> PLUS constant .)
+    OR              reduce using rule 40 (factoraux -> PLUS constant .)
+    LESSTHANEQUAL   reduce using rule 40 (factoraux -> PLUS constant .)
+    GREATTHANEQUAL  reduce using rule 40 (factoraux -> PLUS constant .)
+    GREATTHAN       reduce using rule 40 (factoraux -> PLUS constant .)
+    LESSTHAN        reduce using rule 40 (factoraux -> PLUS constant .)
+    COMMA           reduce using rule 40 (factoraux -> PLUS constant .)
+    SEMICOLON       reduce using rule 40 (factoraux -> PLUS constant .)
+    RGTPAREN        reduce using rule 40 (factoraux -> PLUS constant .)
+    RGTBRACSQR      reduce using rule 40 (factoraux -> PLUS constant .)
+
+
+state 72
+
+    (60) term -> factor DIVISION . codeAddOperator term
+    (123) codeAddOperator -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOperator                shift and go to state 122
+    empty                          shift and go to state 123
+
+state 73
+
+    (61) term -> factor codeAskTerm .
+
+    PLUS            reduce using rule 61 (term -> factor codeAskTerm .)
+    MINUS           reduce using rule 61 (term -> factor codeAskTerm .)
+    COMMA           reduce using rule 61 (term -> factor codeAskTerm .)
+    SEMICOLON       reduce using rule 61 (term -> factor codeAskTerm .)
+    RGTPAREN        reduce using rule 61 (term -> factor codeAskTerm .)
+    RGTBRACSQR      reduce using rule 61 (term -> factor codeAskTerm .)
+    AND             reduce using rule 61 (term -> factor codeAskTerm .)
+    DOUBEQUAL       reduce using rule 61 (term -> factor codeAskTerm .)
+    NOT             reduce using rule 61 (term -> factor codeAskTerm .)
+    OR              reduce using rule 61 (term -> factor codeAskTerm .)
+    LESSTHANEQUAL   reduce using rule 61 (term -> factor codeAskTerm .)
+    GREATTHANEQUAL  reduce using rule 61 (term -> factor codeAskTerm .)
+    GREATTHAN       reduce using rule 61 (term -> factor codeAskTerm .)
+    LESSTHAN        reduce using rule 61 (term -> factor codeAskTerm .)
+
+
+state 74
+
+    (59) term -> factor MULTIPLICATION . codeAddOperator term
+    (123) codeAddOperator -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOperator                shift and go to state 124
+    empty                          shift and go to state 123
+
+state 75
+
+    (124) codeAskTerm -> empty .
+
+    PLUS            reduce using rule 124 (codeAskTerm -> empty .)
+    MINUS           reduce using rule 124 (codeAskTerm -> empty .)
+    AND             reduce using rule 124 (codeAskTerm -> empty .)
+    DOUBEQUAL       reduce using rule 124 (codeAskTerm -> empty .)
+    NOT             reduce using rule 124 (codeAskTerm -> empty .)
+    OR              reduce using rule 124 (codeAskTerm -> empty .)
+    LESSTHANEQUAL   reduce using rule 124 (codeAskTerm -> empty .)
+    GREATTHANEQUAL  reduce using rule 124 (codeAskTerm -> empty .)
+    GREATTHAN       reduce using rule 124 (codeAskTerm -> empty .)
+    LESSTHAN        reduce using rule 124 (codeAskTerm -> empty .)
+    COMMA           reduce using rule 124 (codeAskTerm -> empty .)
+    SEMICOLON       reduce using rule 124 (codeAskTerm -> empty .)
+    RGTPAREN        reduce using rule 124 (codeAskTerm -> empty .)
+    RGTBRACSQR      reduce using rule 124 (codeAskTerm -> empty .)
+
+
+state 76
+
+    (92) codeIsCalll -> empty .
+
+    MULTIPLICATION  reduce using rule 92 (codeIsCalll -> empty .)
+    DIVISION        reduce using rule 92 (codeIsCalll -> empty .)
+    PLUS            reduce using rule 92 (codeIsCalll -> empty .)
+    MINUS           reduce using rule 92 (codeIsCalll -> empty .)
+    AND             reduce using rule 92 (codeIsCalll -> empty .)
+    DOUBEQUAL       reduce using rule 92 (codeIsCalll -> empty .)
+    NOT             reduce using rule 92 (codeIsCalll -> empty .)
+    OR              reduce using rule 92 (codeIsCalll -> empty .)
+    LESSTHANEQUAL   reduce using rule 92 (codeIsCalll -> empty .)
+    GREATTHANEQUAL  reduce using rule 92 (codeIsCalll -> empty .)
+    GREATTHAN       reduce using rule 92 (codeIsCalll -> empty .)
+    LESSTHAN        reduce using rule 92 (codeIsCalll -> empty .)
+    COMMA           reduce using rule 92 (codeIsCalll -> empty .)
+    SEMICOLON       reduce using rule 92 (codeIsCalll -> empty .)
+    RGTPAREN        reduce using rule 92 (codeIsCalll -> empty .)
+    RGTBRACSQR      reduce using rule 92 (codeIsCalll -> empty .)
+
+
+state 77
+
+    (32) constant -> call codeIsCalll .
+
+    MULTIPLICATION  reduce using rule 32 (constant -> call codeIsCalll .)
+    DIVISION        reduce using rule 32 (constant -> call codeIsCalll .)
+    PLUS            reduce using rule 32 (constant -> call codeIsCalll .)
+    MINUS           reduce using rule 32 (constant -> call codeIsCalll .)
+    AND             reduce using rule 32 (constant -> call codeIsCalll .)
+    DOUBEQUAL       reduce using rule 32 (constant -> call codeIsCalll .)
+    NOT             reduce using rule 32 (constant -> call codeIsCalll .)
+    OR              reduce using rule 32 (constant -> call codeIsCalll .)
+    LESSTHANEQUAL   reduce using rule 32 (constant -> call codeIsCalll .)
+    GREATTHANEQUAL  reduce using rule 32 (constant -> call codeIsCalll .)
+    GREATTHAN       reduce using rule 32 (constant -> call codeIsCalll .)
+    LESSTHAN        reduce using rule 32 (constant -> call codeIsCalll .)
+    RGTPAREN        reduce using rule 32 (constant -> call codeIsCalll .)
+    COMMA           reduce using rule 32 (constant -> call codeIsCalll .)
+    SEMICOLON       reduce using rule 32 (constant -> call codeIsCalll .)
+    RGTBRACSQR      reduce using rule 32 (constant -> call codeIsCalll .)
+
+
+state 78
+
+    (35) cteS -> STRING codeAddConstString .
+
+    RGTPAREN        reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    MULTIPLICATION  reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    DIVISION        reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    PLUS            reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    MINUS           reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    AND             reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    DOUBEQUAL       reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    NOT             reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    OR              reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    LESSTHANEQUAL   reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    GREATTHANEQUAL  reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    GREATTHAN       reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    LESSTHAN        reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    COMMA           reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    SEMICOLON       reduce using rule 35 (cteS -> STRING codeAddConstString .)
+    RGTBRACSQR      reduce using rule 35 (cteS -> STRING codeAddConstString .)
+
+
+state 79
+
+    (121) codeAddConstString -> empty .
+
+    MULTIPLICATION  reduce using rule 121 (codeAddConstString -> empty .)
+    DIVISION        reduce using rule 121 (codeAddConstString -> empty .)
+    PLUS            reduce using rule 121 (codeAddConstString -> empty .)
+    MINUS           reduce using rule 121 (codeAddConstString -> empty .)
+    AND             reduce using rule 121 (codeAddConstString -> empty .)
+    DOUBEQUAL       reduce using rule 121 (codeAddConstString -> empty .)
+    NOT             reduce using rule 121 (codeAddConstString -> empty .)
+    OR              reduce using rule 121 (codeAddConstString -> empty .)
+    LESSTHANEQUAL   reduce using rule 121 (codeAddConstString -> empty .)
+    GREATTHANEQUAL  reduce using rule 121 (codeAddConstString -> empty .)
+    GREATTHAN       reduce using rule 121 (codeAddConstString -> empty .)
+    LESSTHAN        reduce using rule 121 (codeAddConstString -> empty .)
+    COMMA           reduce using rule 121 (codeAddConstString -> empty .)
+    SEMICOLON       reduce using rule 121 (codeAddConstString -> empty .)
+    RGTPAREN        reduce using rule 121 (codeAddConstString -> empty .)
+    RGTBRACSQR      reduce using rule 121 (codeAddConstString -> empty .)
+
+
+state 80
+
+    (42) factor -> LFTPAREN codeAddOpenParen . expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (44) expression -> . exp
+    (45) expression -> . exp expressionaux codeAddOperator exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 58
+    expression                     shift and go to state 125
+
+state 81
+
+    (119) codeAddOpenParen -> empty .
+
+    LFTPAREN        reduce using rule 119 (codeAddOpenParen -> empty .)
+    PLUS            reduce using rule 119 (codeAddOpenParen -> empty .)
+    MINUS           reduce using rule 119 (codeAddOpenParen -> empty .)
+    ID              reduce using rule 119 (codeAddOpenParen -> empty .)
+    TRUE            reduce using rule 119 (codeAddOpenParen -> empty .)
+    FALSE           reduce using rule 119 (codeAddOpenParen -> empty .)
+    FLOAT           reduce using rule 119 (codeAddOpenParen -> empty .)
+    INT             reduce using rule 119 (codeAddOpenParen -> empty .)
+    STRING          reduce using rule 119 (codeAddOpenParen -> empty .)
+
+
+state 82
+
+    (84) call -> ID codeVerifyFunct . LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 126
+
+
+state 83
+
+    (6) array -> ID LFTBRACSQR . exp RGTBRACSQR
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 127
+
+state 84
+
+    (99) codeVerifyFunct -> empty .
+
+    LFTPAREN        reduce using rule 99 (codeVerifyFunct -> empty .)
+
+
+state 85
+
+    (37) exp -> term PLUS . codeAddOperator exp
+    (123) codeAddOperator -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOperator                shift and go to state 128
+    empty                          shift and go to state 123
+
+state 86
+
+    (38) exp -> term MINUS . codeAddOperator exp
+    (123) codeAddOperator -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOperator                shift and go to state 129
+    empty                          shift and go to state 123
+
+state 87
+
+    (31) constant -> FALSE codeAddConstBool .
+
+    MULTIPLICATION  reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    DIVISION        reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    PLUS            reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    MINUS           reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    AND             reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    DOUBEQUAL       reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    NOT             reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    OR              reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    LESSTHANEQUAL   reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    GREATTHANEQUAL  reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    GREATTHAN       reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    LESSTHAN        reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    RGTPAREN        reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    COMMA           reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    SEMICOLON       reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+    RGTBRACSQR      reduce using rule 31 (constant -> FALSE codeAddConstBool .)
+
+
+state 88
+
+    (34) cteN -> INT codeAddConstNumber .
+
+    MULTIPLICATION  reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    DIVISION        reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    PLUS            reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    MINUS           reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    RGTBRACSQR      reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    RGTPAREN        reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    AND             reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    DOUBEQUAL       reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    NOT             reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    OR              reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    LESSTHANEQUAL   reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    GREATTHANEQUAL  reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    GREATTHAN       reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    LESSTHAN        reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    COMMA           reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+    SEMICOLON       reduce using rule 34 (cteN -> INT codeAddConstNumber .)
+
+
+state 89
+
+    (122) codeAddConstNumber -> empty .
+
+    MULTIPLICATION  reduce using rule 122 (codeAddConstNumber -> empty .)
+    DIVISION        reduce using rule 122 (codeAddConstNumber -> empty .)
+    PLUS            reduce using rule 122 (codeAddConstNumber -> empty .)
+    MINUS           reduce using rule 122 (codeAddConstNumber -> empty .)
+    AND             reduce using rule 122 (codeAddConstNumber -> empty .)
+    DOUBEQUAL       reduce using rule 122 (codeAddConstNumber -> empty .)
+    NOT             reduce using rule 122 (codeAddConstNumber -> empty .)
+    OR              reduce using rule 122 (codeAddConstNumber -> empty .)
+    LESSTHANEQUAL   reduce using rule 122 (codeAddConstNumber -> empty .)
+    GREATTHANEQUAL  reduce using rule 122 (codeAddConstNumber -> empty .)
+    GREATTHAN       reduce using rule 122 (codeAddConstNumber -> empty .)
+    LESSTHAN        reduce using rule 122 (codeAddConstNumber -> empty .)
+    COMMA           reduce using rule 122 (codeAddConstNumber -> empty .)
+    SEMICOLON       reduce using rule 122 (codeAddConstNumber -> empty .)
+    RGTPAREN        reduce using rule 122 (codeAddConstNumber -> empty .)
+    RGTBRACSQR      reduce using rule 122 (codeAddConstNumber -> empty .)
+
+
+state 90
+
+    (33) cteN -> FLOAT codeAddConstNumber .
+
+    MULTIPLICATION  reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    DIVISION        reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    PLUS            reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    MINUS           reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    RGTBRACSQR      reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    RGTPAREN        reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    AND             reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    DOUBEQUAL       reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    NOT             reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    OR              reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    LESSTHANEQUAL   reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    GREATTHANEQUAL  reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    GREATTHAN       reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    LESSTHAN        reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    COMMA           reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+    SEMICOLON       reduce using rule 33 (cteN -> FLOAT codeAddConstNumber .)
+
+
+state 91
+
+    (46) expressionaux -> AND .
+
+    LFTPAREN        reduce using rule 46 (expressionaux -> AND .)
+    PLUS            reduce using rule 46 (expressionaux -> AND .)
+    MINUS           reduce using rule 46 (expressionaux -> AND .)
+    ID              reduce using rule 46 (expressionaux -> AND .)
+    TRUE            reduce using rule 46 (expressionaux -> AND .)
+    FALSE           reduce using rule 46 (expressionaux -> AND .)
+    FLOAT           reduce using rule 46 (expressionaux -> AND .)
+    INT             reduce using rule 46 (expressionaux -> AND .)
+    STRING          reduce using rule 46 (expressionaux -> AND .)
+
+
+state 92
+
+    (45) expression -> exp expressionaux . codeAddOperator exp codeAskExpression
+    (123) codeAddOperator -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeAddOperator                shift and go to state 130
+    empty                          shift and go to state 123
+
+state 93
+
+    (51) expressionaux -> GREATTHANEQUAL .
+
+    LFTPAREN        reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    PLUS            reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    MINUS           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    ID              reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    TRUE            reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    FALSE           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    FLOAT           reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    INT             reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+    STRING          reduce using rule 51 (expressionaux -> GREATTHANEQUAL .)
+
+
+state 94
+
+    (52) expressionaux -> GREATTHAN .
+
+    LFTPAREN        reduce using rule 52 (expressionaux -> GREATTHAN .)
+    PLUS            reduce using rule 52 (expressionaux -> GREATTHAN .)
+    MINUS           reduce using rule 52 (expressionaux -> GREATTHAN .)
+    ID              reduce using rule 52 (expressionaux -> GREATTHAN .)
+    TRUE            reduce using rule 52 (expressionaux -> GREATTHAN .)
+    FALSE           reduce using rule 52 (expressionaux -> GREATTHAN .)
+    FLOAT           reduce using rule 52 (expressionaux -> GREATTHAN .)
+    INT             reduce using rule 52 (expressionaux -> GREATTHAN .)
+    STRING          reduce using rule 52 (expressionaux -> GREATTHAN .)
+
+
+state 95
+
+    (50) expressionaux -> LESSTHANEQUAL .
+
+    LFTPAREN        reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    PLUS            reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    MINUS           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    ID              reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    TRUE            reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    FALSE           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    FLOAT           reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    INT             reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+    STRING          reduce using rule 50 (expressionaux -> LESSTHANEQUAL .)
+
+
+state 96
+
+    (53) expressionaux -> LESSTHAN .
+
+    LFTPAREN        reduce using rule 53 (expressionaux -> LESSTHAN .)
+    PLUS            reduce using rule 53 (expressionaux -> LESSTHAN .)
+    MINUS           reduce using rule 53 (expressionaux -> LESSTHAN .)
+    ID              reduce using rule 53 (expressionaux -> LESSTHAN .)
+    TRUE            reduce using rule 53 (expressionaux -> LESSTHAN .)
+    FALSE           reduce using rule 53 (expressionaux -> LESSTHAN .)
+    FLOAT           reduce using rule 53 (expressionaux -> LESSTHAN .)
+    INT             reduce using rule 53 (expressionaux -> LESSTHAN .)
+    STRING          reduce using rule 53 (expressionaux -> LESSTHAN .)
+
+
+state 97
+
+    (48) expressionaux -> NOT .
+
+    LFTPAREN        reduce using rule 48 (expressionaux -> NOT .)
+    PLUS            reduce using rule 48 (expressionaux -> NOT .)
+    MINUS           reduce using rule 48 (expressionaux -> NOT .)
+    ID              reduce using rule 48 (expressionaux -> NOT .)
+    TRUE            reduce using rule 48 (expressionaux -> NOT .)
+    FALSE           reduce using rule 48 (expressionaux -> NOT .)
+    FLOAT           reduce using rule 48 (expressionaux -> NOT .)
+    INT             reduce using rule 48 (expressionaux -> NOT .)
+    STRING          reduce using rule 48 (expressionaux -> NOT .)
+
+
+state 98
+
+    (47) expressionaux -> DOUBEQUAL .
+
+    LFTPAREN        reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    PLUS            reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    MINUS           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    ID              reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    TRUE            reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    FALSE           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    FLOAT           reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    INT             reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+    STRING          reduce using rule 47 (expressionaux -> DOUBEQUAL .)
+
+
+state 99
+
+    (49) expressionaux -> OR .
+
+    LFTPAREN        reduce using rule 49 (expressionaux -> OR .)
+    PLUS            reduce using rule 49 (expressionaux -> OR .)
+    MINUS           reduce using rule 49 (expressionaux -> OR .)
+    ID              reduce using rule 49 (expressionaux -> OR .)
+    TRUE            reduce using rule 49 (expressionaux -> OR .)
+    FALSE           reduce using rule 49 (expressionaux -> OR .)
+    FLOAT           reduce using rule 49 (expressionaux -> OR .)
+    INT             reduce using rule 49 (expressionaux -> OR .)
+    STRING          reduce using rule 49 (expressionaux -> OR .)
+
+
+state 100
+
+    (79) varsaux2 -> SEMICOLON .
+
+    INT             reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    FLOAT           reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    CHAR            reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    BOOL            reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    STRING          reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    FUNCTION        reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    PRIOMH          reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    IF              reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    WHILE           reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    PRINT           reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    READ            reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    ID              reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    RGTBRAC         reduce using rule 79 (varsaux2 -> SEMICOLON .)
+    RETURN          reduce using rule 79 (varsaux2 -> SEMICOLON .)
+
+
+state 101
+
+    (80) varsaux -> ID codeAddVar EQUAL expression varsaux2 .
+
+    INT             reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    FLOAT           reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    CHAR            reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    BOOL            reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    STRING          reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    FUNCTION        reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    PRIOMH          reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    IF              reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    WHILE           reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    PRINT           reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    READ            reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    ID              reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    RGTBRAC         reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+    RETURN          reduce using rule 80 (varsaux -> ID codeAddVar EQUAL expression varsaux2 .)
+
+
+state 102
+
+    (78) varsaux2 -> COMMA . varsaux
+    (80) varsaux -> . ID codeAddVar EQUAL expression varsaux2
+    (81) varsaux -> . ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2
+
+    ID              shift and go to state 21
+
+    varsaux                        shift and go to state 131
+
+state 103
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN . parameter RGTPAREN codeAddFunctQuad blockreturn codeScope
+    (56) parameter -> . type codeCheckType ID codeAddParameters
+    (57) parameter -> . type codeCheckType ID codeAddParameters COMMA parameter
+    (58) parameter -> . empty
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (88) empty -> .
+
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+    RGTPAREN        reduce using rule 88 (empty -> .)
+
+    type                           shift and go to state 132
+    parameter                      shift and go to state 133
+    empty                          shift and go to state 134
+
+state 104
+
+    (18) blockneutral -> vars . blockneutral
+    (17) blockneutral -> . statement blockneutral
+    (18) blockneutral -> . vars blockneutral
+    (19) blockneutral -> . empty
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . loop
+    (65) statement -> . write
+    (66) statement -> . read
+    (67) statement -> . call SEMICOLON
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (12) assignment -> . assignmentaux EQUAL expression SEMICOLON
+    (21) condition -> . IF conditionaux codeEndIf
+    (22) condition -> . IF conditionaux ELSE codeElse block codeEndIf
+    (54) loop -> . WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (85) read -> . READ LFTPAREN readaux RGTPAREN SEMICOLON
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (13) assignmentaux -> . ID
+    (14) assignmentaux -> . array
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
+    IF              shift and go to state 118
+    WHILE           shift and go to state 107
+    PRINT           shift and go to state 106
+    READ            shift and go to state 105
+    ID              shift and go to state 116
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    vars                           shift and go to state 104
+    array                          shift and go to state 108
+    write                          shift and go to state 109
+    call                           shift and go to state 111
+    type                           shift and go to state 12
+    empty                          shift and go to state 112
+    statement                      shift and go to state 113
+    read                           shift and go to state 110
+    assignment                     shift and go to state 114
+    assignmentaux                  shift and go to state 115
+    condition                      shift and go to state 117
+    blockneutral                   shift and go to state 135
+    loop                           shift and go to state 120
+
+state 105
+
+    (85) read -> READ . LFTPAREN readaux RGTPAREN SEMICOLON
+
+    LFTPAREN        shift and go to state 136
+
+
+state 106
+
+    (55) write -> PRINT . LFTPAREN constant RGTPAREN SEMICOLON
+
+    LFTPAREN        shift and go to state 137
+
+
+state 107
+
+    (54) loop -> WHILE . codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (109) codeWhileCondition -> .
+
+    LFTPAREN        reduce using rule 109 (codeWhileCondition -> .)
+
+    codeWhileCondition             shift and go to state 138
+
+state 108
+
+    (14) assignmentaux -> array .
+
+    EQUAL           reduce using rule 14 (assignmentaux -> array .)
+
+
+state 109
+
+    (65) statement -> write .
+
+    IF              reduce using rule 65 (statement -> write .)
+    WHILE           reduce using rule 65 (statement -> write .)
+    PRINT           reduce using rule 65 (statement -> write .)
+    READ            reduce using rule 65 (statement -> write .)
+    ID              reduce using rule 65 (statement -> write .)
+    INT             reduce using rule 65 (statement -> write .)
+    FLOAT           reduce using rule 65 (statement -> write .)
+    CHAR            reduce using rule 65 (statement -> write .)
+    BOOL            reduce using rule 65 (statement -> write .)
+    STRING          reduce using rule 65 (statement -> write .)
+    RGTBRAC         reduce using rule 65 (statement -> write .)
+    RETURN          reduce using rule 65 (statement -> write .)
+
+
+state 110
+
+    (66) statement -> read .
+
+    IF              reduce using rule 66 (statement -> read .)
+    WHILE           reduce using rule 66 (statement -> read .)
+    PRINT           reduce using rule 66 (statement -> read .)
+    READ            reduce using rule 66 (statement -> read .)
+    ID              reduce using rule 66 (statement -> read .)
+    INT             reduce using rule 66 (statement -> read .)
+    FLOAT           reduce using rule 66 (statement -> read .)
+    CHAR            reduce using rule 66 (statement -> read .)
+    BOOL            reduce using rule 66 (statement -> read .)
+    STRING          reduce using rule 66 (statement -> read .)
+    RGTBRAC         reduce using rule 66 (statement -> read .)
+    RETURN          reduce using rule 66 (statement -> read .)
+
+
+state 111
+
+    (67) statement -> call . SEMICOLON
+
+    SEMICOLON       shift and go to state 139
+
+
+state 112
+
+    (19) blockneutral -> empty .
+
+    RGTBRAC         reduce using rule 19 (blockneutral -> empty .)
+    RETURN          reduce using rule 19 (blockneutral -> empty .)
+
+
+state 113
+
+    (17) blockneutral -> statement . blockneutral
+    (17) blockneutral -> . statement blockneutral
+    (18) blockneutral -> . vars blockneutral
+    (19) blockneutral -> . empty
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . loop
+    (65) statement -> . write
+    (66) statement -> . read
+    (67) statement -> . call SEMICOLON
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (12) assignment -> . assignmentaux EQUAL expression SEMICOLON
+    (21) condition -> . IF conditionaux codeEndIf
+    (22) condition -> . IF conditionaux ELSE codeElse block codeEndIf
+    (54) loop -> . WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (85) read -> . READ LFTPAREN readaux RGTPAREN SEMICOLON
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (13) assignmentaux -> . ID
+    (14) assignmentaux -> . array
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
+    IF              shift and go to state 118
+    WHILE           shift and go to state 107
+    PRINT           shift and go to state 106
+    READ            shift and go to state 105
+    ID              shift and go to state 116
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    vars                           shift and go to state 104
+    array                          shift and go to state 108
+    write                          shift and go to state 109
+    call                           shift and go to state 111
+    type                           shift and go to state 12
+    empty                          shift and go to state 112
+    statement                      shift and go to state 113
+    read                           shift and go to state 110
+    assignment                     shift and go to state 114
+    assignmentaux                  shift and go to state 115
+    condition                      shift and go to state 117
+    blockneutral                   shift and go to state 140
+    loop                           shift and go to state 120
+
+state 114
+
+    (62) statement -> assignment .
+
+    IF              reduce using rule 62 (statement -> assignment .)
+    WHILE           reduce using rule 62 (statement -> assignment .)
+    PRINT           reduce using rule 62 (statement -> assignment .)
+    READ            reduce using rule 62 (statement -> assignment .)
+    ID              reduce using rule 62 (statement -> assignment .)
+    INT             reduce using rule 62 (statement -> assignment .)
+    FLOAT           reduce using rule 62 (statement -> assignment .)
+    CHAR            reduce using rule 62 (statement -> assignment .)
+    BOOL            reduce using rule 62 (statement -> assignment .)
+    STRING          reduce using rule 62 (statement -> assignment .)
+    RGTBRAC         reduce using rule 62 (statement -> assignment .)
+    RETURN          reduce using rule 62 (statement -> assignment .)
+
+
+state 115
+
+    (12) assignment -> assignmentaux . EQUAL expression SEMICOLON
+
+    EQUAL           shift and go to state 141
+
+
+state 116
+
+    (84) call -> ID . codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (13) assignmentaux -> ID .
+    (6) array -> ID . LFTBRACSQR exp RGTBRACSQR
+    (99) codeVerifyFunct -> . empty
+    (88) empty -> .
+
+    EQUAL           reduce using rule 13 (assignmentaux -> ID .)
+    LFTBRACSQR      shift and go to state 83
+    LFTPAREN        reduce using rule 88 (empty -> .)
+
+    codeVerifyFunct                shift and go to state 82
+    empty                          shift and go to state 84
+
+state 117
+
+    (63) statement -> condition .
+
+    IF              reduce using rule 63 (statement -> condition .)
+    WHILE           reduce using rule 63 (statement -> condition .)
+    PRINT           reduce using rule 63 (statement -> condition .)
+    READ            reduce using rule 63 (statement -> condition .)
+    ID              reduce using rule 63 (statement -> condition .)
+    INT             reduce using rule 63 (statement -> condition .)
+    FLOAT           reduce using rule 63 (statement -> condition .)
+    CHAR            reduce using rule 63 (statement -> condition .)
+    BOOL            reduce using rule 63 (statement -> condition .)
+    STRING          reduce using rule 63 (statement -> condition .)
+    RGTBRAC         reduce using rule 63 (statement -> condition .)
+    RETURN          reduce using rule 63 (statement -> condition .)
+
+
+state 118
+
+    (21) condition -> IF . conditionaux codeEndIf
+    (22) condition -> IF . conditionaux ELSE codeElse block codeEndIf
+    (23) conditionaux -> . LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2
+
+    LFTPAREN        shift and go to state 142
+
+    conditionaux                   shift and go to state 143
+
+state 119
+
+    (20) block -> LFTBRAC blockneutral . RGTBRAC
+
+    RGTBRAC         shift and go to state 144
+
+
+state 120
+
+    (64) statement -> loop .
+
+    IF              reduce using rule 64 (statement -> loop .)
+    WHILE           reduce using rule 64 (statement -> loop .)
+    PRINT           reduce using rule 64 (statement -> loop .)
+    READ            reduce using rule 64 (statement -> loop .)
+    ID              reduce using rule 64 (statement -> loop .)
+    INT             reduce using rule 64 (statement -> loop .)
+    FLOAT           reduce using rule 64 (statement -> loop .)
+    CHAR            reduce using rule 64 (statement -> loop .)
+    BOOL            reduce using rule 64 (statement -> loop .)
+    STRING          reduce using rule 64 (statement -> loop .)
+    RGTBRAC         reduce using rule 64 (statement -> loop .)
+    RETURN          reduce using rule 64 (statement -> loop .)
+
+
+state 121
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL . arrayvals varsaux2
+    (7) arrayvals -> . LFTBRACSQR arrayvalsaux RGTBRACSQR
+
+    LFTBRACSQR      shift and go to state 145
+
+    arrayvals                      shift and go to state 146
+
+state 122
+
+    (60) term -> factor DIVISION codeAddOperator . term
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 147
+
+state 123
+
+    (123) codeAddOperator -> empty .
+
+    LFTPAREN        reduce using rule 123 (codeAddOperator -> empty .)
+    PLUS            reduce using rule 123 (codeAddOperator -> empty .)
+    MINUS           reduce using rule 123 (codeAddOperator -> empty .)
+    ID              reduce using rule 123 (codeAddOperator -> empty .)
+    TRUE            reduce using rule 123 (codeAddOperator -> empty .)
+    FALSE           reduce using rule 123 (codeAddOperator -> empty .)
+    FLOAT           reduce using rule 123 (codeAddOperator -> empty .)
+    INT             reduce using rule 123 (codeAddOperator -> empty .)
+    STRING          reduce using rule 123 (codeAddOperator -> empty .)
+
+
+state 124
+
+    (59) term -> factor MULTIPLICATION codeAddOperator . term
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 148
+
+state 125
+
+    (42) factor -> LFTPAREN codeAddOpenParen expression . RGTPAREN codeDeleteOpenParen codeAskFactor
+
+    RGTPAREN        shift and go to state 149
+
+
+state 126
+
+    (84) call -> ID codeVerifyFunct LFTPAREN . codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (98) codeEraQuad -> . empty
+    (88) empty -> .
+
+    LFTPAREN        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    TRUE            reduce using rule 88 (empty -> .)
+    FALSE           reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+
+    codeEraQuad                    shift and go to state 150
+    empty                          shift and go to state 151
+
+state 127
+
+    (6) array -> ID LFTBRACSQR exp . RGTBRACSQR
+
+    RGTBRACSQR      shift and go to state 152
+
+
+state 128
+
+    (37) exp -> term PLUS codeAddOperator . exp
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 153
+
+state 129
+
+    (38) exp -> term MINUS codeAddOperator . exp
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 154
+
+state 130
+
+    (45) expression -> exp expressionaux codeAddOperator . exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 155
+
+state 131
+
+    (78) varsaux2 -> COMMA varsaux .
+
+    INT             reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    FLOAT           reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    CHAR            reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    BOOL            reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    STRING          reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    FUNCTION        reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    PRIOMH          reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    IF              reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    WHILE           reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    PRINT           reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    READ            reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    ID              reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    RGTBRAC         reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+    RETURN          reduce using rule 78 (varsaux2 -> COMMA varsaux .)
+
+
+state 132
+
+    (56) parameter -> type . codeCheckType ID codeAddParameters
+    (57) parameter -> type . codeCheckType ID codeAddParameters COMMA parameter
+    (111) codeCheckType -> .
+
+    ID              reduce using rule 111 (codeCheckType -> .)
+
+    codeCheckType                  shift and go to state 156
+
+state 133
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter . RGTPAREN codeAddFunctQuad blockreturn codeScope
+
+    RGTPAREN        shift and go to state 157
+
+
+state 134
+
+    (58) parameter -> empty .
+
+    RGTPAREN        reduce using rule 58 (parameter -> empty .)
+
+
+state 135
+
+    (18) blockneutral -> vars blockneutral .
+
+    RGTBRAC         reduce using rule 18 (blockneutral -> vars blockneutral .)
+    RETURN          reduce using rule 18 (blockneutral -> vars blockneutral .)
+
+
+state 136
+
+    (85) read -> READ LFTPAREN . readaux RGTPAREN SEMICOLON
+    (86) readaux -> . ID
+    (87) readaux -> . array
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+
+    ID              shift and go to state 160
+
+    readaux                        shift and go to state 158
+    array                          shift and go to state 159
+
+state 137
+
+    (55) write -> PRINT LFTPAREN . constant RGTPAREN SEMICOLON
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 161
+    call                           shift and go to state 49
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+
+state 138
+
+    (54) loop -> WHILE codeWhileCondition . LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+
+    LFTPAREN        shift and go to state 162
+
+
+state 139
+
+    (67) statement -> call SEMICOLON .
+
+    IF              reduce using rule 67 (statement -> call SEMICOLON .)
+    WHILE           reduce using rule 67 (statement -> call SEMICOLON .)
+    PRINT           reduce using rule 67 (statement -> call SEMICOLON .)
+    READ            reduce using rule 67 (statement -> call SEMICOLON .)
+    ID              reduce using rule 67 (statement -> call SEMICOLON .)
+    INT             reduce using rule 67 (statement -> call SEMICOLON .)
+    FLOAT           reduce using rule 67 (statement -> call SEMICOLON .)
+    CHAR            reduce using rule 67 (statement -> call SEMICOLON .)
+    BOOL            reduce using rule 67 (statement -> call SEMICOLON .)
+    STRING          reduce using rule 67 (statement -> call SEMICOLON .)
+    RGTBRAC         reduce using rule 67 (statement -> call SEMICOLON .)
+    RETURN          reduce using rule 67 (statement -> call SEMICOLON .)
+
+
+state 140
+
+    (17) blockneutral -> statement blockneutral .
+
+    RGTBRAC         reduce using rule 17 (blockneutral -> statement blockneutral .)
+    RETURN          reduce using rule 17 (blockneutral -> statement blockneutral .)
+
+
+state 141
+
+    (12) assignment -> assignmentaux EQUAL . expression SEMICOLON
+    (44) expression -> . exp
+    (45) expression -> . exp expressionaux codeAddOperator exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 58
+    expression                     shift and go to state 163
+
+state 142
+
+    (23) conditionaux -> LFTPAREN . expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2
+    (44) expression -> . exp
+    (45) expression -> . exp expressionaux codeAddOperator exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 58
+    expression                     shift and go to state 164
+
+state 143
+
+    (21) condition -> IF conditionaux . codeEndIf
+    (22) condition -> IF conditionaux . ELSE codeElse block codeEndIf
+    (105) codeEndIf -> .
+
+    ELSE            shift and go to state 165
+    IF              reduce using rule 105 (codeEndIf -> .)
+    WHILE           reduce using rule 105 (codeEndIf -> .)
+    PRINT           reduce using rule 105 (codeEndIf -> .)
+    READ            reduce using rule 105 (codeEndIf -> .)
+    ID              reduce using rule 105 (codeEndIf -> .)
+    INT             reduce using rule 105 (codeEndIf -> .)
+    FLOAT           reduce using rule 105 (codeEndIf -> .)
+    CHAR            reduce using rule 105 (codeEndIf -> .)
+    BOOL            reduce using rule 105 (codeEndIf -> .)
+    STRING          reduce using rule 105 (codeEndIf -> .)
+    RGTBRAC         reduce using rule 105 (codeEndIf -> .)
+    RETURN          reduce using rule 105 (codeEndIf -> .)
+
+    codeEndIf                      shift and go to state 166
+
+state 144
+
+    (20) block -> LFTBRAC blockneutral RGTBRAC .
+
+    ELSEIF          reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    ELSE            reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    IF              reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    WHILE           reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    PRINT           reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    READ            reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    ID              reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    INT             reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    FLOAT           reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    CHAR            reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    BOOL            reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    STRING          reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    RGTBRAC         reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+    RETURN          reduce using rule 20 (block -> LFTBRAC blockneutral RGTBRAC .)
+
+
+state 145
+
+    (7) arrayvals -> LFTBRACSQR . arrayvalsaux RGTBRACSQR
+    (8) arrayvalsaux -> . cteNcteS codeAddValueArray
+    (9) arrayvalsaux -> . cteNcteS codeAddValueArray COMMA arrayvalsaux
+    (10) cteNcteS -> . cteN
+    (11) cteNcteS -> . cteS
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 167
+    cteNcteS                       shift and go to state 168
+    cteN                           shift and go to state 169
+    arrayvalsaux                   shift and go to state 170
+
+state 146
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals . varsaux2
+    (78) varsaux2 -> . COMMA varsaux
+    (79) varsaux2 -> . SEMICOLON
+
+    COMMA           shift and go to state 102
+    SEMICOLON       shift and go to state 100
+
+    varsaux2                       shift and go to state 171
+
+state 147
+
+    (60) term -> factor DIVISION codeAddOperator term .
+
+    PLUS            reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    MINUS           reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    COMMA           reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    SEMICOLON       reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    RGTPAREN        reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    RGTBRACSQR      reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    AND             reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    DOUBEQUAL       reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    NOT             reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    OR              reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    LESSTHANEQUAL   reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    GREATTHANEQUAL  reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    GREATTHAN       reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+    LESSTHAN        reduce using rule 60 (term -> factor DIVISION codeAddOperator term .)
+
+
+state 148
+
+    (59) term -> factor MULTIPLICATION codeAddOperator term .
+
+    PLUS            reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    MINUS           reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    COMMA           reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    SEMICOLON       reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    RGTPAREN        reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    RGTBRACSQR      reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    AND             reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    DOUBEQUAL       reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    NOT             reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    OR              reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    LESSTHANEQUAL   reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    GREATTHANEQUAL  reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    GREATTHAN       reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+    LESSTHAN        reduce using rule 59 (term -> factor MULTIPLICATION codeAddOperator term .)
+
+
+state 149
+
+    (42) factor -> LFTPAREN codeAddOpenParen expression RGTPAREN . codeDeleteOpenParen codeAskFactor
+    (118) codeDeleteOpenParen -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeDeleteOpenParen            shift and go to state 172
+    empty                          shift and go to state 173
+
+state 150
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad . exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 174
+
+state 151
+
+    (98) codeEraQuad -> empty .
+
+    LFTPAREN        reduce using rule 98 (codeEraQuad -> empty .)
+    PLUS            reduce using rule 98 (codeEraQuad -> empty .)
+    MINUS           reduce using rule 98 (codeEraQuad -> empty .)
+    ID              reduce using rule 98 (codeEraQuad -> empty .)
+    TRUE            reduce using rule 98 (codeEraQuad -> empty .)
+    FALSE           reduce using rule 98 (codeEraQuad -> empty .)
+    FLOAT           reduce using rule 98 (codeEraQuad -> empty .)
+    INT             reduce using rule 98 (codeEraQuad -> empty .)
+    STRING          reduce using rule 98 (codeEraQuad -> empty .)
+
+
+state 152
+
+    (6) array -> ID LFTBRACSQR exp RGTBRACSQR .
+
+    MULTIPLICATION  reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    DIVISION        reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    PLUS            reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    MINUS           reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    AND             reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    DOUBEQUAL       reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    NOT             reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    OR              reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    LESSTHANEQUAL   reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    GREATTHANEQUAL  reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    GREATTHAN       reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    LESSTHAN        reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    COMMA           reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    SEMICOLON       reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    RGTPAREN        reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    RGTBRACSQR      reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+    EQUAL           reduce using rule 6 (array -> ID LFTBRACSQR exp RGTBRACSQR .)
+
+
+state 153
+
+    (37) exp -> term PLUS codeAddOperator exp .
+
+    COMMA           reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    SEMICOLON       reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    RGTPAREN        reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    AND             reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    DOUBEQUAL       reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    NOT             reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    OR              reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    LESSTHANEQUAL   reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    GREATTHANEQUAL  reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    GREATTHAN       reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    LESSTHAN        reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+    RGTBRACSQR      reduce using rule 37 (exp -> term PLUS codeAddOperator exp .)
+
+
+state 154
+
+    (38) exp -> term MINUS codeAddOperator exp .
+
+    COMMA           reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    SEMICOLON       reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    RGTPAREN        reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    AND             reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    DOUBEQUAL       reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    NOT             reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    OR              reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    LESSTHANEQUAL   reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    GREATTHANEQUAL  reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    GREATTHAN       reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    LESSTHAN        reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+    RGTBRACSQR      reduce using rule 38 (exp -> term MINUS codeAddOperator exp .)
+
+
+state 155
+
+    (45) expression -> exp expressionaux codeAddOperator exp . codeAskExpression
+    (126) codeAskExpression -> . empty
+    (88) empty -> .
+
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+
+    empty                          shift and go to state 175
+    codeAskExpression              shift and go to state 176
+
+state 156
+
+    (56) parameter -> type codeCheckType . ID codeAddParameters
+    (57) parameter -> type codeCheckType . ID codeAddParameters COMMA parameter
+
+    ID              shift and go to state 177
+
+
+state 157
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN . codeAddFunctQuad blockreturn codeScope
+    (101) codeAddFunctQuad -> .
+
+    LFTBRAC         reduce using rule 101 (codeAddFunctQuad -> .)
+
+    codeAddFunctQuad               shift and go to state 178
+
+state 158
+
+    (85) read -> READ LFTPAREN readaux . RGTPAREN SEMICOLON
+
+    RGTPAREN        shift and go to state 179
+
+
+state 159
+
+    (87) readaux -> array .
+
+    RGTPAREN        reduce using rule 87 (readaux -> array .)
+
+
+state 160
+
+    (86) readaux -> ID .
+    (6) array -> ID . LFTBRACSQR exp RGTBRACSQR
+
+    RGTPAREN        reduce using rule 86 (readaux -> ID .)
+    LFTBRACSQR      shift and go to state 83
+
+
+state 161
+
+    (55) write -> PRINT LFTPAREN constant . RGTPAREN SEMICOLON
+
+    RGTPAREN        shift and go to state 180
+
+
+state 162
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN . expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (44) expression -> . exp
+    (45) expression -> . exp expressionaux codeAddOperator exp codeAskExpression
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 58
+    expression                     shift and go to state 181
+
+state 163
+
+    (12) assignment -> assignmentaux EQUAL expression . SEMICOLON
+
+    SEMICOLON       shift and go to state 182
+
+
+state 164
+
+    (23) conditionaux -> LFTPAREN expression . RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2
+
+    RGTPAREN        shift and go to state 183
+
+
+state 165
+
+    (22) condition -> IF conditionaux ELSE . codeElse block codeEndIf
+    (104) codeElse -> .
+
+    LFTBRAC         reduce using rule 104 (codeElse -> .)
+
+    codeElse                       shift and go to state 184
+
+state 166
+
+    (21) condition -> IF conditionaux codeEndIf .
+
+    IF              reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    WHILE           reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    PRINT           reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    READ            reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    ID              reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    INT             reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    FLOAT           reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    CHAR            reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    BOOL            reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    STRING          reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    RGTBRAC         reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+    RETURN          reduce using rule 21 (condition -> IF conditionaux codeEndIf .)
+
+
+state 167
+
+    (11) cteNcteS -> cteS .
+
+    COMMA           reduce using rule 11 (cteNcteS -> cteS .)
+    RGTBRACSQR      reduce using rule 11 (cteNcteS -> cteS .)
+
+
+state 168
+
+    (8) arrayvalsaux -> cteNcteS . codeAddValueArray
+    (9) arrayvalsaux -> cteNcteS . codeAddValueArray COMMA arrayvalsaux
+    (90) codeAddValueArray -> . empty
+    (88) empty -> .
+
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAddValueArray              shift and go to state 185
+    empty                          shift and go to state 186
+
+state 169
+
+    (10) cteNcteS -> cteN .
+
+    COMMA           reduce using rule 10 (cteNcteS -> cteN .)
+    RGTBRACSQR      reduce using rule 10 (cteNcteS -> cteN .)
+
+
+state 170
+
+    (7) arrayvals -> LFTBRACSQR arrayvalsaux . RGTBRACSQR
+
+    RGTBRACSQR      shift and go to state 187
+
+
+state 171
+
+    (81) varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .
+
+    INT             reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    FLOAT           reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    CHAR            reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    BOOL            reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    STRING          reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    FUNCTION        reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    PRIOMH          reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    IF              reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    WHILE           reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    PRINT           reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    READ            reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    ID              reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    RGTBRAC         reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+    RETURN          reduce using rule 81 (varsaux -> ID codeAddVarArreglo LFTBRACSQR INT RGTBRACSQR EQUAL arrayvals varsaux2 .)
+
+
+state 172
+
+    (42) factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen . codeAskFactor
+    (125) codeAskFactor -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeAskFactor                  shift and go to state 188
+    empty                          shift and go to state 67
+
+state 173
+
+    (118) codeDeleteOpenParen -> empty .
+
+    MULTIPLICATION  reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    DIVISION        reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    PLUS            reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    MINUS           reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    AND             reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    DOUBEQUAL       reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    NOT             reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    OR              reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    LESSTHANEQUAL   reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    GREATTHANEQUAL  reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    GREATTHAN       reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    LESSTHAN        reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    COMMA           reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    SEMICOLON       reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    RGTPAREN        reduce using rule 118 (codeDeleteOpenParen -> empty .)
+    RGTBRACSQR      reduce using rule 118 (codeDeleteOpenParen -> empty .)
+
+
+state 174
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp . codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (97) codeAddArguments -> . empty
+    (88) empty -> .
+
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+
+    codeAddArguments               shift and go to state 189
+    empty                          shift and go to state 190
+
+state 175
+
+    (126) codeAskExpression -> empty .
+
+    COMMA           reduce using rule 126 (codeAskExpression -> empty .)
+    SEMICOLON       reduce using rule 126 (codeAskExpression -> empty .)
+    RGTPAREN        reduce using rule 126 (codeAskExpression -> empty .)
+
+
+state 176
+
+    (45) expression -> exp expressionaux codeAddOperator exp codeAskExpression .
+
+    SEMICOLON       reduce using rule 45 (expression -> exp expressionaux codeAddOperator exp codeAskExpression .)
+    RGTPAREN        reduce using rule 45 (expression -> exp expressionaux codeAddOperator exp codeAskExpression .)
+    COMMA           reduce using rule 45 (expression -> exp expressionaux codeAddOperator exp codeAskExpression .)
+
+
+state 177
+
+    (56) parameter -> type codeCheckType ID . codeAddParameters
+    (57) parameter -> type codeCheckType ID . codeAddParameters COMMA parameter
+    (114) codeAddParameters -> .
+
+    COMMA           reduce using rule 114 (codeAddParameters -> .)
+    RGTPAREN        reduce using rule 114 (codeAddParameters -> .)
+
+    codeAddParameters              shift and go to state 191
+
+state 178
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad . blockreturn codeScope
+    (15) blockreturn -> . LFTBRAC blockneutral RGTBRAC
+    (16) blockreturn -> . LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC
+
+    LFTBRAC         shift and go to state 192
+
+    blockreturn                    shift and go to state 193
+
+state 179
+
+    (85) read -> READ LFTPAREN readaux RGTPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 194
+
+
+state 180
+
+    (55) write -> PRINT LFTPAREN constant RGTPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 195
+
+
+state 181
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN expression . RGTPAREN codeGOTOF block codeGOTOWhile
+
+    RGTPAREN        shift and go to state 196
+
+
+state 182
+
+    (12) assignment -> assignmentaux EQUAL expression SEMICOLON .
+
+    IF              reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    WHILE           reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    PRINT           reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    READ            reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    ID              reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    INT             reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    CHAR            reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    BOOL            reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    STRING          reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    RGTBRAC         reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+    RETURN          reduce using rule 12 (assignment -> assignmentaux EQUAL expression SEMICOLON .)
+
+
+state 183
+
+    (23) conditionaux -> LFTPAREN expression RGTPAREN . codeGOTOF block codeGotoElseIf conditionaux2
+    (107) codeGOTOF -> .
+
+    LFTBRAC         reduce using rule 107 (codeGOTOF -> .)
+
+    codeGOTOF                      shift and go to state 197
+
+state 184
+
+    (22) condition -> IF conditionaux ELSE codeElse . block codeEndIf
+    (20) block -> . LFTBRAC blockneutral RGTBRAC
+
+    LFTBRAC         shift and go to state 63
+
+    block                          shift and go to state 198
+
+state 185
+
+    (8) arrayvalsaux -> cteNcteS codeAddValueArray .
+    (9) arrayvalsaux -> cteNcteS codeAddValueArray . COMMA arrayvalsaux
+
+    RGTBRACSQR      reduce using rule 8 (arrayvalsaux -> cteNcteS codeAddValueArray .)
+    COMMA           shift and go to state 199
+
+
+state 186
+
+    (90) codeAddValueArray -> empty .
+
+    COMMA           reduce using rule 90 (codeAddValueArray -> empty .)
+    RGTBRACSQR      reduce using rule 90 (codeAddValueArray -> empty .)
+
+
+state 187
+
+    (7) arrayvals -> LFTBRACSQR arrayvalsaux RGTBRACSQR .
+
+    COMMA           reduce using rule 7 (arrayvals -> LFTBRACSQR arrayvalsaux RGTBRACSQR .)
+    SEMICOLON       reduce using rule 7 (arrayvals -> LFTBRACSQR arrayvalsaux RGTBRACSQR .)
+
+
+state 188
+
+    (42) factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .
+
+    MULTIPLICATION  reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    DIVISION        reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    PLUS            reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    MINUS           reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    SEMICOLON       reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    AND             reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    DOUBEQUAL       reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    NOT             reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    OR              reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    LESSTHANEQUAL   reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    GREATTHANEQUAL  reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    GREATTHAN       reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    LESSTHAN        reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    COMMA           reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    RGTPAREN        reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+    RGTBRACSQR      reduce using rule 42 (factor -> LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor .)
+
+
+state 189
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments . callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (82) callaux -> . codeMovePointer COMMA exp codeAddArguments callaux
+    (83) callaux -> . empty
+    (96) codeMovePointer -> . empty
+    (88) empty -> .
+
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+
+    callaux                        shift and go to state 200
+    codeMovePointer                shift and go to state 201
+    empty                          shift and go to state 202
+
+state 190
+
+    (97) codeAddArguments -> empty .
+
+    COMMA           reduce using rule 97 (codeAddArguments -> empty .)
+    RGTPAREN        reduce using rule 97 (codeAddArguments -> empty .)
+
+
+state 191
+
+    (56) parameter -> type codeCheckType ID codeAddParameters .
+    (57) parameter -> type codeCheckType ID codeAddParameters . COMMA parameter
+
+    RGTPAREN        reduce using rule 56 (parameter -> type codeCheckType ID codeAddParameters .)
+    COMMA           shift and go to state 203
+
+
+state 192
+
+    (15) blockreturn -> LFTBRAC . blockneutral RGTBRAC
+    (16) blockreturn -> LFTBRAC . blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC
+    (17) blockneutral -> . statement blockneutral
+    (18) blockneutral -> . vars blockneutral
+    (19) blockneutral -> . empty
+    (62) statement -> . assignment
+    (63) statement -> . condition
+    (64) statement -> . loop
+    (65) statement -> . write
+    (66) statement -> . read
+    (67) statement -> . call SEMICOLON
+    (77) vars -> . type codeCheckType varsaux
+    (88) empty -> .
+    (12) assignment -> . assignmentaux EQUAL expression SEMICOLON
+    (21) condition -> . IF conditionaux codeEndIf
+    (22) condition -> . IF conditionaux ELSE codeElse block codeEndIf
+    (54) loop -> . WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile
+    (55) write -> . PRINT LFTPAREN constant RGTPAREN SEMICOLON
+    (85) read -> . READ LFTPAREN readaux RGTPAREN SEMICOLON
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (13) assignmentaux -> . ID
+    (14) assignmentaux -> . array
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
+    IF              shift and go to state 118
+    WHILE           shift and go to state 107
+    PRINT           shift and go to state 106
+    READ            shift and go to state 105
+    ID              shift and go to state 116
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+
+    vars                           shift and go to state 104
+    array                          shift and go to state 108
+    write                          shift and go to state 109
+    call                           shift and go to state 111
+    type                           shift and go to state 12
+    empty                          shift and go to state 112
+    statement                      shift and go to state 113
+    read                           shift and go to state 110
+    assignment                     shift and go to state 114
+    assignmentaux                  shift and go to state 115
+    condition                      shift and go to state 117
+    blockneutral                   shift and go to state 204
+    loop                           shift and go to state 120
+
+state 193
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn . codeScope
+    (110) codeScope -> .
+
+    FUNCTION        reduce using rule 110 (codeScope -> .)
+    PRIOMH          reduce using rule 110 (codeScope -> .)
+
+    codeScope                      shift and go to state 205
+
+state 194
+
+    (85) read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .
+
+    IF              reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    WHILE           reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    PRINT           reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    READ            reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    ID              reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    INT             reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    FLOAT           reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    CHAR            reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    BOOL            reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    STRING          reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    RGTBRAC         reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+    RETURN          reduce using rule 85 (read -> READ LFTPAREN readaux RGTPAREN SEMICOLON .)
+
+
+state 195
+
+    (55) write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .
+
+    IF              reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    WHILE           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    PRINT           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    READ            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    ID              reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    INT             reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    FLOAT           reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    CHAR            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    BOOL            reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    STRING          reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    RGTBRAC         reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+    RETURN          reduce using rule 55 (write -> PRINT LFTPAREN constant RGTPAREN SEMICOLON .)
+
+
+state 196
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN . codeGOTOF block codeGOTOWhile
+    (107) codeGOTOF -> .
+
+    LFTBRAC         reduce using rule 107 (codeGOTOF -> .)
+
+    codeGOTOF                      shift and go to state 206
+
+state 197
+
+    (23) conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF . block codeGotoElseIf conditionaux2
+    (20) block -> . LFTBRAC blockneutral RGTBRAC
+
+    LFTBRAC         shift and go to state 63
+
+    block                          shift and go to state 207
+
+state 198
+
+    (22) condition -> IF conditionaux ELSE codeElse block . codeEndIf
+    (105) codeEndIf -> .
+
+    IF              reduce using rule 105 (codeEndIf -> .)
+    WHILE           reduce using rule 105 (codeEndIf -> .)
+    PRINT           reduce using rule 105 (codeEndIf -> .)
+    READ            reduce using rule 105 (codeEndIf -> .)
+    ID              reduce using rule 105 (codeEndIf -> .)
+    INT             reduce using rule 105 (codeEndIf -> .)
+    FLOAT           reduce using rule 105 (codeEndIf -> .)
+    CHAR            reduce using rule 105 (codeEndIf -> .)
+    BOOL            reduce using rule 105 (codeEndIf -> .)
+    STRING          reduce using rule 105 (codeEndIf -> .)
+    RGTBRAC         reduce using rule 105 (codeEndIf -> .)
+    RETURN          reduce using rule 105 (codeEndIf -> .)
+
+    codeEndIf                      shift and go to state 208
+
+state 199
+
+    (9) arrayvalsaux -> cteNcteS codeAddValueArray COMMA . arrayvalsaux
+    (8) arrayvalsaux -> . cteNcteS codeAddValueArray
+    (9) arrayvalsaux -> . cteNcteS codeAddValueArray COMMA arrayvalsaux
+    (10) cteNcteS -> . cteN
+    (11) cteNcteS -> . cteS
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 167
+    cteNcteS                       shift and go to state 168
+    cteN                           shift and go to state 169
+    arrayvalsaux                   shift and go to state 209
+
+state 200
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux . RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    RGTPAREN        shift and go to state 210
+
+
+state 201
+
+    (82) callaux -> codeMovePointer . COMMA exp codeAddArguments callaux
+
+    COMMA           shift and go to state 211
+
+
+state 202
+
+    (83) callaux -> empty .
+    (96) codeMovePointer -> empty .
+
+    RGTPAREN        reduce using rule 83 (callaux -> empty .)
+    COMMA           reduce using rule 96 (codeMovePointer -> empty .)
+
+
+state 203
+
+    (57) parameter -> type codeCheckType ID codeAddParameters COMMA . parameter
+    (56) parameter -> . type codeCheckType ID codeAddParameters
+    (57) parameter -> . type codeCheckType ID codeAddParameters COMMA parameter
+    (58) parameter -> . empty
+    (68) type -> . INT
+    (69) type -> . FLOAT
+    (70) type -> . CHAR
+    (71) type -> . BOOL
+    (72) type -> . STRING
+    (88) empty -> .
+
+    INT             shift and go to state 8
+    FLOAT           shift and go to state 7
+    CHAR            shift and go to state 9
+    BOOL            shift and go to state 10
+    STRING          shift and go to state 11
+    RGTPAREN        reduce using rule 88 (empty -> .)
+
+    parameter                      shift and go to state 212
+    type                           shift and go to state 132
+    empty                          shift and go to state 134
+
+state 204
+
+    (15) blockreturn -> LFTBRAC blockneutral . RGTBRAC
+    (16) blockreturn -> LFTBRAC blockneutral . RETURN exp codeReturnQuad SEMICOLON RGTBRAC
+
+    RGTBRAC         shift and go to state 214
+    RETURN          shift and go to state 213
+
+
+state 205
+
+    (74) function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope .
+
+    FUNCTION        reduce using rule 74 (function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope .)
+    PRIOMH          reduce using rule 74 (function -> FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope .)
+
+
+state 206
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF . block codeGOTOWhile
+    (20) block -> . LFTBRAC blockneutral RGTBRAC
+
+    LFTBRAC         shift and go to state 63
+
+    block                          shift and go to state 215
+
+state 207
+
+    (23) conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block . codeGotoElseIf conditionaux2
+    (89) codeGotoElseIf -> .
+
+    ELSEIF          reduce using rule 89 (codeGotoElseIf -> .)
+    ELSE            reduce using rule 89 (codeGotoElseIf -> .)
+    IF              reduce using rule 89 (codeGotoElseIf -> .)
+    WHILE           reduce using rule 89 (codeGotoElseIf -> .)
+    PRINT           reduce using rule 89 (codeGotoElseIf -> .)
+    READ            reduce using rule 89 (codeGotoElseIf -> .)
+    ID              reduce using rule 89 (codeGotoElseIf -> .)
+    INT             reduce using rule 89 (codeGotoElseIf -> .)
+    FLOAT           reduce using rule 89 (codeGotoElseIf -> .)
+    CHAR            reduce using rule 89 (codeGotoElseIf -> .)
+    BOOL            reduce using rule 89 (codeGotoElseIf -> .)
+    STRING          reduce using rule 89 (codeGotoElseIf -> .)
+    RGTBRAC         reduce using rule 89 (codeGotoElseIf -> .)
+    RETURN          reduce using rule 89 (codeGotoElseIf -> .)
+
+    codeGotoElseIf                 shift and go to state 216
+
+state 208
+
+    (22) condition -> IF conditionaux ELSE codeElse block codeEndIf .
+
+    IF              reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    WHILE           reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    PRINT           reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    READ            reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    ID              reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    INT             reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    FLOAT           reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    CHAR            reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    BOOL            reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    STRING          reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    RGTBRAC         reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+    RETURN          reduce using rule 22 (condition -> IF conditionaux ELSE codeElse block codeEndIf .)
+
+
+state 209
+
+    (9) arrayvalsaux -> cteNcteS codeAddValueArray COMMA arrayvalsaux .
+
+    RGTBRACSQR      reduce using rule 9 (arrayvalsaux -> cteNcteS codeAddValueArray COMMA arrayvalsaux .)
+
+
+state 210
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN . codeVerifyNull codeGOSUB codeTempReturn
+    (94) codeVerifyNull -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeVerifyNull                 shift and go to state 217
+    empty                          shift and go to state 218
+
+state 211
+
+    (82) callaux -> codeMovePointer COMMA . exp codeAddArguments callaux
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 219
+
+state 212
+
+    (57) parameter -> type codeCheckType ID codeAddParameters COMMA parameter .
+
+    RGTPAREN        reduce using rule 57 (parameter -> type codeCheckType ID codeAddParameters COMMA parameter .)
+
+
+state 213
+
+    (16) blockreturn -> LFTBRAC blockneutral RETURN . exp codeReturnQuad SEMICOLON RGTBRAC
+    (36) exp -> . term
+    (37) exp -> . term PLUS codeAddOperator exp
+    (38) exp -> . term MINUS codeAddOperator exp
+    (59) term -> . factor MULTIPLICATION codeAddOperator term
+    (60) term -> . factor DIVISION codeAddOperator term
+    (61) term -> . factor codeAskTerm
+    (42) factor -> . LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
+    (43) factor -> . factoraux codeAskFactor
+    (39) factoraux -> . constant
+    (40) factoraux -> . PLUS constant
+    (41) factoraux -> . MINUS constant
+    (26) constant -> . ID
+    (27) constant -> . array
+    (28) constant -> . cteN
+    (29) constant -> . cteS
+    (30) constant -> . TRUE codeAddConstBool
+    (31) constant -> . FALSE codeAddConstBool
+    (32) constant -> . call codeIsCalll
+    (6) array -> . ID LFTBRACSQR exp RGTBRACSQR
+    (33) cteN -> . FLOAT codeAddConstNumber
+    (34) cteN -> . INT codeAddConstNumber
+    (35) cteS -> . STRING codeAddConstString
+    (84) call -> . ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn
+
+    LFTPAREN        shift and go to state 52
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 45
+    ID              shift and go to state 53
+    TRUE            shift and go to state 46
+    FALSE           shift and go to state 55
+    FLOAT           shift and go to state 57
+    INT             shift and go to state 56
+    STRING          shift and go to state 50
+
+    cteS                           shift and go to state 51
+    constant                       shift and go to state 41
+    factoraux                      shift and go to state 42
+    array                          shift and go to state 43
+    cteN                           shift and go to state 44
+    call                           shift and go to state 49
+    factor                         shift and go to state 48
+    term                           shift and go to state 54
+    exp                            shift and go to state 220
+
+state 214
+
+    (15) blockreturn -> LFTBRAC blockneutral RGTBRAC .
+
+    FUNCTION        reduce using rule 15 (blockreturn -> LFTBRAC blockneutral RGTBRAC .)
+    PRIOMH          reduce using rule 15 (blockreturn -> LFTBRAC blockneutral RGTBRAC .)
+
+
+state 215
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block . codeGOTOWhile
+    (108) codeGOTOWhile -> .
+
+    IF              reduce using rule 108 (codeGOTOWhile -> .)
+    WHILE           reduce using rule 108 (codeGOTOWhile -> .)
+    PRINT           reduce using rule 108 (codeGOTOWhile -> .)
+    READ            reduce using rule 108 (codeGOTOWhile -> .)
+    ID              reduce using rule 108 (codeGOTOWhile -> .)
+    INT             reduce using rule 108 (codeGOTOWhile -> .)
+    FLOAT           reduce using rule 108 (codeGOTOWhile -> .)
+    CHAR            reduce using rule 108 (codeGOTOWhile -> .)
+    BOOL            reduce using rule 108 (codeGOTOWhile -> .)
+    STRING          reduce using rule 108 (codeGOTOWhile -> .)
+    RGTBRAC         reduce using rule 108 (codeGOTOWhile -> .)
+    RETURN          reduce using rule 108 (codeGOTOWhile -> .)
+
+    codeGOTOWhile                  shift and go to state 221
+
+state 216
+
+    (23) conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf . conditionaux2
+    (24) conditionaux2 -> . codeNextIf ELSEIF conditionaux
+    (25) conditionaux2 -> . empty
+    (106) codeNextIf -> .
+    (88) empty -> .
+
+    ELSEIF          reduce using rule 106 (codeNextIf -> .)
+    ELSE            reduce using rule 88 (empty -> .)
+    IF              reduce using rule 88 (empty -> .)
+    WHILE           reduce using rule 88 (empty -> .)
+    PRINT           reduce using rule 88 (empty -> .)
+    READ            reduce using rule 88 (empty -> .)
+    ID              reduce using rule 88 (empty -> .)
+    INT             reduce using rule 88 (empty -> .)
+    FLOAT           reduce using rule 88 (empty -> .)
+    CHAR            reduce using rule 88 (empty -> .)
+    BOOL            reduce using rule 88 (empty -> .)
+    STRING          reduce using rule 88 (empty -> .)
+    RGTBRAC         reduce using rule 88 (empty -> .)
+    RETURN          reduce using rule 88 (empty -> .)
+
+    conditionaux2                  shift and go to state 222
+    codeNextIf                     shift and go to state 223
+    empty                          shift and go to state 224
+
+state 217
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull . codeGOSUB codeTempReturn
+    (93) codeGOSUB -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeGOSUB                      shift and go to state 225
+    empty                          shift and go to state 226
+
+state 218
+
+    (94) codeVerifyNull -> empty .
+
+    MULTIPLICATION  reduce using rule 94 (codeVerifyNull -> empty .)
+    DIVISION        reduce using rule 94 (codeVerifyNull -> empty .)
+    PLUS            reduce using rule 94 (codeVerifyNull -> empty .)
+    MINUS           reduce using rule 94 (codeVerifyNull -> empty .)
+    AND             reduce using rule 94 (codeVerifyNull -> empty .)
+    DOUBEQUAL       reduce using rule 94 (codeVerifyNull -> empty .)
+    NOT             reduce using rule 94 (codeVerifyNull -> empty .)
+    OR              reduce using rule 94 (codeVerifyNull -> empty .)
+    LESSTHANEQUAL   reduce using rule 94 (codeVerifyNull -> empty .)
+    GREATTHANEQUAL  reduce using rule 94 (codeVerifyNull -> empty .)
+    GREATTHAN       reduce using rule 94 (codeVerifyNull -> empty .)
+    LESSTHAN        reduce using rule 94 (codeVerifyNull -> empty .)
+    COMMA           reduce using rule 94 (codeVerifyNull -> empty .)
+    SEMICOLON       reduce using rule 94 (codeVerifyNull -> empty .)
+    RGTPAREN        reduce using rule 94 (codeVerifyNull -> empty .)
+    RGTBRACSQR      reduce using rule 94 (codeVerifyNull -> empty .)
+
+
+state 219
+
+    (82) callaux -> codeMovePointer COMMA exp . codeAddArguments callaux
+    (97) codeAddArguments -> . empty
+    (88) empty -> .
+
+    COMMA           reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+
+    codeAddArguments               shift and go to state 227
+    empty                          shift and go to state 190
+
+state 220
+
+    (16) blockreturn -> LFTBRAC blockneutral RETURN exp . codeReturnQuad SEMICOLON RGTBRAC
+    (100) codeReturnQuad -> .
+
+    SEMICOLON       reduce using rule 100 (codeReturnQuad -> .)
+
+    codeReturnQuad                 shift and go to state 228
+
+state 221
+
+    (54) loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .
+
+    IF              reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    WHILE           reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    PRINT           reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    READ            reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    ID              reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    INT             reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    FLOAT           reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    CHAR            reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    BOOL            reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    STRING          reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    RGTBRAC         reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+    RETURN          reduce using rule 54 (loop -> WHILE codeWhileCondition LFTPAREN expression RGTPAREN codeGOTOF block codeGOTOWhile .)
+
+
+state 222
+
+    (23) conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .
+
+    ELSE            reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    IF              reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    WHILE           reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    PRINT           reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    READ            reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    ID              reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    INT             reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    FLOAT           reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    CHAR            reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    BOOL            reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    STRING          reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    RGTBRAC         reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+    RETURN          reduce using rule 23 (conditionaux -> LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 .)
+
+
+state 223
+
+    (24) conditionaux2 -> codeNextIf . ELSEIF conditionaux
+
+    ELSEIF          shift and go to state 229
+
+
+state 224
+
+    (25) conditionaux2 -> empty .
+
+    ELSE            reduce using rule 25 (conditionaux2 -> empty .)
+    IF              reduce using rule 25 (conditionaux2 -> empty .)
+    WHILE           reduce using rule 25 (conditionaux2 -> empty .)
+    PRINT           reduce using rule 25 (conditionaux2 -> empty .)
+    READ            reduce using rule 25 (conditionaux2 -> empty .)
+    ID              reduce using rule 25 (conditionaux2 -> empty .)
+    INT             reduce using rule 25 (conditionaux2 -> empty .)
+    FLOAT           reduce using rule 25 (conditionaux2 -> empty .)
+    CHAR            reduce using rule 25 (conditionaux2 -> empty .)
+    BOOL            reduce using rule 25 (conditionaux2 -> empty .)
+    STRING          reduce using rule 25 (conditionaux2 -> empty .)
+    RGTBRAC         reduce using rule 25 (conditionaux2 -> empty .)
+    RETURN          reduce using rule 25 (conditionaux2 -> empty .)
+
+
+state 225
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB . codeTempReturn
+    (91) codeTempReturn -> . empty
+    (88) empty -> .
+
+    MULTIPLICATION  reduce using rule 88 (empty -> .)
+    DIVISION        reduce using rule 88 (empty -> .)
+    PLUS            reduce using rule 88 (empty -> .)
+    MINUS           reduce using rule 88 (empty -> .)
+    AND             reduce using rule 88 (empty -> .)
+    DOUBEQUAL       reduce using rule 88 (empty -> .)
+    NOT             reduce using rule 88 (empty -> .)
+    OR              reduce using rule 88 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 88 (empty -> .)
+    GREATTHANEQUAL  reduce using rule 88 (empty -> .)
+    GREATTHAN       reduce using rule 88 (empty -> .)
+    LESSTHAN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+    SEMICOLON       reduce using rule 88 (empty -> .)
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    RGTBRACSQR      reduce using rule 88 (empty -> .)
+
+    codeTempReturn                 shift and go to state 230
+    empty                          shift and go to state 231
+
+state 226
+
+    (93) codeGOSUB -> empty .
+
+    MULTIPLICATION  reduce using rule 93 (codeGOSUB -> empty .)
+    DIVISION        reduce using rule 93 (codeGOSUB -> empty .)
+    PLUS            reduce using rule 93 (codeGOSUB -> empty .)
+    MINUS           reduce using rule 93 (codeGOSUB -> empty .)
+    AND             reduce using rule 93 (codeGOSUB -> empty .)
+    DOUBEQUAL       reduce using rule 93 (codeGOSUB -> empty .)
+    NOT             reduce using rule 93 (codeGOSUB -> empty .)
+    OR              reduce using rule 93 (codeGOSUB -> empty .)
+    LESSTHANEQUAL   reduce using rule 93 (codeGOSUB -> empty .)
+    GREATTHANEQUAL  reduce using rule 93 (codeGOSUB -> empty .)
+    GREATTHAN       reduce using rule 93 (codeGOSUB -> empty .)
+    LESSTHAN        reduce using rule 93 (codeGOSUB -> empty .)
+    COMMA           reduce using rule 93 (codeGOSUB -> empty .)
+    SEMICOLON       reduce using rule 93 (codeGOSUB -> empty .)
+    RGTPAREN        reduce using rule 93 (codeGOSUB -> empty .)
+    RGTBRACSQR      reduce using rule 93 (codeGOSUB -> empty .)
+
+
+state 227
+
+    (82) callaux -> codeMovePointer COMMA exp codeAddArguments . callaux
+    (82) callaux -> . codeMovePointer COMMA exp codeAddArguments callaux
+    (83) callaux -> . empty
+    (96) codeMovePointer -> . empty
+    (88) empty -> .
+
+    RGTPAREN        reduce using rule 88 (empty -> .)
+    COMMA           reduce using rule 88 (empty -> .)
+
+    codeMovePointer                shift and go to state 201
+    empty                          shift and go to state 202
+    callaux                        shift and go to state 232
+
+state 228
+
+    (16) blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad . SEMICOLON RGTBRAC
+
+    SEMICOLON       shift and go to state 233
+
+
+state 229
+
+    (24) conditionaux2 -> codeNextIf ELSEIF . conditionaux
+    (23) conditionaux -> . LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2
+
+    LFTPAREN        shift and go to state 142
+
+    conditionaux                   shift and go to state 234
+
+state 230
+
+    (84) call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .
+
+    SEMICOLON       reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    MULTIPLICATION  reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    DIVISION        reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    PLUS            reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    MINUS           reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    COMMA           reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    RGTPAREN        reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    AND             reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    DOUBEQUAL       reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    NOT             reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    OR              reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    LESSTHANEQUAL   reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    GREATTHANEQUAL  reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    GREATTHAN       reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    LESSTHAN        reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+    RGTBRACSQR      reduce using rule 84 (call -> ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn .)
+
+
+state 231
+
+    (91) codeTempReturn -> empty .
+
+    MULTIPLICATION  reduce using rule 91 (codeTempReturn -> empty .)
+    DIVISION        reduce using rule 91 (codeTempReturn -> empty .)
+    PLUS            reduce using rule 91 (codeTempReturn -> empty .)
+    MINUS           reduce using rule 91 (codeTempReturn -> empty .)
+    AND             reduce using rule 91 (codeTempReturn -> empty .)
+    DOUBEQUAL       reduce using rule 91 (codeTempReturn -> empty .)
+    NOT             reduce using rule 91 (codeTempReturn -> empty .)
+    OR              reduce using rule 91 (codeTempReturn -> empty .)
+    LESSTHANEQUAL   reduce using rule 91 (codeTempReturn -> empty .)
+    GREATTHANEQUAL  reduce using rule 91 (codeTempReturn -> empty .)
+    GREATTHAN       reduce using rule 91 (codeTempReturn -> empty .)
+    LESSTHAN        reduce using rule 91 (codeTempReturn -> empty .)
+    COMMA           reduce using rule 91 (codeTempReturn -> empty .)
+    SEMICOLON       reduce using rule 91 (codeTempReturn -> empty .)
+    RGTPAREN        reduce using rule 91 (codeTempReturn -> empty .)
+    RGTBRACSQR      reduce using rule 91 (codeTempReturn -> empty .)
+
+
+state 232
+
+    (82) callaux -> codeMovePointer COMMA exp codeAddArguments callaux .
+
+    RGTPAREN        reduce using rule 82 (callaux -> codeMovePointer COMMA exp codeAddArguments callaux .)
+
+
+state 233
+
+    (16) blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON . RGTBRAC
+
+    RGTBRAC         shift and go to state 235
+
+
+state 234
+
+    (24) conditionaux2 -> codeNextIf ELSEIF conditionaux .
+
+    ELSE            reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    IF              reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    WHILE           reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    PRINT           reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    READ            reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    ID              reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    INT             reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    FLOAT           reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    CHAR            reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    BOOL            reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    STRING          reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    RGTBRAC         reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+    RETURN          reduce using rule 24 (conditionaux2 -> codeNextIf ELSEIF conditionaux .)
+
+
+state 235
+
+    (16) blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC .
+
+    FUNCTION        reduce using rule 16 (blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC .)
+    PRIOMH          reduce using rule 16 (blockreturn -> LFTBRAC blockneutral RETURN exp codeReturnQuad SEMICOLON RGTBRAC .)
+
