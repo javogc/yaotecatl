@@ -1,14 +1,14 @@
 from Yaotecatl import *
 from cuboSemantico import *
 
-def runVirtualMachine( quadruplesList,):
+def runVirtualMachine( quadruplesList,globalVarDir,localVarDir,constVarDir,tempVarDir,constantDict,localVarDict,globalVarDict):
 
 	print ("Yaotecatl virtual machine RUNNING...")
 
-contQuadruples = 0
+quadCount = 0  #contador de quadruplos
 
-while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
-	quad = quadruplesList[contQuadruples]
+while quadruplesList[quadCount]['OPERATOR'] != "END":
+	quad = quadruplesList[quadCount]
 
 	##Substaction
 	if quad['OPERATOR'] == '-':
@@ -16,29 +16,29 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 		
-			op2Value = #activeMemory
+		op2Value = #memory
 
 		
 
-		resultValue = op1Value - op2Value
+		lastResult = op1Value - op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	##addition	
-	elif quad['OPERATOR'] == '-':
+	elif quad['OPERATOR'] == '+':
 		op1 = quad['OP1']
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
-		resultValue = op1Value + op2Value
+		lastResult = op1Value + op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#multiplication
 	elif quad['OPERATOR'] == '*':
@@ -46,15 +46,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = float(op1Value) + float(op2Value)
+		lastResult = op1Value * op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#division	
 	elif quad['OPERATOR'] == '/':
@@ -62,13 +62,16 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value / op2Value
+		lastResult = op1Value / op2Value
+
+		#memory
+
 
 	#equals	
 	elif quad['OPERATOR'] == '=':
@@ -76,9 +79,8 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			##check later
+			#memory
 
-		##add value to active activeMemory
 
 	#greaterthan
 	elif quad['OPERATOR'] == '>':
@@ -86,15 +88,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value > op2Value
+		lastResult = op1Value > op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#lessthan
 	elif quad['OPERATOR'] == '<':
@@ -102,15 +104,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value < op2Value
+		lastResult = op1Value < op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#greaterthanorequal	
 	elif quad['OPERATOR'] == '>=':
@@ -118,15 +120,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value >= op2Value
+		lastResult = op1Value >= op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#lessthanorequal
 	elif quad['OPERATOR'] == '<=':
@@ -134,15 +136,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value <= op2Value
+		lastResult = op1Value <= op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#	
 	elif quad['OPERATOR'] == '==':
@@ -150,15 +152,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value == op2Value
+		lastResult = op1Value == op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#different
 	elif quad['OPERATOR'] == '!=':
@@ -166,15 +168,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value != op2Value
+		lastResult = op1Value != op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#and
 	elif quad['OPERATOR'] == '&&':
@@ -182,15 +184,15 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value != op2Value
+		lastResult = op1Value and op2Value
 
-		##add value to active activeMemory
+		#memory
 
 	#or
 	elif quad['OPERATOR'] == '||':
@@ -198,21 +200,111 @@ while quadruplesList[contQuadruples]['OPERATOR'] != 'END' :
 		op2 = quad['OP2']
 		result = quad['RESULT']
 
-			op1Value = #globalMemory
+		op1Value = #memory
 
-			op2Value = #activeMemory
+		op2Value = #memory
 
 
 
-		resultValue = op1Value != op2Value
+		lastResult = op1Value or op2Value
 
-		##add value to active activeMemory
+		#memory
 
-	contQuadruples += 1
+	#print	
+	elif quad['OPERATOR'] == 'PRINT':
+		result = quad['RESULT']
 
-	#print
-	@gotof
-	#goto
-	#read
-	#memory
+		op1Value = #memory
+
+		#printwithmemory
+
+
+	#read	
+	elif quad['OPERATOR'] == 'READ':
+		result = quad['RESULT']
+
+		op1Value = #memory
+
+		#readwithmemory
+
+	#era	
+	elif quad['OPERATOR'] == 'ERA':
+		result = quad['RESULT']
+
+		#memory
+
+
+
+	#param	
+	elif quad['OPERATOR'] == 'PARAM':
+		op1 = quad['OP1']
+	
+		result = quad['RESULT']
+
+		#memory	
+
+
+	#gosub	
+	elif quad['OPERATOR'] == 'GOSUB':
+		result = quad['RESULT']
+
+		quadCount = result - 1
+
+		#memory		
+
+
+
+	#return	
+	elif quad['OPERATOR'] == 'RETURN':
+		result = quad['RESULT']
+
+		op1Value = #memory
+
+		#memory		
+
+	#endproc
+	elif quad['OPERATOR'] == 'ENDPROC':
+		
+		#memory		
+
+
+
+	#goto	
+	elif quad['OPERATOR'] == 'GOTO':
+		result = quad['RESULT']
+
+		quadCount = result - 1
+
+
+	#gotof	
+	elif quad['OPERATOR'] == 'GOTOF':
+		op1 = quad['OP1']
+
+		result = quad['RESULT']
+
+		quadCount = result - 1
+
+		#memory
+
+
+
+	#gotom	
+	elif quad['OPERATOR'] == 'GOTOM':
+		result = quad['RESULT']
+
+		quadCount = result - 1
+
+		#memory
+		
+
+
+	#verify	
+	elif quad['OPERATOR'] == 'VERIFY':
+		op1 = quad['OP1']
+
+		#memory	
+
+
+
+	quadCount += 1
 

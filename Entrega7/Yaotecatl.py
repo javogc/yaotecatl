@@ -36,6 +36,7 @@ pilaO = [] #pila que tendra los operandos y despues los operador cuando se haga 
 isInt = False #variable para saber si la constante es int o no
 
 jumps = [] #pila de jumps
+jumpsGoto = [] #pila de gotos final
 callPointerDict = dict() #para saber en que parametro estas y comparar argumentos con parametros
 
 isCall = False #var que dira si la asignacion a una variable es el resultado de una funcion          
@@ -98,7 +99,7 @@ def p_program(p):
    # print("Table of Local(main) Variables: %s" % localVarDict)
     #print("------------------------------------")
     #print("------------------------------------")
-
+    addNewQuadruple("END", "", "", "")
     #para imprimir los cuadrulos uno por uno
 
     countQuadruples = 0 
@@ -152,24 +153,25 @@ def p_array(p):
 
 
 
-    indexArr = pilaO.pop()["dir"]
+    indexArr = pilaO.pop()["dir"] #saca el tamano del arreglo
 
-    addNewQuadruple("VERIFY", indexArr, "", findVar["arrSize"])
+    addNewQuadruple("VERIFY", indexArr, "", findVar["arrSize"]) #verifica que el index sea menor que el max del arreglo
 
     auxDir = findVar["dir"]
 
 
 
-    constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] }
+    constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] } #arreglo la direccion base del arreglo 
     constVarDir["int"] += 1
 
 
-    specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" 
+    specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" #direccion especial
 
-    addNewQuadruple("+",indexArr, constantDict[str(auxDir)]["dir"], specialDir  )
+    addNewQuadruple("+",indexArr, constantDict[str(auxDir)]["dir"], specialDir  ) # sumas la base por el index que buscas
 
 
-    pilaO.append({"dir":specialDir, "type":findVar["type"]})
+    pilaO.append({"dir":specialDir, "type":findVar["type"]}) #metes la direccion especial a la pilaO
+
     
     tempVarDir[listOfTypesReversed(findVar["type"])] += 1
 
@@ -254,7 +256,7 @@ def p_condition(p):
     """condition : IF conditionaux codeEndIf
     | IF conditionaux ELSE codeElse block  codeEndIf""" 
 def p_conditionaux(p):
-    """conditionaux : LFTPAREN expression RGTPAREN codeGOTOF block  conditionaux2 """      
+    """conditionaux : LFTPAREN expression RGTPAREN codeGOTOF block codeGotoElseIf conditionaux2 """      
 def p_conditionaux2(p):
     """conditionaux2 : codeNextIf ELSEIF conditionaux
     | empty """ 
@@ -302,13 +304,19 @@ def p_factoraux(p):
 
     if not isCall:
         if len(p) == 2: #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[1]
-         
-            pilaO.append(searchForOperand(p[1]))
+            aux = searchForOperand(p[1]) 
+            
+            if aux["type"] < 20:
+                pilaO.append(aux)
+        
           
  
         else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
-         
-            pilaO.append(searchForOperand(p[2]))
+            aux = searchForOperand(p[1]) 
+            
+            if aux["type"] < 20:
+                pilaO.append(aux)
+
              
     
         
@@ -566,6 +574,11 @@ def p_error(p):
 
 #-------------------------------------------------- OTHER RULES -------------------------------------
 
+#codigo para el brinco del else si un IF ya entro 
+def p_codeGotoElseIf(p):
+    """codeGotoElseIf : """
+    addNewQuadruple("GOTO", "", "", "")
+    jumpsGoto.append(len(quadruplesList)-1)
 
 
 #codigo para agregar valor del arreglo al arreglo creado llamado arrayValues y despues usarlo para asignar a cada valor del array
@@ -646,14 +659,15 @@ def p_codeAddArguments(p):
 
     p_codeVerifyNull2(p)
 
-    newType = checkSemanticCube( argument["type"] ,funcDict[nameOfFunct]["parameters"][callPointerDict[counterCalls]["pointer"]]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
+    newType = checkSemanticCube( argument["type"] ,funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
             
     if newType < 10: # si si son compatibles los argrega al quadruplo
                 
         addNewQuadruple("PARAM", argument["dir"], "", funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["dir"]) #usando el pinter sacamos el parametro que recibira el argumento
 
     else: #Si no son compatibles marca error
-        print("You cant evaluate those operands with that operator!")
+    
+        print("You cant evaluate those operands with that operator!" )
         exit()
 
 
@@ -733,14 +747,16 @@ def p_codeGOTOMain(p):
 #codigo para el brinco del else si un IF ya entro 
 def p_codeElse(p):
     """codeElse : """
-    addNewQuadruple("GOTO", "", "", "")
-    quadruplesList[jumps.pop()]["RESULT"] = len(quadruplesList) 
-    jumps.append(len(quadruplesList)-1)
+ 
+    jumpsGoto.append(len(quadruplesList)-1)
 
 #codigo para 
 def p_codeEndIf(p):
     """codeEndIf : """
     quadruplesList[jumps.pop()]["RESULT"] = len(quadruplesList)
+
+    while len(jumpsGoto) != 0:
+        quadruplesList[jumpsGoto.pop()]["RESULT"] = len(quadruplesList)
 
 #codigo para completar el GOTOF cuando hay elseif 
 def p_codeNextIf(p):
@@ -1105,8 +1121,8 @@ def AddVarDict(varName, varType):
             localVarDir[listOfTypesReversed(varType)] += 1
 
         else:
-            rint("Error in local table, variable already exists!")
-
+            print("Error in local table, variable already exists!")
+            exit()
 
 
 
@@ -1153,6 +1169,8 @@ if __name__ == "__main__":
             f = open(file, "r")
             data = f.read()
             yacc.parse(data, tracking = True) 
+            
+
         except EOFError:
             print(EOFError)
             exit()
