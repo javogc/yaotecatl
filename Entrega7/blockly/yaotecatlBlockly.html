@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>YAOTECATL - Input Gráfico</title>
+  <script src="blockly_compressed.js"></script>
+  <script src="blocks_compressed.js"></script>
+  <script src="javascript_compressed.js"></script>
+  <script src="customblocks.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head>
+<body>
+
+<h1 align="center" > YAOTECATL </h1>
+  
+  <a href="https://developers.google.com/blockly/guides/configure/web/code-generators">Learn Yaotecatl</a>
+
+  <p>
+    <button onclick="showCode()">Show Yaotecatl Code</button>
+    <button onclick="runCode()">Run JavaScript</button>
+  </p>
+
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Program Structure & Declarations">
+      <block type="priomh"></block>
+      <block type="function"></block>
+      <block type="return"></block>
+      <block type="endfunc"></block>
+      <block type="print"></block>
+    </category>
+    <category name="Declare">
+      <block type="var"></block>
+     
+      <block type="if"></block>
+      <block type="param"></block>
+      <block type="param2"></block>
+      <block type="string"></block>
+      <block type="assingvalue"></block>
+    </category>
+        <category name="Logical Operators">
+      <block type="lessthan"></block>
+      <block type="greaterthan"></block>
+      <block type="equality"></block>
+      <block type="greaterthanEquals"></block>
+      <block type="lessthanEquals"></block>
+      <block type="not"></block>
+      <block type="and"></block>
+      <block type="or"></block>
+
+    </category>
+    
+    <category name="Math">
+      <block type="math_number"></block>
+      <block type="sum"></block>
+      <block type="sub"></block>
+      <block type="mult"></block>
+      <block type="div"></block>
+      <block type="sum2"></block>
+      <block type="sub2"></block>
+      <block type="mult2"></block>
+      <block type="div2"></block> 
+     
+    </category>
+  </xml>
+
+ 
+  <script>
+    var workspace = Blockly.inject('blocklyDiv',
+        {media: 'media/',
+         toolbox: document.getElementById('toolbox')});
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                               workspace);
+
+    function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      code = 'program id { \n\n' + code + '\n}'; 
+      alert(code);
+    }
+
+    function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      try {
+        eval(code);
+      } catch (e) {
+        alert(e);
+      }
+    }
+  </script>
+
+</body>
+</html>
