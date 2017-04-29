@@ -3,6 +3,9 @@ from lex import *
 import collections
 from collections import OrderedDict
 from collections import deque
+from virtualMachine import *
+
+
 
 
 #------------------------------Comienzo de Yacc --------------------------------------------
@@ -41,8 +44,8 @@ callPointerDict = dict() #para saber en que parametro estas y comparar argumento
 
 isCall = False #var que dira si la asignacion a una variable es el resultado de una funcion          
 counterCalls = 0 #cuantas funciones anidadas
-newDir = 0
-arrValues = []
+newDir = 0 #guardara la direccion base del arreglo y despues le sumaremos + 1 para cada valor del arreglo
+arrValues = [] #guardamos los valores del arreglo para comparar el tamano despues
 
 
 globalVarDir = dict() #diccionario que tiene las direcciones de memoria globales
@@ -96,11 +99,12 @@ def p_program(p):
     #print("-------------------------------------")
     #print("------------------------------------")
 
-   # print("Table of Local(main) Variables: %s" % localVarDict)
+    #print("Table of Local(main) Variables: %s" % localVarDict)
     #print("------------------------------------")
     #print("------------------------------------")
     addNewQuadruple("END", "", "", "")
     #para imprimir los cuadrulos uno por uno
+
 
     countQuadruples = 0 
     for p in quadruplesList:
@@ -160,9 +164,9 @@ def p_array(p):
     auxDir = findVar["dir"]
 
 
-
-    constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] } #arreglo la direccion base del arreglo 
-    constVarDir["int"] += 1
+    if not constantDict.has_key(str(auxDir)):
+        constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] } #arreglo la direccion base del arreglo 
+        constVarDir["int"] += 1
 
 
     specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" #direccion especial
@@ -323,9 +327,7 @@ def p_factoraux(p):
     else: 
         isCall = False
   
-        if p[1] == 4:
-            print("can't use a void function for assignment") 
-            exit()   
+       
        
           
     
@@ -414,12 +416,43 @@ def p_function(p):
     """function : FUNCTION codeScope functionaux ID codeNameOfFunct LFTPAREN parameter RGTPAREN codeAddFunctQuad blockreturn codeScope  """
 
     #print("Table of Local(funct) Variables: %s" % localVarDict)
+    #print("Table of Local(function) Variables: %s" % localVarDict)
+
+    global localVarDir
+    global tempVarDir
+    global functParameters
+    global funcDict
+
+    #metemos la cantidad de variables a la tabla de funciones
+    funcDict[nameOfFunct]["localBool"] = localVarDir["bool"]
+    funcDict[nameOfFunct]["localInt"] = localVarDir["int"]
+    funcDict[nameOfFunct]["localFloat"] = localVarDir["float"]
+    funcDict[nameOfFunct]["localString"] = localVarDir["string"]
+
+    funcDict[nameOfFunct]["tempBool"] = tempVarDir["bool"]
+    funcDict[nameOfFunct]["tempInt"] = tempVarDir["int"]
+    funcDict[nameOfFunct]["tempFloat"] = tempVarDir["float"]
+    funcDict[nameOfFunct]["tempString"] = tempVarDir["string"]
+
     
+
     localVarDict.clear() #limpia el diccionario de variables locales para usarlo en otra funcion
 
+
     funcParameters = [] #limpia el arreglo de parametros para usarlo en otra funcion
+
+    #reseteamos la direccion inicial
+    localVarDir["bool"] = 26000
+    localVarDir["int"] = 30000
+    localVarDir["float"] = 34000
+    localVarDir["string"] = 38000
+
+    tempVarDir["bool"] = 58000
+    tempVarDir["int"] = 62000
+    tempVarDir["float"] = 66000
+    tempVarDir["string"] = 70000 
     
-    addNewQuadruple('ENDPROC', '', '', '')
+    addNewQuadruple("ENDPROC", "", "", "")
 
 def p_functionaux(p):
     """functionaux : VOID codeTypeVoid codeCheckType 
@@ -469,12 +502,12 @@ def p_varsaux(p):
         arrSize = int(p[4])
 
         if scopeVar == "global":
-            globalVarDir[listOfTypesReversed(globalVarDict[nameOfVar]['type'])] += arrSize - 1 #le sumara el size del arreglo a la memoria global
+            globalVarDir[listOfTypesReversed(globalVarDict[nameOfVar]["type"])] += arrSize - 1 #le sumara el size del arreglo a la memoria global
 
-            varGlobal[nameOfVar]["arrSize"] = arrSize
+            globalVarDict[nameOfVar]["arrSize"] = arrSize
 
         else:
-            localVarDir[listOfTypesReversed(localVarDict[nameOfVar]['type'])] += arrSize - 1 #le sumara el size del arreglo a la memoria local
+            localVarDir[listOfTypesReversed(localVarDict[nameOfVar]["type"])] += arrSize - 1 #le sumara el size del arreglo a la memoria local
 
 
             localVarDict[nameOfVar]["arrSize"] = arrSize
@@ -487,18 +520,19 @@ def p_varsaux(p):
             for i in range(0, findVar["arrSize"]):
                 arrValAux = arrValues.pop(0)
        
-                checktype = checkSemanticCube( findVar["type"] ,constantDict[arrValAux]['type'] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
+                checktype = checkSemanticCube( findVar["type"] ,constantDict[arrValAux]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
                 
                 if checktype >= 10:
                     print("array value types don't match!")
                     exit()
 
             
-                addNewQuadruple("=", constantDict[arrValAux]['dir'], "", savedDir) #se le asigna el valor a la direccion actual del arreglo
+                addNewQuadruple("=", constantDict[arrValAux]["dir"], "", savedDir) #se le asigna el valor a la direccion actual del arreglo
                 
                 savedDir += 1 #le suma 1 a la direccion para asiganrle el siguiente valor
         else:
-            print("Error: Array size doesn't match!")   
+            print("Error: Array size doesn't match!")  
+            print(findVar["arrSize"], len(arrValues)) 
             exit()     
 
     else:          
@@ -600,7 +634,7 @@ def p_codeTempReturn(p):
 
         respAux = {"dir": tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])], "type":funcDict[nameOfFunct]["type"]}
 
-        addNewQuadruple('=', nameOfFunct, "", respAux["dir"])
+        #addNewQuadruple("=", 0, "", respAux["dir"])
 
         pilaO.append(respAux)
 
@@ -621,7 +655,7 @@ def p_codeGOSUB(p):
     global counterCalls
 
     counterCalls -= 1
-    addNewQuadruple("GOSUB", "", "", funcDict[p[-9]]["Quadruple"]) # saca donde esta ubicada la funcion 
+    addNewQuadruple("GOSUB", "", "", int(funcDict[p[-9]]["Quadruple"])) # saca donde esta ubicada la funcion 
 
 #checa si es pusiste menos argumentos
 def p_codeVerifyNull(p):
@@ -677,7 +711,7 @@ def p_codeEraQuad(p):
     global counterCalls
     global callPointerDict
 
-    addNewQuadruple("ERA", "", "", p[-3])
+    addNewQuadruple("ERA", "", "", funcDict[p[-3]])
 
     callPointerDict[counterCalls]["pointer"] = 0
 
@@ -900,17 +934,17 @@ def p_codeAddOpenParen(p): #abre parentesis en una operacion
 
 def p_codeAddConstBool(p): #agrega una constante bool al diccionario de constantes
     """codeAddConstBool : empty"""
+    if not constantDict.has_key(p[-1]):
+        constantDict[p[-1]] = {"val": p[-1], "type":3, "dir": constVarDir["bool"]  }
 
-    constantDict[p[-1]] = {"val": p[-1], "type":3, "dir": constVarDir["bool"]  }
-
-    constVarDir["bool"] += 1
+        constVarDir["bool"] += 1
 
 def p_codeAddConstString(p): #agrega una constante string al diccionario de constantes
     """codeAddConstString : empty"""
-    
-    constantDict[p[-1]] = {"val": p[-1], "type":2, "dir": constVarDir["string"] }
+    if not constantDict.has_key(p[-1]):
+        constantDict[p[-1]] = {"val": p[-1], "type":2, "dir": constVarDir["string"] }
 
-    constVarDir["string"] += 1
+        constVarDir["string"] += 1
 
 def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccionario de constantes
     """codeAddConstNumber : empty"""
@@ -919,12 +953,14 @@ def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccio
 
     if isInt(p[-1]):
         typeOfConst = 0
-        constantDict[str(p[-1])] = {"val":p[-1], "type":typeOfConst, "dir": constVarDir["int"] }
-        constVarDir["int"] += 1
+        if not constantDict.has_key(str(p[-1])):
+            constantDict[str(p[-1])] = {"val":int(p[-1]), "type":typeOfConst, "dir": constVarDir["int"] }
+            constVarDir["int"] += 1
     else:
         typeOfConst = 1
-        constantDict[str(p[-1])] = {"val":p[-1], "type":typeOfConst, "dir": constVarDir["float"] }
-        constVarDir["float"] += 1
+        if not constantDict.has_key(str(p[-1])):
+            constantDict[str(p[-1])] = {"val":float(p[-1]), "type":typeOfConst, "dir": constVarDir["float"] }
+            constVarDir["float"] += 1
     
     
 
@@ -1158,10 +1194,6 @@ def addNewQuadruple(operator, op1, op2, result):
     quadruplesList.append(orderDict)
 
 
-
-
-
-# para poder meter un test file y verificar en donde ocurren los errores
 if __name__ == "__main__":
     if (len(sys.argv) > 1):
         file = sys.argv[1]
@@ -1169,12 +1201,16 @@ if __name__ == "__main__":
             f = open(file, "r")
             data = f.read()
             yacc.parse(data, tracking = True) 
-            
-
+            runVirtualMachine(quadruplesList, globalVarDir, localVarDir, constVarDir, tempVarDir, constantDict,localVarDict, globalVarDict)
         except EOFError:
             print(EOFError)
             exit()
    
+
+
+
+
+
 
 
 

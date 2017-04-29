@@ -52,7 +52,7 @@ t_DIVISION = r'\/'
 t_INT = r'[0-9]+'
 t_FLOAT = r'[0-9]+\.[0-9]+'
 #t_CHAR = r'\".\"'
-t_STRING = r'\".*\"'
+t_STRING = r'\"([^\\\"]|\\.)*\"'
 t_ignore = ' \t'
 
 
