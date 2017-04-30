@@ -47,6 +47,8 @@ counterCalls = 0 #cuantas funciones anidadas
 newDir = 0 #guardara la direccion base del arreglo y despues le sumaremos + 1 para cada valor del arreglo
 arrValues = [] #guardamos los valores del arreglo para comparar el tamano despues
 
+isMinusActive = False #variable que se activara cuando encuentre una varibale negativa
+
 
 globalVarDir = dict() #diccionario que tiene las direcciones de memoria globales
 globalVarDir["bool"] = 10000
@@ -299,7 +301,7 @@ def p_exp(p):
 def p_factoraux(p):
     """factoraux : constant
     | PLUS constant
-    | MINUS constant """ 
+    | MINUS codeMinusSign constant """ 
 
     global pilaO
     global isCall
@@ -316,7 +318,16 @@ def p_factoraux(p):
           
  
         else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
-            aux = searchForOperand(p[1]) 
+            
+            addVar = p[3]
+
+            addVar = "-" + addVar
+            
+            
+            
+
+            aux = searchForOperand(addVar) 
+
             
             if aux["type"] < 20:
                 pilaO.append(aux)
@@ -618,6 +629,15 @@ def p_error(p):
 
 #-------------------------------------------------- OTHER RULES -------------------------------------
 
+
+def p_codeMinusSign(p):
+    """codeMinusSign : """
+    global isMinusActive
+    isMinusActive = True
+    
+
+
+
 #codigo para el brinco del else si un IF ya entro 
 def p_codeGotoElseIf(p):
     """codeGotoElseIf : """
@@ -644,7 +664,7 @@ def p_codeTempReturn(p):
 
         respAux = {"dir": tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])], "type":funcDict[nameOfFunct]["type"]}
 
-        addNewQuadruple("=", "" , "", respAux["dir"])
+        addNewQuadruple("=", funcDict[nameOfFunct]["dir"] , "", respAux["dir"])
 
         pilaO.append(respAux)
 
@@ -960,16 +980,33 @@ def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccio
     """codeAddConstNumber : empty"""
 
     global constantDict
+    global isMinusActive
 
     if isInt(p[-1]):
+
+
+        addVar = int(p[-1])
+
+        if isMinusActive:
+            addVar *= -1
+            isMinusActive = False
+
+
+
         typeOfConst = 0
         if not constantDict.has_key(str(p[-1])):
-            constantDict[str(p[-1])] = {"val":int(p[-1]), "type":typeOfConst, "dir": constVarDir["int"] }
+            constantDict[str(addVar)] = {"val":addVar, "type":typeOfConst, "dir": constVarDir["int"] }
             constVarDir["int"] += 1
     else:
+
+        addVar = float(p[-1])
+        if isMinusActive:
+            addVar *= -1
+            isMinusActive = False
+
         typeOfConst = 1
-        if not constantDict.has_key(str(p[-1])):
-            constantDict[str(p[-1])] = {"val":float(p[-1]), "type":typeOfConst, "dir": constVarDir["float"] }
+        if not constantDict.has_key(str(addVar)):
+            constantDict[str(p[-1])] = {"val":addVar, "type":typeOfConst, "dir": constVarDir["float"] }
             constVarDir["float"] += 1
     
     
@@ -1138,7 +1175,8 @@ def addFunctDict(functName, functType, functParameters, numOfQuadruple):
     global funcDict
 
     if functName in funcDict.keys():   #verifica si la funcion ya existe en el diccionario
-        print ("Error in function table, the function already exists! ")
+        print ("Error in function table, the function already exists! ",functName)
+        exit()
         
     else:
         funcDict[functName] = {"val":functName, "type":functType, "parameters":functParameters, "Quadruple": numOfQuadruple } #guarda la funcion en el diccionario
@@ -1175,16 +1213,20 @@ def AddVarDict(varName, varType):
 #Busca la variable o constante de todas las tablas/diccionarios y regresa un objeto diccionario
 def searchForOperand(key):
     if key in globalVarDict.keys():
+
         return globalVarDict[key]
 
     elif key in localVarDict.keys():
         return localVarDict[key]
 
+
     elif key in constantDict.keys():
-        return constantDict[key]    
+        return constantDict[key] 
+
     
     else:
         #sale error aqui
+        print(constantDict,"HOLA") 
         print("Variable not found!", key) #imprime cual variable no fue declarada en ninguna de las tablas 
         exit()
 

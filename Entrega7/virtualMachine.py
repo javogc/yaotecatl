@@ -13,6 +13,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 	objMemoria.SetConstants(constantDict)
 	stackQuadBack = [] #arreglo que guardara el numero del quadruplo en el que regresara despues de la funcion
 	quadCount = 0  #contador de quadruplos
+	returnDirection = None
 
 	while quadruplesList[quadCount]['OPERATOR'] != "END":
 
@@ -347,10 +348,11 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 
 
 		#era	
-		elif quad['OPERATOR'] == 'ERA':
+		elif quad['OPERATOR'] == "ERA":
 			result = quad['RESULT'] #saca la funcion a la cual ira
 
 			objMemoria.newFunc(result) #la envia a la funcion para asignar la memoria correspondiente
+			returnDirection = result['dir']
 
 
 
@@ -390,19 +392,12 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 		elif quad['OPERATOR'] == 'RETURN':
 			result = quad['RESULT']
 
-			
 
 			resultValue = objMemoria.getVarValue(result) #saca el valor de la direccion
 
-			objMemoria.changeBackMemory()
+			
 
-			quadCount = stackQuadBack[-1]
-
-			quad = quadruplesList[quadCount]
-
-			resultAddress = quad['RESULT']
-
-			objMemoria.setVarValue(resultAddress, resultValue)
+			objMemoria.setVarValue(returnDirection, resultValue)
 
 			
 		      
@@ -410,8 +405,8 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 
 		#endproc
 		elif quad['OPERATOR'] == 'ENDPROC':
-			
-
+			objMemoria.changeBackMemory()
+		
 			quadCount = stackQuadBack.pop() - 1
 					
 

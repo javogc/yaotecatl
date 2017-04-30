@@ -1,17 +1,6 @@
 program id {
 
 
-  function int factorialRec (int n){
-    int result=1;
-    int temp=1;
-    if (n > 0) {
-      temp=factorialRec(n - 1);
-      result=n * temp;
-    }
-    return result;
-
-  }	
-
 
 
 
@@ -73,7 +62,12 @@ program id {
     x=fibonacci(n);
     print(x);
 
+
     print("Recursive Fibonacci");
+    x = fibonacciRec(n);
+    print(x);
+    
+    print("Recursive Factorial");
     x = factorialRec(n);
     print(x);
 
