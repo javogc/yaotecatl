@@ -13,6 +13,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 	objMemoria.SetConstants(constantDict)
 	stackQuadBack = [] #arreglo que guardara el numero del quadruplo en el que regresara despues de la funcion
 	quadCount = 0  #contador de quadruplos
+	returnDirection = None
 
 	while quadruplesList[quadCount]['OPERATOR'] != "END":
 
@@ -22,7 +23,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 		op2 = quad["OP2"]
 		result = quad["RESULT"]
 
-		print(operator, op1, op2, result)
+		#print(operator, op1, op2, result)
 
 
 		#Substaction
@@ -47,14 +48,54 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			op1 = quad['OP1']
 			op2 = quad['OP2']
 			result = quad['RESULT']
+		
+			if type(result) is str and type(op1) is int and type(op2) is int:
+				
+				result = result.replace("(", "")
+				result = result.replace(")", "")
 
-			op1Value = objMemoria.getVarValue(op1)
+				op1Value = objMemoria.getVarValue(op1)
 
-			op2Value = objMemoria.getVarValue(op2)
+				op2Value = objMemoria.getVarValue(op2)
 
-			lastResult = op1Value + op2Value
+				#print(op1Value, op2Value)
 
-			objMemoria.setVarValue(result, lastResult)
+				lastResult = op1Value + op2Value
+
+				objMemoria.setVarValue(int(result), lastResult)
+
+				#print(objMemoria.getVarValue(int(result)))
+
+			elif type(result) is int and type(op1) is str and type(op2) is int:
+
+				op1 = op1.replace("(", "")
+				op1 = op1.replace(")", "")
+
+				op1Value = objMemoria.getVarValue(int(op1))
+				op1Value = objMemoria.getVarValue(op1Value)
+				op2Value = objMemoria.getVarValue(op2)
+
+				#print(op1Value, op2Value)
+
+				lastResult = op1Value + op2Value
+
+				objMemoria.setVarValue(int(result), lastResult)
+			
+
+
+
+
+			else:
+
+				op1Value = objMemoria.getVarValue(op1)
+
+				op2Value = objMemoria.getVarValue(op2)
+
+				
+
+				lastResult = op1Value + op2Value
+
+				objMemoria.setVarValue(result, lastResult)
 
 		#multiplication
 		elif quad['OPERATOR'] == '*':
@@ -78,9 +119,9 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			op2 = quad['OP2']
 			result = quad['RESULT']
 
-			print op1, "dir"
+			
 			op1Value = objMemoria.getVarValue(op1)
-			print op1Value, "valor"
+			
 
 			op2Value = objMemoria.getVarValue(op2)
 
@@ -94,10 +135,50 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 		elif quad['OPERATOR'] == '=':
 			op1 = quad['OP1'] #saca la direccion del valor que le asignaras a la variable
 			result = quad['RESULT'] #saca la direccion de la variable
-		
-			op1Value = objMemoria.getVarValue(op1) #saca el valor que le asignaremos a la variable
 
-			objMemoria.setVarValue(result, op1Value) #asigna el valor a la direccion de memoria de la variable
+
+			if type(result) is str and type(op1) is int:
+				
+				result = result.replace("(", "")
+				result = result.replace(")", "")
+
+				op1Value = objMemoria.getVarValue(op1)
+			
+
+				resultValue = objMemoria.getVarValue(int(result))
+			
+
+				objMemoria.setVarValue(resultValue, op1Value)
+
+			elif type(result) is str and type(op1) is str:
+				result = result.replace("(", "")
+				result = result.replace(")", "")
+
+				op1 = op1.replace("(", "")
+				op1 = op1.replace(")", "")
+
+				op1Value = objMemoria.getVarValue(int(op1))
+				op1Value = objMemoria.getVarValue(op1Value)
+
+				resultValue = objMemoria.getVarValue(int(result))
+
+				objMemoria.setVarValue(resultValue, op1Value)
+
+			
+			elif type(result) is int and type(op1) is str:
+				op1 = op1.replace("(", "")
+				op1 = op1.replace(")", "")
+
+				op1Value = objMemoria.getVarValue(int(op1))
+				op1Value = objMemoria.getVarValue(op1Value)
+
+				objMemoria.setVarValue(result, op1Value)
+
+
+			else:
+				op1Value = objMemoria.getVarValue(op1) #saca el valor que le asignaremos a la variable
+
+				objMemoria.setVarValue(result, op1Value) #asigna el valor a la direccion de memoria de la variable
 
 
 		#greaterthan
@@ -232,24 +313,46 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 		elif quad['OPERATOR'] == 'PRINT':
 			result = quad['RESULT']
 
-			aux = objMemoria.getVarValue(result)
+			if type(result) is str:
+				result = result.replace("(", "")
+				result = result.replace(")", "")
 
-			print(aux)
+				resultValue = objMemoria.getVarValue(int(result))
+				aux = objMemoria.getVarValue(resultValue)
+				
+				print(aux)
+			
+			else:
+				
+
+				aux = objMemoria.getVarValue(result)
+
+				print(aux)
 
 
 		#read	
-		#elif quad['OPERATOR'] == 'READ':
-		#	result = quad['RESULT']
+		elif quad['OPERATOR'] == 'READ':
+			result = quad['RESULT']
 
-		#	op1Value = #objMemoria
+			varType = objMemoria.getVarTypeHelper(result)
+			
+			if varType == "int":
+				readValue = int(raw_input())
+				objMemoria.setVarValue(result, readValue)
+			elif varType == "float":
+				readValue = float(raw_input())
+				objMemoria.setVarValue(result, readValue)
+			elif varType == "string":
+				readValue = str(raw_input())
+				objMemoria.setVarValue(result, readValue)
 
-			#readwithobjMemoria
 
 		#era	
-		elif quad['OPERATOR'] == 'ERA':
+		elif quad['OPERATOR'] == "ERA":
 			result = quad['RESULT'] #saca la funcion a la cual ira
 
 			objMemoria.newFunc(result) #la envia a la funcion para asignar la memoria correspondiente
+			returnDirection = result['dir']
 
 
 
@@ -289,26 +392,21 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 		elif quad['OPERATOR'] == 'RETURN':
 			result = quad['RESULT']
 
+
 			resultValue = objMemoria.getVarValue(result) #saca el valor de la direccion
 
-			objMemoria.changeBackMemory()
+			
 
-			quadCount = stackQuadBack[-1]
+			objMemoria.setVarValue(returnDirection, resultValue)
 
-			quad = quadruplesList[quadCount]
-
-			resultAddress = quad['RESULT']
-
-			objMemoria.setVarValue(resultAddress, resultValue)
-
-		
+			
 		      
 
 
 		#endproc
 		elif quad['OPERATOR'] == 'ENDPROC':
 			objMemoria.changeBackMemory()
-
+		
 			quadCount = stackQuadBack.pop() - 1
 					
 
@@ -346,18 +444,18 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 
 
 		#verify	
-		#elif quad['OPERATOR'] == 'VERIFY':
-		#	op1 = quad['OP1']
-		#	result = quad['RESULT']
+		elif quad['OPERATOR'] == 'VERIFY':
+			op1 = quad['OP1']
+			result = quad['RESULT']
 
-		#	op1Value = objMemoria.getVarValue(op1)
-		#	resultValue = objMemoria.getVarValue(op1)
-		#	print op1Value
-		#	print resultValue
-		#	if op1Value > resultValue:
-		#		print("array index to big!")
+			op1Value = objMemoria.getVarValue(op1)
+
+			
+			if op1Value > result:
+				print("array index to big!")
 		#		exit()
 
+			
 
 
 		quadCount += 1
