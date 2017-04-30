@@ -13,7 +13,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 	objMemoria.SetConstants(constantDict)
 	stackQuadBack = [] #arreglo que guardara el numero del quadruplo en el que regresara despues de la funcion
 	quadCount = 0  #contador de quadruplos
-	returnDirection = None
+	dirOfReturn = 0
 
 	while quadruplesList[quadCount]['OPERATOR'] != "END":
 
@@ -352,7 +352,9 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			result = quad['RESULT'] #saca la funcion a la cual ira
 
 			objMemoria.newFunc(result) #la envia a la funcion para asignar la memoria correspondiente
-			returnDirection = result['dir']
+			
+			if result["type"] != 4:
+				dirOfReturn = result["dir"]
 
 
 
@@ -397,7 +399,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 
 			
 
-			objMemoria.setVarValue(returnDirection, resultValue)
+			objMemoria.setVarValue(dirOfReturn, resultValue)
 
 			
 		      

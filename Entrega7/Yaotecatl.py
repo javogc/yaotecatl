@@ -4,6 +4,7 @@ import collections
 from collections import OrderedDict
 from collections import deque
 from virtualMachine import *
+import time
 
 
 
@@ -994,7 +995,7 @@ def p_codeAddConstNumber(p): #agrega una constante ya sea int o double al diccio
 
 
         typeOfConst = 0
-        if not constantDict.has_key(str(p[-1])):
+        if not constantDict.has_key(str(addVar)):
             constantDict[str(addVar)] = {"val":addVar, "type":typeOfConst, "dir": constVarDir["int"] }
             constVarDir["int"] += 1
     else:
@@ -1185,6 +1186,7 @@ def addFunctDict(functName, functType, functParameters, numOfQuadruple):
             funcDict[functName]["dir"] = globalVarDir[listOfTypesReversed(functType)]
             globalVarDir[listOfTypesReversed(functType)] += 1
 
+
 def AddVarDict(varName, varType): 
     global scopeVar
     global globalVarDict
@@ -1253,7 +1255,13 @@ if __name__ == "__main__":
             f = open(file, "r")
             data = f.read()
             yacc.parse(data, tracking = True) 
+
+            aux = time.time()
+
             runVirtualMachine(quadruplesList, globalVarDir, localVarDir, constVarDir, tempVarDir, constantDict,localVarDict, globalVarDict)
+
+            print(time.time() - aux)
+            
         except EOFError:
             print(EOFError)
             exit()
