@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>YAOTECATL - Input Gráfico</title>
+<link rel="icon" href="http://www-01.sil.org/Mexico/nahuatl/sup/23-Tlaloc.gif">
+
   <script src="blockly_compressed.js"></script>
   <script src="blocks_compressed.js"></script>
   <script src="javascript_compressed.js"></script>
@@ -22,32 +24,53 @@
 
 <h1 align="center" > YAOTECATL </h1>
   
-  <a href="https://developers.google.com/blockly/guides/configure/web/code-generators">Learn Yaotecatl</a>
-
+  <a target="_blank"  href="../yaotecatl.html">Learn Yaotecatl</a>
+  <br>
+  <a href=""> See Demo Again</a>
   <p>
     <button onclick="showCode()">Show Yaotecatl Code</button>
     <button onclick="runCode()">Run JavaScript</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <div id="blocklyDiv" style="height: 520px; width: 800px; float: left"></div>
+
+    <div id="codeDisplay">
+      <textarea id="textCode" style="width: 360px; height: 520px " readonly=""></textarea>
+  </div>
 
   <xml id="toolbox" style="display: none">
-    <category name="Program Structure & Declarations">
+    <category name="Program Structure">
       <block type="priomh"></block>
-      <block type="function"></block>
+
       <block type="return"></block>
       <block type="endfunc"></block>
       <block type="print"></block>
     </category>
-    <category name="Declare">
+        <category name="Variables">
       <block type="var"></block>
-     
-      <block type="if"></block>
       <block type="param"></block>
       <block type="param2"></block>
+       <block type="parameter"></block>
       <block type="string"></block>
       <block type="assingvalue"></block>
+      <block type="array"></block>
+      <block type="arrayparam1"></block>
+      <block type="arrayparam2"></block>
+       <block type="vars3"></block>
+         <block type="vars4"></block>
     </category>
+    <category name="Loops & Conditions">
+      <block type="if"></block>
+      <block type="else_if"></block>
+      <block type="else"></block>
+      <block type="while"></block>
+    </category>
+       <category name="Functions">
+              <block type="function"></block>
+       <block type="funccall1"></block>
+      <block type="funccall2"></block>
+    <categoty>
+    </category>  
         <category name="Logical Operators">
       <block type="lessthan"></block>
       <block type="greaterthan"></block>
@@ -61,6 +84,7 @@
     </category>
     
     <category name="Math">
+      <block type="text1"></block>
       <block type="math_number"></block>
       <block type="sum"></block>
       <block type="sub"></block>
@@ -72,10 +96,14 @@
       <block type="div2"></block> 
      
     </category>
+
+
   </xml>
 
  
   <script>
+
+
     var workspace = Blockly.inject('blocklyDiv',
         {media: 'media/',
          toolbox: document.getElementById('toolbox')});
@@ -86,8 +114,11 @@
       // Generate JavaScript code and display it.
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
       var code = Blockly.JavaScript.workspaceToCode(workspace);
+      code = code.replace(/[¡]/g,'(');
+        code = code.replace(/[!]/g,')');
       code = 'program id { \n\n' + code + '\n}'; 
-      alert(code);
+      document.getElementById("textCode").value = code;
+      //alert(code);
     }
 
     function runCode() {
