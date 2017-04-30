@@ -71,6 +71,14 @@ class Memory:
 			
 	#Saca el valor 			
 	def getVarValue(self, dirVar):
+			if type(dirVar) is str:
+				dirVar = dirVar.replace("(", "")
+				dirVar = dirVar.replace(")", "") 
+				dirVar = self.getVarValue(int(dirVar))
+				dirVar = self.getVarValue(dirVar)
+				return dirVar
+
+
 
 			scope = getVarScope(dirVar)
 			typeOfVarAux = getVarType(dirVar)
@@ -144,11 +152,17 @@ class Memory:
 	#Asignamos el valor a la direccion en el arreglo de memoria correspondiente		
 	def setVarValue(self, dirVar, answer):
 
+			if type(dirVar) is str:
+
+				dirVar = dirVar.replace("(", "")
+				dirVar = dirVar.replace(")", "") 
+
+				dirVar = self.getVarValue(int(dirVar))
+
+				
+
 			scope = getVarScope(dirVar)
 			typeOfVarAux = getVarType(dirVar)
-
-			#print typeOfVarAux
-		
 
 			if scope == "global":
 
@@ -208,6 +222,7 @@ class Memory:
 					self.finalTempVarDirFloat[dirVar - initialTempVarDirFloat] = answer
 
 				elif typeOfVarAux == "string":
+				
 					self.finalTempVarDirString[dirVar - initialTempVarDirString] = answer     
 
 
@@ -230,6 +245,17 @@ class Memory:
 		self.finalTempVarDirFloat = self.functionTempVarDirFloat
 		self.finalTempVarDirString = self.functionTempVarDirString
 
+	def changeBackMemory(self):
+		arrLastMemoryOut = self.memoriesStack.pop()
+
+		self.finalLocalVarDirBool = arrLastMemoryOut[0]
+		self.finalLocalVarDirInt = arrLastMemoryOut[1]
+		self.finalLocalVarDirFloat = arrLastMemoryOut[2]
+		self.finalLocalVarDirString = arrLastMemoryOut[3]
+		self.finalTempVarDirBool = arrLastMemoryOut[4]
+		self.finalTempVarDirInt = arrLastMemoryOut[5]
+		self.finalTempVarDirFloat = arrLastMemoryOut[6]
+		self.finalTempVarDirString = arrLastMemoryOut[7]	
 
 
 	def newFunc(self, func):
@@ -245,17 +271,11 @@ class Memory:
 		self.functionTempVarDirString = range(func["tempString"] - initialTempVarDirString) 
 
 
-	def changeBackMemory(self):
-		arrLastMemoryOut = self.memoriesStack.pop()
 
-		self.finalLocalVarDirBool = arrLastMemoryOut[0]
-		self.finalLocalVarDirInt = arrLastMemoryOut[1]
-		self.finalLocalVarDirFloat = arrLastMemoryOut[2]
-		self.finalLocalVarDirString = arrLastMemoryOut[3]
-		self.finalTempVarDirBool = arrLastMemoryOut[4]
-		self.finalTempVarDirInt = arrLastMemoryOut[5]
-		self.finalTempVarDirFloat = arrLastMemoryOut[6]
-		self.finalTempVarDirString = arrLastMemoryOut[7]
+	def getVarTypeHelper(self, dirVar):
+		getVarAux = getVarType(dirVar)
+
+		return getVarAux
 
 
 

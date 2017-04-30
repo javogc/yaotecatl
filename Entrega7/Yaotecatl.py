@@ -134,7 +134,7 @@ def p_auxprogramfunct(p):
 
 
 def p_array(p):
-    """array : ID LFTBRACSQR exp RGTBRACSQR"""
+    """array : ID codeAddOpenParen LFTBRACSQR exp RGTBRACSQR codeDeleteOpenParen"""
 
     global newDir
 
@@ -363,15 +363,25 @@ def p_write(p):
 
     if p[3] in globalVarDict.keys():
         findVar = globalVarDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["dir"]) 
+        if findVar["type"] < 20:
+            addNewQuadruple("PRINT", "", "", findVar["dir"]) 
+        else:
+            addNewQuadruple("PRINT", "", "", pilaO.pop()["dir"]) 
+        
 
     elif p[3] in localVarDict.keys():
         findVar = localVarDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["dir"]) 
+        if findVar["type"] < 20:
+            addNewQuadruple("PRINT", "", "", findVar["dir"]) 
+        else:
+            addNewQuadruple("PRINT", "", "", pilaO.pop()["dir"]) 
 
     elif p[3] in constantDict.keys():
         findVar = constantDict[p[3]]
-        addNewQuadruple("PRINT", "", "", findVar["dir"])    
+        if findVar["type"] < 20:
+            addNewQuadruple("PRINT", "", "", findVar["dir"]) 
+        else:
+            addNewQuadruple("PRINT", "", "", pilaO.pop()["dir"])    
     
     else:
         print("Variable not found!", p[3]) #imprime cual variable no fue declarada en ninguna de las tablas 
@@ -556,7 +566,7 @@ def p_callaux(p):
     | empty """ 
 
 def p_call(p):
-    """call : ID codeVerifyFunct LFTPAREN codeEraQuad exp codeAddArguments callaux RGTPAREN codeVerifyNull codeGOSUB codeTempReturn  """ 
+    """call : ID codeVerifyFunct LFTPAREN codeAddOpenParen codeEraQuad exp codeAddArguments callaux codeDeleteOpenParen RGTPAREN codeVerifyNull codeGOSUB codeTempReturn  """ 
     p[0] = funcDict[p[1]]["type"]
 
 
@@ -628,13 +638,13 @@ def p_codeAddValueArray(p):
 def p_codeTempReturn(p):
     '''codeTempReturn : empty'''
     global nameOfFunct
-    nameOfFunct = p[-10]
+    nameOfFunct = p[-12]
 
     if funcDict[nameOfFunct]["type"] != 4:
 
         respAux = {"dir": tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])], "type":funcDict[nameOfFunct]["type"]}
 
-        #addNewQuadruple("=", 0, "", respAux["dir"])
+        addNewQuadruple("=", "" , "", respAux["dir"])
 
         pilaO.append(respAux)
 
@@ -655,7 +665,7 @@ def p_codeGOSUB(p):
     global counterCalls
 
     counterCalls -= 1
-    addNewQuadruple("GOSUB", "", "", int(funcDict[p[-9]]["Quadruple"])) # saca donde esta ubicada la funcion 
+    addNewQuadruple("GOSUB", "", "", int(funcDict[p[-11]]["Quadruple"])) # saca donde esta ubicada la funcion 
 
 #checa si es pusiste menos argumentos
 def p_codeVerifyNull(p):
@@ -711,7 +721,7 @@ def p_codeEraQuad(p):
     global counterCalls
     global callPointerDict
 
-    addNewQuadruple("ERA", "", "", funcDict[p[-3]])
+    addNewQuadruple("ERA", "", "", funcDict[p[-4]])
 
     callPointerDict[counterCalls]["pointer"] = 0
 
@@ -781,8 +791,8 @@ def p_codeGOTOMain(p):
 #codigo para el brinco del else si un IF ya entro 
 def p_codeElse(p):
     """codeElse : """
- 
-    jumpsGoto.append(len(quadruplesList)-1)
+    quadruplesList[jumps.pop()]["RESULT"] = len(quadruplesList)
+    jumps.append(len(quadruplesList)-1)
 
 #codigo para 
 def p_codeEndIf(p):
