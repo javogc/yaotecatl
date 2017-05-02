@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <title>YAOTECATL - Input Gráfico</title>
 <link rel="icon" href="http://www-01.sil.org/Mexico/nahuatl/sup/23-Tlaloc.gif">
-
+ <link href="introjs.css" rel="stylesheet">
   <script src="blockly_compressed.js"></script>
   <script src="blocks_compressed.js"></script>
   <script src="javascript_compressed.js"></script>
+    <script src="msg/js/en.js"></script>
   <script src="customblocks.js"></script>
+  <script src="FileSaver.js"></script>
+  <script type="text/javascript" src="intro.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <style>
     body {
       background-color: #fff;
@@ -22,19 +26,23 @@
 </head>
 <body>
 
-<h1 align="center" > YAOTECATL </h1>
+<h1 align="center" data-step="1" data-intro="¡Hola! Bienvenid@ a Yaotecatl, aquí podrás aprender a programar usando bloques divertidos." > YAOTECATL </h1>
   
   <a target="_blank"  href="../yaotecatl.html">Learn Yaotecatl</a>
   <br>
-  <a href=""> See Demo Again</a>
+  <a href="javascript:void(0);" onclick="javascript:introJs().start();"> See Demo</a>
   <p>
-    <button onclick="showCode()">Show Yaotecatl Code</button>
-    <button onclick="runCode()">Run JavaScript</button>
+    <button onclick="showCode()" data-step="4" data-intro="Si das click aquí, puedes transformar tus bloques en código">Show Yaotecatl Code</button>
+    <button onclick="downloadCode()"  data-step="5" data-intro="Si das click aquí, puedes descargar tu código en un archivo">Download Yaotecatl Code</button>
+     <input id="fileName" type="text" name="fname" placeholder="Name ">
+    <button onclick="saveCode() " data-step="6" data-intro="Si das click aquí, puedes guardar tus bloques para usarlos después">Export Blocks</button>
+    <input type="file" id="fileInput">
+    <button id="load">Load</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 520px; width: 800px; float: left"></div>
+  <div id="blocklyDiv" style="height: 520px; width: 800px; float: left" data-step="2" data-intro="En esta zona va tu código!"></div>
 
-    <div id="codeDisplay">
+    <div id="codeDisplay" data-step="3" data-intro="Aqui puedes ver tu código en Yaotecatl">
       <textarea id="textCode" style="width: 360px; height: 520px " readonly=""></textarea>
   </div>
 
@@ -45,6 +53,7 @@
       <block type="return"></block>
       <block type="endfunc"></block>
       <block type="print"></block>
+      <block type="read"></block>
     </category>
         <category name="Variables">
       <block type="var"></block>
@@ -54,6 +63,9 @@
       <block type="string"></block>
       <block type="assingvalue"></block>
       <block type="array"></block>
+      <block type="arraydeclare"></block>
+       <block type="arrayvalue"></block>
+       <block type="arrayvaluePre"></block>
       <block type="arrayparam1"></block>
       <block type="arrayparam2"></block>
        <block type="vars3"></block>
@@ -107,8 +119,7 @@
     var workspace = Blockly.inject('blocklyDiv',
         {media: 'media/',
          toolbox: document.getElementById('toolbox')});
-    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                               workspace);
+    
 
     function showCode() {
       // Generate JavaScript code and display it.
@@ -121,19 +132,56 @@
       //alert(code);
     }
 
-    function runCode() {
-      // Generate JavaScript code and run it.
-      window.LoopTrap = 1000;
-      Blockly.JavaScript.INFINITE_LOOP_TRAP =
-          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
+    function downloadCode() {
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      try {
-        eval(code);
-      } catch (e) {
-        alert(e);
-      }
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      code = code.replace(/[¡]/g,'(');
+        code = code.replace(/[!]/g,')');
+      code = 'program id { \n\n' + code + '\n}'; 
+      var fileName = 'yaoTest';
+      var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, fileName +".yaotecatl");
     }
+
+    function saveCode(){
+     var output = document.getElementById('importExport');
+      var xml = Blockly.Xml.workspaceToDom(workspace);
+      var xml_text = Blockly.Xml.domToText(xml);
+      var blockName = document.getElementById('fileNames').value;
+      if(blockName == ''){
+        blockName = "yaotecatlBlock";
+      }
+      var blob = new Blob([xml_text], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, blockName + ".blocks");
+    }
+
+    
+       window.onload = function() {
+      var fileInput = document.getElementById('fileInput');
+      var fileDisplayArea = document.getElementById('fileDisplayArea');
+
+      fileInput.addEventListener('change', function(e) {
+          var file = fileInput.files[0];
+          var xml_text;
+          var xml;
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+              xml_text = reader.result;
+              xml = Blockly.Xml.textToDom(xml_text);
+              Blockly.Xml.domToWorkspace(xml, workspace);
+          }
+
+          reader.readAsText(file);    
+      });
+    }     
+
+    $(document).ready(function() {
+      $( '#load' ).click( function() {
+        $( '#fileInput' ).trigger( 'click' );
+      });
+    });
+
   </script>
 
 </body>

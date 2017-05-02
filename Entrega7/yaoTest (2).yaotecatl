@@ -1,0 +1,23 @@
+﻿program id { 
+
+function int factorial(int n) {
+  int i = 1;
+  int acum = 1;
+  while(i < n){
+    acum = acum*i;
+    i = i+1;
+
+   }
+  return acum;
+}
+priomh {
+  int x = 1;
+  int n = 0;
+  print("Read N");
+  read (n);
+  print("------------------------");
+  x = factorial(n);
+  print(x);
+
+  }
+}

@@ -40,6 +40,19 @@ Blockly.Blocks['print'] = {
   }
 };
 
+Blockly.Blocks['read'] = {
+  init: function() {
+    this.appendValueInput("read")
+        .setCheck(null)
+        .appendField("read");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(60);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
 Blockly.Blocks['var'] = {
   init: function() {
     this.appendValueInput("print")
@@ -109,14 +122,14 @@ Blockly.Blocks['vars3'] = {
   init: function() {
     this.appendValueInput("var")
         .setCheck(null)
-        .appendField(new Blockly.FieldDropdown([["int","int"], ["double","double"], ["float","float"], ["string","string"]]), "var")
-        .appendField(new Blockly.FieldTextInput("varName"), "varName")
+        .appendField(new Blockly.FieldDropdown([["int","int"], ["double","int"], ["float","float"], ["string","string"]]), "var")
+        .appendField(new Blockly.FieldTextInput("varName"), "varname")
         .appendField("=")
-        .appendField(new Blockly.FieldTextInput("varValue"), "varValue");
+        .appendField(new Blockly.FieldTextInput("varValue"), "varvalue");
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -131,7 +144,7 @@ Blockly.Blocks['vars4'] = {
         .appendField(new Blockly.FieldTextInput("varValue"), "varValue");
     this.setInputsInline(false);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -227,6 +240,51 @@ Blockly.Blocks['array'] = {
         .appendField("]");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
+    this.setColour(255);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['arraydeclare'] = {
+  init: function() {
+    this.appendValueInput("var")
+        .setCheck(null)
+        .appendField(new Blockly.FieldDropdown([["int","int"], ["double","int"], ["float","float"], ["string","string"]]), "var")
+        .appendField(new Blockly.FieldTextInput("arrayName"), "arrayName")
+        .appendField("[")
+        .appendField(new Blockly.FieldTextInput("arraySize"), "arraySize")
+        .appendField("]");
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(255);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['arrayvalue'] = {
+  init: function() {
+    this.appendValueInput("var")
+        .setCheck(null)
+        .appendField("arrayValue")
+        .appendField(new Blockly.FieldNumber(0), "arrayValue");
+    this.setInputsInline(false);
+    this.setOutput(true, null);
+    this.setColour(255);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['arrayvaluePre'] = {
+  init: function() {
+    this.appendValueInput("var")
+        .setCheck(null)
+        .appendField("10 values")
+    this.setInputsInline(false);
+    this.setOutput(true, null);
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
@@ -682,13 +740,13 @@ Blockly.JavaScript['function'] = function(block) {
 
 Blockly.JavaScript['vars3'] = function(block) {
   var dropdown_var = block.getFieldValue('var');
-  var text_varname = block.getFieldValue('varName');
-  var text_varvalue = block.getFieldValue('varValue');
+  var text_varname = block.getFieldValue('varname');
+  var text_varvalue = block.getFieldValue('varvalue');
   var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = dropdown_var + ' ' + text_varname + ' = ' + text_varvalue + value_var + ';\n';
+  var code = dropdown_var + ' ' + text_varname + '=' + text_varvalue + value_var + ';';
   code = code.replace(/[()]/g,'');
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return code;
 };
 
 
@@ -697,7 +755,13 @@ Blockly.JavaScript['vars4'] = function(block) {
   var text_varvalue = block.getFieldValue('varValue');
   var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = ', '+text_varname + ' = ' + text_varvalue + value_var;
+   // TODO: Assemble JavaScript into code variable.
+  if(value_var == ''){
+    var code = text_varname + '=' + text_varvalue;
+  }
+  else{
+    var code = text_varname + '=' + text_varvalue + ',' + value_var;
+  }
   // TODO: Change ORDER_NONE to the correct strength.
   code = code.replace(/[()]/g,'');
   return [code, Blockly.JavaScript.ORDER_NONE];
@@ -724,6 +788,13 @@ Blockly.JavaScript['print'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['read'] = function(block) {
+  var value_print = Blockly.JavaScript.valueToCode(block, 'read', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'read¡'+value_print + '!;\n';
+  code = code.replace(/[()]/g,'');
+  return code;
+};
 
 Blockly.JavaScript['endfunc'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
@@ -791,6 +862,51 @@ Blockly.JavaScript['array'] = function(block) {
   var code = dropdown_type + ' ' + text_arrayname + ' [' + text_arraysize + ']; \n';
   return code;
 };
+
+Blockly.JavaScript['arraydeclare'] = function(block) {
+  var dropdown_var = block.getFieldValue('var');
+  var text_arrayname = block.getFieldValue('arrayName');
+  var text_arraysize = block.getFieldValue('arraySize');
+  var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = dropdown_var + ' ' + text_arrayname+'['+text_arraysize+']' + ' = [' + value_var + '];';
+   code = code.replace(/[()]/g,'');
+  return code;
+};
+
+Blockly.JavaScript['arrayvalue'] = function(block) {
+  var number_arrayvalue = block.getFieldValue('arrayValue');
+  var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+
+   if(value_var == ''){
+    var code = number_arrayvalue;
+  }
+  else{
+   var code = number_arrayvalue+', '+value_var;
+  }
+  
+  // TODO: Change ORDER_NONE to the correct strength.
+    code = code.replace(/[()]/g,'');
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+
+Blockly.JavaScript['arrayvaluePre'] = function(block) {
+  var number_arrayvalue = block.getFieldValue('arrayValue');
+  var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+
+   var code = '2, 3, 5, 9, 1, 4, 0, 6, 8, 7';
+  
+  
+  // TODO: Change ORDER_NONE to the correct strength.
+    code = code.replace(/[()]/g,'');
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
 
 Blockly.JavaScript['arrayparam1'] = function(block) {
   var dropdown_var = block.getFieldValue('var');
