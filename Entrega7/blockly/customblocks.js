@@ -744,7 +744,13 @@ Blockly.JavaScript['vars3'] = function(block) {
   var text_varvalue = block.getFieldValue('varvalue');
   var value_var = Blockly.JavaScript.valueToCode(block, 'var', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = dropdown_var + ' ' + text_varname + '=' + text_varvalue + value_var + ';';
+  if(value_var == ''){
+        var code = dropdown_var + ' ' + text_varname + '=' + text_varvalue + ';';
+  }
+  else{
+        var code = dropdown_var + ' ' + text_varname + '=' + text_varvalue + ',' + value_var;
+  }
+  
   code = code.replace(/[()]/g,'');
   return code;
 };
@@ -757,7 +763,7 @@ Blockly.JavaScript['vars4'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
    // TODO: Assemble JavaScript into code variable.
   if(value_var == ''){
-    var code = text_varname + '=' + text_varvalue;
+    var code = text_varname + '=' + text_varvalue + ';';
   }
   else{
     var code = text_varname + '=' + text_varvalue + ',' + value_var;

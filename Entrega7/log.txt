@@ -1,0 +1,322 @@
+commit de87a37022cc8f2f6534f1be2df18f7baafcd39e
+Author: javogc <javo_gc@hotmail.com>
+Date:   Tue May 2 14:03:33 2017 -0500
+
+    changes to graphical input
+
+commit b2aceaf11b155fe48aad8e12bfea10dac6204d9b
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Apr 30 15:34:13 2017 -0500
+
+    Arregle error de numeros negativos
+
+commit 1ae342a308ecbf624c6ada8b8cdb7e3a60626238
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Apr 30 13:46:29 2017 -0500
+
+    Set theme jekyll-theme-minimal
+
+commit 67ab574ce35906f58d330f17738c04179994afcf
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Apr 30 13:45:12 2017 -0500
+
+    Set theme jekyll-theme-minimal
+
+commit 127c2c85ea9c7d8d5be880acb18b9c467415f427
+Merge: aee0deb 09a0522
+Author: javogc <javo_gc@hotmail.com>
+Date:   Sun Apr 30 12:40:43 2017 -0500
+
+    changes to graphical input
+
+commit aee0deb1b1e5f6c88c3970570114dc4cfe423a76
+Author: javogc <javo_gc@hotmail.com>
+Date:   Sun Apr 30 11:24:59 2017 -0500
+
+    changes to graphical input
+
+commit 09a0522249c8678b2a362f78cc7b4a451460da68
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sat Apr 29 23:31:34 2017 -0500
+
+    Funciona Recursion!! wuuuuwu
+
+commit 4636dbf9a4dbad01e8dd9248e94a674b2a029292
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sat Apr 29 19:57:43 2017 -0500
+
+    Funciona todo menos recursividad!
+
+commit 82cd4225b76e7c513140670be950ed8ccc8055a1
+Author: javogc <javo_gc@hotmail.com>
+Date:   Sat Apr 29 11:31:53 2017 -0500
+
+    added documentation and final yaotecatl page
+
+commit 11d279268245deefc7afaf733daae1d9d9c22919
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sat Apr 29 01:15:06 2017 -0500
+
+    Functions casi
+
+commit 7e09c5926f9465b80389305a4b2b3bcb090b3cd0
+Merge: 65dbef2 4ff6c82
+Author: javogc <javo_gc@hotmail.com>
+Date:   Mon Apr 24 12:58:00 2017 -0500
+
+    changed .gitignore
+
+commit 65dbef265b805f3b76ad8592a78aa10763539ce2
+Author: javogc <javo_gc@hotmail.com>
+Date:   Mon Apr 24 12:53:13 2017 -0500
+
+    Added custom blockly blocks and web implementation
+
+commit 4ff6c82ca1d6ac5097c8ff564252d4c5939745d0
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Apr 24 12:15:20 2017 -0500
+
+    Esqueleto de la maquina virtual
+
+commit 46eceb61827d74f9952ab77614cee4ed182ad172
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Apr 23 17:43:11 2017 -0500
+
+    Jalan Arreglos
+
+commit e3ef535dfa4780d37939c8ed867313c386ab01cb
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Tue Apr 18 17:08:37 2017 -0500
+
+    Ya listo para entrega 7
+
+commit bd90a07ac28f2912ad95e26107916c4a1c530aaf
+Author: javogc <javo_gc@hotmail.com>
+Date:   Tue Apr 11 15:02:04 2017 -0500
+
+    basic virtual machine
+
+commit 98d22109c8f593cec5dbe424916b0d2e54fd99bf
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Wed Apr 5 15:24:56 2017 -0500
+
+    Llamadas de funciones adentro de argumentos para una funcion
+    
+    PORFIN
+
+commit a7ceab79c0bed2cfc51e22b1ad800b83f74516ea
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Tue Apr 4 18:12:09 2017 -0500
+
+    Entrega 6 No terminada
+
+commit 1ad086593db039b8cc204c256da96bbb72379ba1
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 27 12:29:33 2017 -0600
+
+    Entrega 4 con GOTOF y GOTO
+
+commit b80fb0a2640943f37b9ff784d151bbfc70448fcb
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sat Mar 25 13:31:25 2017 -0600
+
+    Entrega 4
+
+commit de5287464ad35901bcd75903ed366c11574a84a0
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 19 16:40:25 2017 -0600
+
+    Cubo Semantico hecho
+
+commit ad662bf9467ddb7e15b37cf6031ab27977bdc3ef
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Thu Mar 16 20:01:56 2017 -0600
+
+    Fixed every shift/reduce error!
+
+commit 138b4f9b2c38759fb16a1bbfb4a6b809b4d8fe2f
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 13 12:17:14 2017 -0600
+
+    Void Fix
+
+commit 438bebda6b4149764125d1baf77011edc5766444
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 12 16:19:12 2017 -0600
+
+    Minor Fix Print
+
+commit 79664d97ed0f8d9d557f6c2d09643481123153aa
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 12 16:17:12 2017 -0600
+
+    Entrega 2 Completa y Corregida
+
+commit d4d968459a13a1478cdf96f672b0cd2595e5e1ce
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Thu Mar 9 12:15:53 2017 -0600
+
+    Entrega 1 completa corregida
+
+commit e049f0a92f627fc03330dc758fb767654700dc6c
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Thu Mar 9 11:08:40 2017 -0600
+
+    Minor Test Fix
+
+commit 93b86d98639cb4c862b74c8a60aace2b82d323c5
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Thu Mar 9 11:06:17 2017 -0600
+
+    Correccion de la Miss
+
+commit 7d977340358761a9eeef4d633be4b74cfe5ffc7b
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Tue Mar 7 08:01:49 2017 -0600
+
+    12 shift/reduce left
+
+commit 20cf6162e84e485860941eafa878c537b37e27dd
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Tue Mar 7 07:15:10 2017 -0600
+
+    Fix 1 shift/reduce error
+
+commit 6db677c7380dafcad172223aedff346a1015cd42
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 6 13:55:05 2017 -0600
+
+    Ya funciona la Entrega 1
+
+commit a833c487e034210d7c837d6417cf1d9d28fc5626
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 6 13:36:58 2017 -0600
+
+    Quite la propuesta PDF
+
+commit b4b8933115f170d52b7306f670b617876af82782
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 6 13:35:22 2017 -0600
+
+    Commit Final Entrega 1
+
+commit d8d1a53e1fb43b06258c64b13fa85583378975f2
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 6 11:50:55 2017 -0600
+
+    Solo falta quitar Warnings
+
+commit d0d1b6076f469bec5771a826842452dd6c594785
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Mon Mar 6 01:53:41 2017 -0600
+
+    Entrega 1 90% Completada
+
+commit 25ae76cee74b30b0e6fffec92a70079eb0144c60
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 20:18:16 2017 -0600
+
+    made changes to .py file
+
+commit a50c17730e4a2c9fe7a9b639605b4dc49cbb7eac
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 19:58:36 2017 -0600
+
+    Fix Constant
+
+commit 6670fbf08bd0685dc27f98008829b065cf461afa
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 19:52:07 2017 -0600
+
+    Tests
+
+commit b2cb2b3ee377d3a35d05eeb3317cade301287c8e
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 19:30:45 2017 -0600
+
+    Avance Yacc
+    
+    Pruebas
+
+commit 07c7bcf9d0688975cd10684d022ecef7b7665401
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 18:43:05 2017 -0600
+
+    modified word file
+
+commit 1d5fcb4189cf9cd61b6b4145b3f6f455b9c21567
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 18:39:58 2017 -0600
+
+    Avance Lex
+    
+    Casi Completo
+
+commit 9d2fe03e9dfc22d313b92db3502e880c7d4c89c9
+Merge: bafbd13 e9d0c65
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 17:31:01 2017 -0600
+
+    tessst
+
+commit e9d0c65ffffbf704b01137a7c1b21662507519ec
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 17:29:36 2017 -0600
+
+    Prueba Commit
+
+commit bafbd1310394bb12fc7c01c7cee4639434be1d13
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 17:29:29 2017 -0600
+
+    test
+
+commit 6718cfeece4f1aa9865d721d8e5271a0850e6519
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 17:25:26 2017 -0600
+
+    added .py to entrega 1
+
+commit f4cbffb49046bbc0dad71fd57652dd8d47cb87cd
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 17:19:38 2017 -0600
+
+    Minor Fixes
+
+commit b3fd2c8163447ce799f1da3f8845fb82a3f718d7
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 17:18:39 2017 -0600
+
+    Propuesta Terminada
+
+commit 06e6d49e6198305bc7d10764f9e035f326115c35
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 17:02:38 2017 -0600
+
+    Subir Propuesta Word
+
+commit fc685752a33d31f9b0971f8f994a75e4d34521f3
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 17:00:45 2017 -0600
+
+    Correccion
+
+commit f599bea02b22c5c857b6b255c2ea8ae7c5f3a3ec
+Author: gonzalogtz <gonzalogtzs94@gmail.com>
+Date:   Sun Mar 5 16:59:42 2017 -0600
+
+    Corrección Propuesta
+    
+    Correc.
+
+commit b505690afa1509a2ec633142305f45b63b63b8b7
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Sun Mar 5 16:16:04 2017 -0600
+
+    Added grammar and diagrams
+
+commit 458bff1db8117f37aec527cdfe26627592ca74f7
+Author: Javier Guajardo <javo_gc@hotmail.com>
+Date:   Wed Mar 1 15:29:19 2017 -0600
+
+    Added proposal file
