@@ -1,11 +1,7 @@
 program id {
 
 
-<<<<<<< Updated upstream
-  function int fibonacci(int a){
-=======
   function int fibonacciRecursivo(int a){
->>>>>>> Stashed changes
      int answer = 0;
      if (a == 0){
        answer = 0;
@@ -36,43 +32,6 @@ program id {
      return x;
   }
 
-<<<<<<< Updated upstream
-     }
-  
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
-  function int fibonacci (int n){
-=======
-
-  function int fibonacci3(int n){
->>>>>>> Stashed changes
-    int x=0;
-    int y=1;
-    int z=1;
-    int i=0;
-<<<<<<< Updated upstream
-    while (i < n) {
-=======
-      while (i < n) {
->>>>>>> Stashed changes
-      x=y;
-      y=z;
-      z=x + y;
-      i=i + 1;
-<<<<<<< HEAD
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-
-      }
->>>>>>> Stashed changes
->>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
-=======
 
   function int factorialRecursive(int n) {
     int answer = 0;
@@ -95,7 +54,6 @@ program id {
     while(i < n){
       i = i + 1;
       result = i * result;
->>>>>>> Stashed changes
     }
     
     return result;
@@ -113,43 +71,6 @@ program id {
 
 
   priomh {
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-
-=======
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
-    int x = 20;
-    x = fibonacci(x);
-    print("fibonacci recursivo");
-
-    int a[10] = [2, 3, 5, 9, 1, 4, 0, 6, 8, 7];
-=======
-
-    int c = 20;
-    c = fibonacci(c);
-    print("fibonacci recursivo");
-
-    int a[10] = [2, 3, 5, 9, 1, 4, 0, 6, 8, 7];
-    print(a[1]);
->>>>>>> Stashed changes
-    int x=1,i=1,j=0,temp=0,size=10,n=0;
-    print("Read N");
-    read (n);
-    print("-----------------------");
-    print("Iterative Fibonacci");
-    x=fibonacci(n);
-<<<<<<< HEAD
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
->>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
-=======
 
 
     int a = 0;
@@ -160,7 +81,6 @@ program id {
     print("-------------------");
     print("Fibonacci Recursive");
     int x = fibonacciRecursivo(a);
->>>>>>> Stashed changes
     print(x);
 
     print("-------------------");
