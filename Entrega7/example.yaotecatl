@@ -172,7 +172,7 @@ program id {
         }
         else{
         
-          first = first + 1;
+          first = first + 10;
           if(first > 7){
             print("Im sorry we did not find your number!");
           }

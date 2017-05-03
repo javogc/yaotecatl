@@ -13,6 +13,26 @@ program id {
   
   }
 
+  function string funcfinal(int a, int b){
+      string answer = " "; 
+      print(a);
+      print(b);
+      int v = a + b;
+      print(v); 
+      if((a + b) >= 3){
+        answer = "Si Entro";
+      }
+      else{
+        answer = "No Entro";
+      }
+      
+
+      return answer;
+
+
+
+  }
+
   
 
 
@@ -22,12 +42,21 @@ program id {
 
   
 
-    print("-------------------");
+    print("-------------------") ;
     
     andOrNot(2, 5.0, "Hola Mss", true);
 
+    print("-------------------") ;
+    int arr[4] = [1,2,3,4];
 
- 
+    string x = funcfinal(arr[0],arr[3]);
+
+    if(x == "Si Entro"){
+      print("Si Entro!");
+    }
+    else{
+      print("No entro!");
+    }
 
   
   
