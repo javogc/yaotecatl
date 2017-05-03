@@ -108,6 +108,8 @@ def p_program(p):
     addNewQuadruple("END", "", "", "")
     #para imprimir los cuadrulos uno por uno
 
+    #var1 = range(10 - 5) 
+    #print(var1,"yay")
 
     countQuadruples = 0 
     for p in quadruplesList:
@@ -144,7 +146,7 @@ def p_array(p):
     findVar = dict() #buscara la variable
 
     if p[1] in globalVarDict.keys():
-        findVar = globalVarDict[p[1]]
+        findVar = globalVarDict[p[1]] #numbre del arreglo
         findVar["scope"] = "global"
         
 
@@ -168,11 +170,12 @@ def p_array(p):
 
 
     if not constantDict.has_key(str(auxDir)):
-        constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] } #arreglo la direccion base del arreglo 
+        constantDict[str(auxDir)] = {"val":auxDir, "type":0, "dir": constVarDir["int"] } #buscaremos en constVarDir para luego sumarle la direcion de Val
+        #print(auxDir,constVarDir["int"], "hola")
         constVarDir["int"] += 1
 
 
-    specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" #direccion especial
+    specialDir = "(" + str(tempVarDir[listOfTypesReversed(findVar["type"])]) + ")" #direccion especial la creamos
 
     addNewQuadruple("+",indexArr, constantDict[str(auxDir)]["dir"], specialDir  ) # sumas la base por el index que buscas
 
@@ -191,8 +194,9 @@ def p_array(p):
 def p_arrayvals(p):
     """arrayvals : LFTBRACSQR arrayvalsaux RGTBRACSQR """
 
+#agregamos los valores al arreglo, solo numeros y string
 def p_arrayvalsaux(p):
-    """arrayvalsaux : cteNcteS codeAddValueArray 
+    """arrayvalsaux : cteNcteS codeAddValueArray         
     | cteNcteS codeAddValueArray COMMA arrayvalsaux """        
 
 def p_cteNcteS(p):
@@ -206,7 +210,8 @@ def p_cteNcteS(p):
 
 def p_assignment(p):
     """assignment : assignmentaux EQUAL expression SEMICOLON"""    
-
+   # print(p[3], "hola")
+    
     if p[3] == 4:
         print("can't use a void function for an assignment!")
         exit()
@@ -234,7 +239,7 @@ def p_assignment(p):
         if findVar["type"] < 20:
             addNewQuadruple("=", assignVar["dir"], "", findVar["dir"])
         else:
-            addNewQuadruple("=", assignVar["dir"], "", pilaO.pop()["dir"])   
+            addNewQuadruple("=", assignVar["dir"], "", pilaO.pop()["dir"])   #var arreglo arriba
 
     else: #Si no son compatibles marca error
             print("You cant evaluate those operands with that operator!" + findVar["val"] )
@@ -245,7 +250,8 @@ def p_assignment(p):
 def p_assignmentaux(p):
     """assignmentaux : ID 
     | array"""  
-    p[0] = p [1]
+
+    p[0] = p[1]
 
 
 
@@ -299,6 +305,8 @@ def p_exp(p):
     | term PLUS codeAddOperator exp
     | term MINUS codeAddOperator exp  """   
 
+    p[0] = p[1]
+
 def p_factoraux(p):
     """factoraux : constant
     | PLUS constant
@@ -312,14 +320,14 @@ def p_factoraux(p):
     if not isCall:
         if len(p) == 2: #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[1]
             aux = searchForOperand(p[1]) 
-            
+            p[0] = p[1]
             if aux["type"] < 20:
                 pilaO.append(aux)
         
           
  
         else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
-            
+            p[0] = p[2]
             addVar = p[3]
 
             addVar = "-" + addVar
@@ -337,6 +345,7 @@ def p_factoraux(p):
     
         
     else: 
+        #si es funcion no se necesita agregar a la pilaO....constant tiene call
         isCall = False
   
        
@@ -353,6 +362,8 @@ def p_factor(p):
 def p_expression(p):
     """expression : exp 
     | exp expressionaux codeAddOperator exp codeAskExpression""" 
+
+    p[0] = p[1]
 def p_expressionaux(p):
     """expressionaux : AND 
     | DOUBEQUAL 
@@ -411,6 +422,7 @@ def p_term(p):
     | factor DIVISION codeAddOperator term 
     | factor codeAskTerm """ 
 
+    p[0] = p[1]
      
 
 def p_statement(p):
@@ -667,7 +679,7 @@ def p_codeTempReturn(p):
 
         addNewQuadruple("=", funcDict[nameOfFunct]["dir"] , "", respAux["dir"])
 
-        pilaO.append(respAux)
+        pilaO.append(respAux) #esta sera la que se le asignara a la variable que la pidio
 
 
         tempVarDir[listOfTypesReversed(funcDict[nameOfFunct]["type"])] += 1
@@ -723,7 +735,7 @@ def p_codeAddArguments(p):
     argument = pilaO.pop()
 
     p_codeVerifyNull2(p)
-
+    #callpointerDict[countercalls]["pointer"] guardara la posicion del argumento contra la del parametro de la funcion
     newType = checkSemanticCube( argument["type"] ,funcDict[callPointerDict[counterCalls]["func"]]["parameters"][callPointerDict[counterCalls]["pointer"]]["type"] ,"=") #checar si los 2 operandos que sacaste son compatibles con el operador
             
     if newType < 10: # si si son compatibles los argrega al quadruplo
@@ -821,7 +833,7 @@ def p_codeEndIf(p):
     quadruplesList[jumps.pop()]["RESULT"] = len(quadruplesList)
 
     while len(jumpsGoto) != 0:
-        quadruplesList[jumpsGoto.pop()]["RESULT"] = len(quadruplesList)
+        quadruplesList[jumpsGoto.pop()]["RESULT"] = len(quadruplesList) #fix de gotos que olvide
 
 #codigo para completar el GOTOF cuando hay elseif 
 def p_codeNextIf(p):
@@ -1207,7 +1219,7 @@ def AddVarDict(varName, varType):
             localVarDir[listOfTypesReversed(varType)] += 1
 
         else:
-            print("Error in local table, variable already exists!")
+            print("Error in local table, variable already exists!", varName)
             exit()
 
 
@@ -1228,7 +1240,7 @@ def searchForOperand(key):
     
     else:
         #sale error aqui
-        print(constantDict,"HOLA") 
+       # print(constantDict,"HOLA") 
         print("Variable not found!", key) #imprime cual variable no fue declarada en ninguna de las tablas 
         exit()
 

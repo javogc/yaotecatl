@@ -29,18 +29,34 @@ program id {
       }
    
      return x;
+
+     }
   
+<<<<<<< Updated upstream
 =======
   function int fibonacci (int n){
+=======
+
+  function int fibonacci3(int n){
+>>>>>>> Stashed changes
     int x=0;
     int y=1;
     int z=1;
     int i=0;
+<<<<<<< Updated upstream
     while (i < n) {
+=======
+      while (i < n) {
+>>>>>>> Stashed changes
       x=y;
       y=z;
       z=x + y;
       i=i + 1;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+
+      }
 >>>>>>> Stashed changes
     }
 
@@ -54,22 +70,37 @@ program id {
         n = 1 + -1;
         print(n);
       }
+
     }
 
 
   priomh {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     int x = 20;
     x = fibonacci(x);
     print("fibonacci recursivo");
 =======
     int a[10] = [2, 3, 5, 9, 1, 4, 0, 6, 8, 7];
+=======
+
+    int c = 20;
+    c = fibonacci(c);
+    print("fibonacci recursivo");
+
+    int a[10] = [2, 3, 5, 9, 1, 4, 0, 6, 8, 7];
+    print(a[1]);
+>>>>>>> Stashed changes
     int x=1,i=1,j=0,temp=0,size=10,n=0;
     print("Read N");
     read (n);
     print("-----------------------");
     print("Iterative Fibonacci");
     x=fibonacci(n);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
     print(x);
 
@@ -82,8 +113,6 @@ program id {
     print(x);
     checar(4);
   
-  
-    
 
   }
 

@@ -32,8 +32,8 @@ class Memory:
 		self.name = name
 		self.memoriesStack = []
 		
-
-		self.finalGlobalVarDirBool = range(globalVarDir["bool"] - inicialGlobalVarDirBool) #para tener mejor eficiencia creamos arreglo con la cantidad de memoria necesitada
+		#para tener mejor eficiencia creamos arreglo con la cantidad de memoria necesitada
+		self.finalGlobalVarDirBool = range(globalVarDir["bool"] - inicialGlobalVarDirBool) 
 		self.finalGlobalVarDirInt  = range(globalVarDir["int"] - inicialGlobalVarDirInt)
 		self.finalGlobalVarDirFloat = range(globalVarDir["float"] - inicialGlobalVarDirFloat)
 		self.finalGlobalVarDirString = range(globalVarDir["string"] - inicialGlobalVarDirString)
@@ -228,7 +228,7 @@ class Memory:
 
 
 
-
+	#SEGUNDO
 	def changeMemory(self):
 		#asigna la memoria de la funcion a las variables principales de memoria y guarda la memoria anterior en un arreglo el cual meteremos en un stack para usarlo despues
 		#solo local y temporal
@@ -245,6 +245,7 @@ class Memory:
 		self.finalTempVarDirFloat = self.functionTempVarDirFloat
 		self.finalTempVarDirString = self.functionTempVarDirString
 
+	#TERCERO
 	def changeBackMemory(self):
 		arrLastMemoryOut = self.memoriesStack.pop()
 
@@ -257,7 +258,7 @@ class Memory:
 		self.finalTempVarDirFloat = arrLastMemoryOut[6]
 		self.finalTempVarDirString = arrLastMemoryOut[7]	
 
-
+	#PRIMERO
 	def newFunc(self, func):
 		#asigna la memoria correspondiente de la funcion
 		self.functionLocalVarDirBool = range(func["localBool"] - initialLocalVarDirBool)

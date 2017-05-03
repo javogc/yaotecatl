@@ -335,16 +335,16 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			result = quad['RESULT']
 
 			varType = objMemoria.getVarTypeHelper(result)
-			
+			#convierto lo que me de el input a su respectivo tipo
 			if varType == "int":
-				readValue = int(raw_input())
-				objMemoria.setVarValue(result, readValue)
+				valInput = int(raw_input())
+				objMemoria.setVarValue(result, valInput)
 			elif varType == "float":
-				readValue = float(raw_input())
-				objMemoria.setVarValue(result, readValue)
+				valInput = float(raw_input())
+				objMemoria.setVarValue(result, valInput)
 			elif varType == "string":
-				readValue = str(raw_input())
-				objMemoria.setVarValue(result, readValue)
+				valInput = str(raw_input())
+				objMemoria.setVarValue(result, valInput)
 
 
 		#era	
@@ -366,7 +366,6 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			result = quad['RESULT']
 
 			
-
 			op1Value = objMemoria.getVarValue(op1) #saca el valor de la direccion
 			
 			objMemoria.changeMemory() #cambia la memoria a la memoria de la funcion para asignar el valor de las dos lineas de codigo de abajo
@@ -399,7 +398,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 
 			
 
-			objMemoria.setVarValue(dirOfReturn, resultValue)
+			objMemoria.setVarValue(dirOfReturn, resultValue) #dirOfReturn es la direccion de la funcion y que despues estara en la temporal
 
 			
 		      
@@ -455,7 +454,7 @@ def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVa
 			
 			if op1Value > result:
 				print("array index to big!")
-		#		exit()
+				exit()
 
 			
 
