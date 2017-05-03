@@ -30,7 +30,7 @@ class Memory:
 
 	def __init__(self, name, globalVarDir, localVarDir, constVarDir, tempVarDir):
 		self.name = name
-		self.memoriesStack = []
+		
 		
 		#para tener mejor eficiencia creamos arreglo con la cantidad de memoria necesitada
 		self.finalGlobalVarDirBool = range(globalVarDir["bool"] - inicialGlobalVarDirBool) 
@@ -54,7 +54,7 @@ class Memory:
 		self.finalTempVarDirString = range(tempVarDir["string"] - initialTempVarDirString)     
 
 
-
+		self.memoriesStack = []
 
 	#sacamos de la tabla de constantes unicamente los valores y se lo agregamos al arreglo de valores de constantes en la posicion correspondiente
 	def SetConstants(self, constantDict):

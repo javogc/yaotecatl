@@ -7,13 +7,13 @@ import csv
 def runVirtualMachine(quadruplesList,globalVarDir,localVarDir,constVarDir,tempVarDir,constantDict,localVarDict,globalVarDict):
 
 	print ("Yaotecatl virtual machine RUNNING...")
-
+	print ("-------------------------------------")
 
 	objMemoria = Memory('Memoria', globalVarDir, localVarDir, constVarDir, tempVarDir)
 	objMemoria.SetConstants(constantDict)
 	stackQuadBack = [] #arreglo que guardara el numero del quadruplo en el que regresara despues de la funcion
 	quadCount = 0  #contador de quadruplos
-	dirOfReturn = 0
+	dirOfReturn = 0 #guardara direccion la cual regresaremos en el return
 
 	while quadruplesList[quadCount]['OPERATOR'] != "END":
 

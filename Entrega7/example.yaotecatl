@@ -1,7 +1,11 @@
 program id {
 
 
+<<<<<<< Updated upstream
   function int fibonacci(int a){
+=======
+  function int fibonacciRecursivo(int a){
+>>>>>>> Stashed changes
      int answer = 0;
      if (a == 0){
        answer = 0;
@@ -11,14 +15,15 @@ program id {
        answer = 1;
      }
      else{
-       answer = fibonacci(a - 1) + fibonacci(a - 2);
+       answer = fibonacciRecursivo(a - 1) + fibonacciRecursivo(a - 2);
      }
   
      return answer;
   
-     }
+  }
   
-    function int fibonacci2(int a){
+
+  function int fibonacciIterativo(int a){
      int x = 0, y = 1, z = 1, i = 0;
   
      while(i < a){
@@ -29,7 +34,9 @@ program id {
       }
    
      return x;
+  }
 
+<<<<<<< Updated upstream
      }
   
 <<<<<<< HEAD
@@ -65,23 +72,48 @@ program id {
       }
 >>>>>>> Stashed changes
 >>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
+=======
+
+  function int factorialRecursive(int n) {
+    int answer = 0;
+
+    if(n <= 1){
+      answer = 1;
+    }
+    else{
+      answer = n * factorialRecursive(n - 1);
     }
 
-    function void checar(int n){
+    
+    return answer;
+  }
 
-
-      if(n < 4){
-        print("SI LO ES");
-      }
-      else{
-        n = 1 + -1;
-        print(n);
-      }
-
+  function int factorialIterativo(int n){
+    
+    int result = 1;
+    int i = 1;
+    while(i < n){
+      i = i + 1;
+      result = i * result;
+>>>>>>> Stashed changes
     }
+    
+    return result;
+  }
+
+
+
+
+
+
+
+
+
+
 
 
   priomh {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 
 =======
@@ -117,17 +149,121 @@ program id {
 
 >>>>>>> Stashed changes
 >>>>>>> 9aecc9601ffa4f5848aa5716d9cbfa2b725a6c1e
+=======
+
+
+    int a = 0;
+
+    print("Input the fibonacci value: ");
+    read(a);  
+
+    print("-------------------");
+    print("Fibonacci Recursive");
+    int x = fibonacciRecursivo(a);
+>>>>>>> Stashed changes
     print(x);
 
-    print("fibonacci iterativo");
-    x = 20;
-    x = fibonacci2(x);
-
-
-
+    print("-------------------");
+    print("Fibonacci Iterative");
+    x = fibonacciIterativo(a);
     print(x);
-    checar(4);
+
+    print("-------------------");
+    print("-------------------");
+    print("Input the factorial value: ");
+    read(a);  
+
+    print("-------------------");
+    print("-------------------");
+    print("Factorial Recursive");
+    x = factorialRecursive(a);
+    print(x);
+
+
+    print("-------------------");
+    print("Factorial Iterative");
+    x = factorialIterativo(a);
+    print(x);
+
+
+
+    int arr[7] = [4, 2, 10, 35, 1, 0, 7];
+
+    int i = 0, j = 0, h = 0;
+
+    print("-------------------");
+    print("Array print withouth sorting");
+
+    print(arr[0]);
+    print(arr[1]);
+    print(arr[2]);
+    print(arr[3]);
+    print(arr[4]);
+    print(arr[5]);
+    print(arr[6]);
+    
+   
+
+    print("--------------------");
+    int arrSize = 7;
+    while (i < arrSize) {
+    
+
+      while (arrSize - 1 > j) {
+
+        if (arr[j] > arr[j+1]) {
+
+          h = arr[j];
+          arr[j] = arr[j+1];
+          arr[j+1] = h;
+        }
+
+        j = j + 1;
+      }
+
+      i = i + 1;
+      j = 0;
+    }
+
+    print("-------------------");
+    print("Array print with sorting");
+
+    print(arr[0]);
+    print(arr[1]);
+    print(arr[2]);
+    print(arr[3]);
+    print(arr[4]);
+    print(arr[5]);
+    print(arr[6]);
+    
+   
+    print("-------------------");
+    print("-------------------");
+    print("What value do you want me to tell you the position on the array?");
+    read(a); 
+
+    print("-------------------");
+    int first = 0, last = 6;
+    while(first <= last){
+        if(arr[first] == a){
+          print("We found your number in the array on the position: ");
+          print(first);
+          first = last + 1;
+        }
+        else{
+        
+          first = first + 1;
+          if(first > 7){
+            print("Im sorry we did not find your number!");
+          }
+        }
+    }
+    
+
   
+  
+  
+    
 
   }
 

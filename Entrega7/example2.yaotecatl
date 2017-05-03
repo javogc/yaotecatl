@@ -1,0 +1,39 @@
+program id {
+
+
+  function void andOrNot(int iVal, float dVal, string sVal, bool bVal ){
+     
+     if((  (bVal) && (sVal == "Hola Miss")  ) || (  (dVal > 3.4) && (iVal != 3) )){
+        print("Sacaste 100 en el compilador");
+     }
+
+     else{
+        print("Tambien sacaste 100 pero el if es Falso");
+     }  
+  
+  }
+
+  
+
+
+
+  priomh {
+
+
+  
+
+    print("-------------------");
+    
+    andOrNot(2, 5.0, "Hola Mss", true);
+
+
+ 
+
+  
+  
+  
+    
+
+  }
+
+}

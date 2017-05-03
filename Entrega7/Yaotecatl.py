@@ -212,6 +212,7 @@ def p_assignment(p):
     """assignment : assignmentaux EQUAL expression SEMICOLON"""    
    # print(p[3], "hola")
     
+    #print(p[3], "hola")
     if p[3] == 4:
         print("can't use a void function for an assignment!")
         exit()
@@ -304,8 +305,9 @@ def p_exp(p):
     """exp : term
     | term PLUS codeAddOperator exp
     | term MINUS codeAddOperator exp  """   
-
+    
     p[0] = p[1]
+    #print(p[0])
 
 def p_factoraux(p):
     """factoraux : constant
@@ -327,7 +329,7 @@ def p_factoraux(p):
           
  
         else:   #si la longitud de la regla es de 2 entonces busca el operando en todas las tablas que esta en la posicion p[2]
-            p[0] = p[2]
+            p[0] = p[3]
             addVar = p[3]
 
             addVar = "-" + addVar
@@ -347,7 +349,7 @@ def p_factoraux(p):
     else: 
         #si es funcion no se necesita agregar a la pilaO....constant tiene call
         isCall = False
-  
+        p[0] = p[1]
        
        
           
@@ -359,11 +361,16 @@ def p_factor(p):
     """factor : LFTPAREN codeAddOpenParen expression RGTPAREN codeDeleteOpenParen codeAskFactor
     | factoraux codeAskFactor""" 
 
+    p[0] = p[1]
+   # print(p[0],"hola")
+
 def p_expression(p):
     """expression : exp 
     | exp expressionaux codeAddOperator exp codeAskExpression""" 
-
+    
     p[0] = p[1]
+    #print(p[0], "hola")
+
 def p_expressionaux(p):
     """expressionaux : AND 
     | DOUBEQUAL 
@@ -422,8 +429,9 @@ def p_term(p):
     | factor DIVISION codeAddOperator term 
     | factor codeAskTerm """ 
 
+   
     p[0] = p[1]
-     
+    #print(p[0], "hola")
 
 def p_statement(p):
     """statement : assignment 
@@ -432,6 +440,8 @@ def p_statement(p):
     | write 
     | read 
     | call SEMICOLON """ 
+
+    p[0] = p[1]
 
 def p_type(p):
     """type : INT  
@@ -592,6 +602,7 @@ def p_callaux(p):
 def p_call(p):
     """call : ID codeVerifyFunct LFTPAREN codeAddOpenParen codeEraQuad exp codeAddArguments callaux codeDeleteOpenParen RGTPAREN codeVerifyNull codeGOSUB codeTempReturn  """ 
     p[0] = funcDict[p[1]]["type"]
+
 
 
 
@@ -1271,8 +1282,13 @@ if __name__ == "__main__":
             aux = time.time()
 
             runVirtualMachine(quadruplesList, globalVarDir, localVarDir, constVarDir, tempVarDir, constantDict,localVarDict, globalVarDict)
-
+            
+            print
+            print
+            print("Tiempo de Ejecucion: ")
             print(time.time() - aux)
+            print
+            print
             
         except EOFError:
             print(EOFError)
